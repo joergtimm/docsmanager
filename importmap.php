@@ -24,4 +24,91 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    'flowbite/plugin' => [
+        'version' => '2.2.0',
+    ],
+    'mini-svg-data-uri' => [
+        'version' => '1.4.4',
+    ],
+    'tailwindcss/plugin' => [
+        'version' => '3.3.6',
+    ],
+    'tailwindcss/defaultTheme' => [
+        'version' => '3.3.5',
+    ],
+    'tailwindcss/colors' => [
+        'version' => '3.3.5',
+    ],
+    'picocolors' => [
+        'version' => '1.0.0',
+    ],
+    'flowbite' => [
+        'version' => '2.2.0',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'flowbite/dist/flowbite.min.css' => [
+        'version' => '2.2.0',
+        'type' => 'css',
+    ],
+    'hls.js' => [
+        'version' => '1.4.13',
+    ],
+    '@hotwired/turbo' => [
+        'version' => '7.3.0',
+    ],
+    'filepond' => [
+        'version' => '4.30.4',
+    ],
+    'filepond/dist/filepond.min.css' => [
+        'version' => '4.30.4',
+        'type' => 'css',
+    ],
+    'tom-select' => [
+        'version' => '2.3.1',
+    ],
+    'prettier-plugin-tailwindcss' => [
+        'version' => '0.5.9',
+    ],
+    'tailwind-scrollbar' => [
+        'version' => '3.0.5',
+    ],
+    'tailwindcss/lib/util/flattenColorPalette' => [
+        'version' => '3.3.6',
+    ],
+    'tailwindcss/lib/util/toColorValue' => [
+        'version' => '3.3.6',
+    ],
+    'tailwindcss/lib/featureFlags' => [
+        'version' => '3.3.6',
+    ],
+    'mediaplayer' => [
+        'version' => '2.0.1',
+    ],
+    'mediaplayer/index.min.css' => [
+        'version' => '2.0.1',
+        'type' => 'css',
+    ],
+    '@swup/fade-theme' => [
+        'version' => '1.0.5',
+    ],
+    '@swup/slide-theme' => [
+        'version' => '1.0.5',
+    ],
+    '@swup/forms-plugin' => [
+        'version' => '2.0.1',
+    ],
+    '@swup/plugin' => [
+        'version' => '2.0.3',
+    ],
+    'swup' => [
+        'version' => '3.1.1',
+    ],
+    'delegate-it' => [
+        'version' => '6.0.1',
+    ],
+    '@swup/debug-plugin' => [
+        'version' => '3.0.0',
+    ],
 ];
