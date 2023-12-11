@@ -5,9 +5,11 @@ namespace App\Factory;
 use App\Entity\Production;
 use App\Repository\ProductionRepository;
 use DateTimeImmutable;
+use Symfony\Component\Uid\Ulid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
+use function Symfony\Component\String\s;
 
 /**
  * @extends ModelFactory<Production>
@@ -49,7 +51,8 @@ final class ProductionFactory extends ModelFactory
     {
         return [
             'beginAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('-10 years', '-12 days')),
-            'status' => self::faker()->text(20)
+            'status' => self::faker()->text(20),
+            'description' => self::faker()->words(35, true) // erstellt einen Textblock
         ];
     }
 
