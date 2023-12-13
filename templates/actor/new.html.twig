@@ -2,10 +2,18 @@
 
 {% block title %}New Actor{% endblock %}
 
-{% block body %}
-    <h1>Create new Actor</h1>
+{% block boardcontent %}
+    <div class="mt-4 mb-5">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create new Actor</h1>
+        <hr>
+    </div>
+    <div class="m-4 bg-gray-800 p-3 border-2 rounded-2">
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            {{ include('actor/_form.html.twig') }}
 
-    {{ include('actor/_form.html.twig') }}
+            <a class="flex items-center font-semibold text-primary hover:text-primary light:text-primary truncate" href="javascript:void(0);">">back to list</a>
+        </div>
+    </div>
 
-    <a href="{{ path('app_actor_index') }}">back to list</a>
+
 {% endblock %}

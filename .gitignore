@@ -1,6 +1,7 @@
 
 ###> symfony/framework-bundle ###
 /.env.local
+/.dev.sh
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -19,3 +20,10 @@
 /public/assets/
 /assets/vendor
 ###< symfony/asset-mapper ###
+/glowing-animated-css-loader-bytewebster.zip
+/examples/
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###

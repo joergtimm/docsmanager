@@ -1,4 +1,7 @@
 {
+    "babdev/pagerfanta-bundle": {
+        "version": "v4.3.0"
+    },
     "doctrine/annotations": {
         "version": "2.0",
         "recipe": {
@@ -74,6 +77,18 @@
             ".env.test",
             "phpunit.xml.dist",
             "tests/bootstrap.php"
+        ]
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.6",
+            "ref": "1019e5c08d4821cb9b77f4891f8e9c31ff20ac6f"
+        },
+        "files": [
+            "phpcs.xml.dist"
         ]
     },
     "symfony/asset-mapper": {
@@ -299,9 +314,6 @@
     "symfony/ux-dropzone": {
         "version": "v2.13.2"
     },
-    "symfony/ux-swup": {
-        "version": "v2.13.2"
-    },
     "symfony/ux-toggle-password": {
         "version": "v2.13.2"
     },
@@ -332,6 +344,9 @@
             "config/packages/web_profiler.yaml",
             "config/routes/web_profiler.yaml"
         ]
+    },
+    "symfonycasts/sass-bundle": {
+        "version": "v0.3.0"
     },
     "symfonycasts/tailwind-bundle": {
         "version": "v0.2.1"

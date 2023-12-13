@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Mandnat{% endblock %}
+
+{% block body %}
+    <h1>Create new Mandnat</h1>
+
+    {{ include('mandnat/_form.html.twig') }}
+
+    <a href="{{ path('app_mandnat_index') }}">back to list</a>
+{% endblock %}

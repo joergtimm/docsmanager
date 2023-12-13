@@ -1,0 +1,54 @@
+<nav class="bg-white shadow-md">
+    <div class="mx-auto">
+        <div class="flex justify-between py-2 px-4">
+            <div class="flex items-center space-x-2 font-bold text-gray-400">
+                <a href="{{ path('app_main') }}" target="_top">
+                    <span>Dashboard</span>
+                </a>
+
+            </div>
+
+            <div class="hidden md:flex space-x-4">
+                <div class="hidden md:flex flex">
+                    <label for="search"></label><input type="text" placeholder="search" class="lg:w-96 sm:w-48 bg-gray-100 rounded-md px-1 focus:outline" id="search"/>
+                </div>
+            </div>
+            <ul class="flex space-x-4 py-1 lg:text-sm font-bold text-slate-600 items-center">
+                <li>Home</li>
+                <li>Profile</li>
+                <li>Sign in</li>
+                <li class="text-slate-800">or</li>
+                <li class="text-white bg-green-400 py-1 px-2 rounded-md hover:bg-green-400">Sign up</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Mobile view goes here -->
+
+    <button class="p-1 mr-5 mr-1 rounded-md md:hidden focus:outline-none focus:outline-purple mobile-menu-button"
+            @click="toggleSideMenu"
+            aria-label="Menu"
+    >
+        <svg
+                class="w-6 h-6"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+        >
+            <path
+                    fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 0"
+                    clip-rule="evenodd"></path>
+        </svg>
+    </button>
+</nav>
+
+<div class="hidden mobile-menu">
+    <ul class="font-bold text-slate-600 items-center">
+        <li class="block text-md px-2 py-4 hover:bg-green-200 transition duration-300">Fetures</li>
+        <li class="block text-md px-2 py-4 hover:bg-green-200 transition duration-300">Price</li>
+        <li class="block text-md px-2 py-4 hover:bg-green-200 transition duration-300">Sign in</li>
+        <li class="block text-md px-2 py-4 hover:bg-green-200">or</li>
+        <li class="block text-md px-2 py-4 hover:bg-green-200 transition duration-300">Sign up</li>
+    </ul>
+</div>

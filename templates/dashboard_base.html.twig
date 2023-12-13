@@ -7,6 +7,7 @@
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
         </button>
+        {% block sidebar %}
         <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidenav">
             <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <ul class="space-y-2">
@@ -182,9 +183,12 @@
                 </div>
             </div>
         </aside>
-        <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+        {% endblock %}
+
+            <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
             <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <!-- Start coding here -->
+        {% block boardcontent %}
                 <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                     <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                         <div class="w-full md:w-1/2">
@@ -261,7 +265,11 @@
                             </div>
                         </div>
                     </div>
+
+                    {{ include('actor/new.html.twig') }}
+                    {#
                     <div class="overflow-x-auto">
+
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -549,6 +557,7 @@
                             </tbody>
                         </table>
                     </div>
+                    #}
                     <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                 Showing
@@ -591,6 +600,7 @@
                         </ul>
                     </nav>
                 </div>
+        {% endblock %}
             </div>
         </section>
     {% endblock %}

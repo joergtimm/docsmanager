@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mandnat index{% endblock %}
+
+{% block body %}
+    <h1>Mandnat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>ConId</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mandnat in mandnats %}
+            <tr>
+                <td>{{ mandnat.id }}</td>
+                <td>{{ mandnat.name }}</td>
+                <td>{{ mandnat.conId }}</td>
+                <td>
+                    <a href="{{ path('app_mandnat_show', {'id': mandnat.id}) }}">show</a>
+                    <a href="{{ path('app_mandnat_edit', {'id': mandnat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mandnat_new') }}">Create new</a>
+{% endblock %}

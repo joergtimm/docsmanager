@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Actor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,20 +22,18 @@ class ActorRepository extends ServiceEntityRepository
         parent::__construct($registry, Actor::class);
     }
 
-//    /**
-//     * @return Actor[] Returns an array of Actor objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+    public function findBySearch(?string $query, ?string $sort = null, string $direction = 'DESC'): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if ($query) {
+            $qb->andWhere('a.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        return $qb;
+    }
 
 //    public function findOneBySomeField($value): ?Actor
 //    {

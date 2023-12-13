@@ -10,7 +10,7 @@
   src: url("./fonts/tabler-icons.eot?#iefix-v2.13.1") format("embedded-opentype"), url("./fonts/tabler-icons.woff2?v2.13.1") format("woff2"), url("./fonts/tabler-icons.woff?") format("woff"), url("./fonts/tabler-icons.ttf?v2.13.1") format("truetype");
 }
 .ti {
-  font-family: "tabler-icons" !important;
+  font-family: "tabler-icons", serif !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
