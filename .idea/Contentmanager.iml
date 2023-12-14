@@ -149,7 +149,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/nelmio/security-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/orchidjs/tom-select" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-dropzone" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-swup" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-toggle-password" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-turbo" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ua-parser/uap-php" />

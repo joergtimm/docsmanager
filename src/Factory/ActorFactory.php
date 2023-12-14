@@ -6,7 +6,6 @@ use App\Entity\Actor;
 use App\Repository\ActorRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
-use Zenstruck\Foundry\RepositoryProxy;
 
 /**
  * @extends ModelFactory<Actor>
@@ -19,7 +18,7 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static Actor|Proxy                     last(string $sortedField = 'id')
  * @method static Actor|Proxy                     random(array $attributes = [])
  * @method static Actor|Proxy                     randomOrCreate(array $attributes = [])
- * @method static ActorRepository|RepositoryProxy repository()
+ * @method static ActorRepository                 repository()
  * @method static Actor[]|Proxy[]                 all()
  * @method static Actor[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
  * @method static Actor[]|Proxy[]                 createSequence(iterable|callable $sequence)
@@ -42,13 +41,15 @@ final class ActorFactory extends ModelFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
      *
-     * @todo add your default values here
      */
     protected function getDefaults(): array
     {
         return [
-            'name' => self::faker()->name(),
-            'bornAt' => self::faker()->dateTimeInInterval('-30 yaers'),
+            'name' => self::faker()->name('female'),
+            'bornAt' => \DateTimeImmutable::createFromMutable(
+                self::faker()->dateTimeBetween('-40 years', '-18 years')
+            ),
+            'gender' => self::faker()->randomElement(['female', 'male', 'diverse'])
 
         ];
     }
