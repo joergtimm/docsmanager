@@ -34,10 +34,10 @@ return [
         'version' => '3.4.0',
     ],
     'tailwindcss/defaultTheme' => [
-        'version' => '3.4.0',
+        'version' => '3.3.5',
     ],
     'tailwindcss/colors' => [
-        'version' => '3.4.0',
+        'version' => '3.3.5',
     ],
     'picocolors' => [
         'version' => '1.0.0',
@@ -53,7 +53,7 @@ return [
         'version' => '1.4.14',
     ],
     '@hotwired/turbo' => [
-        'version' => '8.0.0-beta.2',
+        'version' => '7.3.0',
     ],
     'filepond' => [
         'version' => '4.30.6',
@@ -108,5 +108,11 @@ return [
     ],
     '@tailwindcss/container-queries' => [
         'version' => '0.1.1',
+    ],
+    '@tailwindcss/forms' => [
+        'version' => '0.5.7',
+    ],
+    '@tailwindcss/aspect-ratio' => [
+        'version' => '0.4.2',
     ],
 ];

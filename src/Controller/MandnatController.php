@@ -24,16 +24,40 @@ class MandnatController extends AbstractController
         #[MapQueryParameter] string $query = null,
         #[MapQueryParameter] string $sort = 'name',
         #[MapQueryParameter] string $sortDirection = 'ASC',
+        #[MapQueryParameter] string $viewMode = 'list',
+        #[MapQueryParameter] int $listItems = 10,
+        #[MapQueryParameter] int $gridItems = 12,
     ): Response {
+        $validSorts = ['name', 'conId'];
+        $sort = in_array($sort, $validSorts) ? $sort : 'name';
+
+        $validViewModes = ['list', 'grid'];
+            $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
+        $validSortDirections = ['asc', 'desc'];
+            $sortDirection = in_array($sortDirection, $validSortDirections) ? $sortDirection : 'asc';
+
+        $validListItems = [10, 20, 30];
+            $listItems = in_array($listItems, $validListItems) ? $listItems : 10;
+
+        $validGridItems = [12, 24, 36];
+            $gridItems = in_array($gridItems, $validGridItems) ? $gridItems : 12;
+
+            $items = $gridItems;
+
+        if ($viewMode === 'list') {
+                $items = $listItems;
+        }
+
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($mandnatRepository->findBySearch($query, $sort, $sortDirection)),
             $page,
-            10
+            $items
         );
-
 
         return $this->render('mandnat/index.html.twig', [
             'pages' => $pager,
+            'sortDirection' => $sortDirection,
+            'sort' => $sort
         ]);
     }
 

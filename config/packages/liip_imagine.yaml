@@ -1,0 +1,55 @@
+# Documentation on how to configure the bundle can be found at: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "gd"
+
+    resolvers:
+        default:
+            web_path: ~
+    webp:
+        generate: true
+    filter_sets:
+        #
+        #        # an example thumbnail transformation definition
+        #        # https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html#create-thumbnails
+        cache: ~
+        squared_thumbnail_nano:
+            filters:
+                scale:
+                    dim: [ 45, 45 ]
+        squared_thumbnail_mini:
+            filters:
+                scale:
+                    dim: [ 80, 80 ]
+        squared_thumbnail_footer:
+            filters:
+                scale:
+                    dim: [ 180, 101 ]
+        video_thumb:
+            filters:
+                scale:
+                    dim: [ 250, 141 ]
+        squared_thumbnail_small:
+            filters:
+                scale:
+                    dim: [ 250, 250 ]
+        my_thumb_webp:
+            format: webp
+            quality: 100
+            filters:
+                thumbnail: { size: [ 223, 223 ], mode: inset }
+        actress_thumbnail_md:
+            filters:
+                scale:
+                    dim: [ 380, 480 ]
+
+        squared_thumbnail_md_ob:
+            filters:
+                thumbnail:
+                    size: [ 700, 700 ]
+                    mode: outbound
+                    allow_upscale: true
+        squared_thumbnail_lg:
+            filters:
+                scale:
+                    dim: [ 900, 900 ]

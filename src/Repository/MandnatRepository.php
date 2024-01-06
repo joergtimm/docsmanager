@@ -23,13 +23,16 @@ class MandnatRepository extends ServiceEntityRepository
     }
 
 
-    public function findBySearch(?string $query, ?string $sort = null, string $direction = 'DESC'): QueryBuilder
+    public function findBySearch(?string $query, ?string $sort = null, string $direction = 'desc'): QueryBuilder
     {
         $qb = $this->createQueryBuilder('m');
 
         if ($query) {
-            $qb->andWhere('a.name LIKE :query')
+            $qb->andWhere('m.name LIKE :query')
                 ->setParameter('query', '%' . $query . '%');
+        }
+        if ($sort) {
+                $qb->orderBy('m.' . $sort, $direction);
         }
 
         return $qb;

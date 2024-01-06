@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 #[ApiResource]
@@ -26,6 +27,24 @@ class Video
 
     #[ORM\ManyToOne(inversedBy: 'videos')]
     private ?Production $production = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updateAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $metadata = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mime_type = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_h264 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_h265 = null;
+
+    #[ORM\Column(type: 'uuid', nullable: true)]
+    private ?Uuid $videoKey = null;
 
     public function getId(): ?int
     {
@@ -76,6 +95,78 @@ class Video
     public function setProduction(?Production $production): static
     {
         $this->production = $production;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $updateAt): static
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(?array $metadata): static
+    {
+        $this->metadata = $metadata;
+
+        return $this;
+    }
+
+    public function getMimeType(): ?string
+    {
+        return $this->mime_type;
+    }
+
+    public function setMimeType(?string $mime_type): static
+    {
+        $this->mime_type = $mime_type;
+
+        return $this;
+    }
+
+    public function isIsH264(): ?bool
+    {
+        return $this->is_h264;
+    }
+
+    public function setIsH264(?bool $is_h264): static
+    {
+        $this->is_h264 = $is_h264;
+
+        return $this;
+    }
+
+    public function isIsH265(): ?bool
+    {
+        return $this->is_h265;
+    }
+
+    public function setIsH265(?bool $is_h265): static
+    {
+        $this->is_h265 = $is_h265;
+
+        return $this;
+    }
+
+    public function getVideoKey(): ?Uuid
+    {
+        return $this->videoKey;
+    }
+
+    public function setVideoKey(?Uuid $videoKey): static
+    {
+        $this->videoKey = $videoKey;
 
         return $this;
     }

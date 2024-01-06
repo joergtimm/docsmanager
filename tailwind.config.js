@@ -70,6 +70,8 @@ module.exports = {
     },
     plugins: [
         require('@tailwindcss/container-queries'),
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/aspect-ratio'),
         plugin(function ({ addVariant }) {
             addVariant('turbo-frame', 'turbo-frame[src] &');
             addVariant('modal', 'dialog &');
