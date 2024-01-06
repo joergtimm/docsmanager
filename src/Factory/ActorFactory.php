@@ -49,8 +49,21 @@ final class ActorFactory extends ModelFactory
             'bornAt' => \DateTimeImmutable::createFromMutable(
                 self::faker()->dateTimeBetween('-40 years', '-18 years')
             ),
-            'gender' => self::faker()->randomElement(['female', 'male', 'diverse'])
-
+            'gender' => self::faker()->randomElement(['female', 'male', 'diverse']),
+            'profilepic' => self::faker()->randomElement([
+                'fm1.jpg',
+                'fm2.jpg',
+                'fm3.jpg',
+                'fm4.jpg',
+                'fm5.jpg',
+                'fm6.jpg',
+                'fm7.jpg',
+                'fm8.jpg',
+                'fm9.jpg',
+                'fm10.jpg',
+                'fm11.jpg',
+                'fm12.jpg'
+            ])
         ];
     }
 

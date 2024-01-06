@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Mandnat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,19 @@ class MandnatRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Mandnat::class);
+    }
+
+
+    public function findBySearch(?string $query, ?string $sort = null, string $direction = 'DESC'): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        if ($query) {
+            $qb->andWhere('a.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        return $qb;
     }
 
 //    /**

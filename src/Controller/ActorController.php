@@ -26,7 +26,7 @@ class ActorController extends AbstractController
         #[MapQueryParameter] string $sortDirection = 'ASC',
     ): Response {
 
-
+       // $this->addFlash('success', 'Planet created - wow!');
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($actorRepository->findBySearch($query, $sort, $sortDirection)),
             $page,
@@ -35,7 +35,6 @@ class ActorController extends AbstractController
 
         return $this->render('actor/index.html.twig', [
             'pages' => $pager,
-            'direction'
         ]);
     }
 

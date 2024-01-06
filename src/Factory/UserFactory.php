@@ -48,9 +48,10 @@ final class UserFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'email' => 'timm.jrg@gmail.com',
-            'password' => '+SuperPassword123',
-            'roles' => ["ROLE_ADMIN", "ROLE_SUPER_ADMIN"],
+            'email' => self::faker()->email(),
+            'password' => self::faker()->password(8, 12),
+            'roles' => ["ROLE_USER"],
+            'username' => self::faker()->userName()
         ];
     }
 

@@ -6,19 +6,34 @@ use App\Entity\Mandnat;
 use App\Form\MandnatType;
 use App\Repository\MandnatRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/mandnat')]
 class MandnatController extends AbstractController
 {
     #[Route('/', name: 'app_mandnat_index', methods: ['GET'])]
-    public function index(MandnatRepository $mandnatRepository): Response
-    {
+    public function index(
+        MandnatRepository $mandnatRepository,
+        #[MapQueryParameter] int $page = 1,
+        #[MapQueryParameter] string $query = null,
+        #[MapQueryParameter] string $sort = 'name',
+        #[MapQueryParameter] string $sortDirection = 'ASC',
+    ): Response {
+        $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($mandnatRepository->findBySearch($query, $sort, $sortDirection)),
+            $page,
+            10
+        );
+
+
         return $this->render('mandnat/index.html.twig', [
-            'mandnats' => $mandnatRepository->findAll(),
+            'pages' => $pager,
         ]);
     }
 

@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
+#[ApiResource]
 class Video
 {
     #[ORM\Id]
@@ -21,6 +23,9 @@ class Video
 
     #[ORM\Column]
     private ?bool $isverrifyted = null;
+
+    #[ORM\ManyToOne(inversedBy: 'videos')]
+    private ?Production $production = null;
 
     public function getId(): ?int
     {
@@ -59,6 +64,18 @@ class Video
     public function setIsverrifyted(bool $isverrifyted): static
     {
         $this->isverrifyted = $isverrifyted;
+
+        return $this;
+    }
+
+    public function getProduction(): ?Production
+    {
+        return $this->production;
+    }
+
+    public function setProduction(?Production $production): static
+    {
+        $this->production = $production;
 
         return $this;
     }

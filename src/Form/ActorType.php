@@ -36,10 +36,7 @@ class ActorType extends AbstractType
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('profilepic', DropzoneType::class, [
-                'label' => 'Profile - pic',
-                'constraints' => $imageConstrains
-            ])
+
         ;
     }
 

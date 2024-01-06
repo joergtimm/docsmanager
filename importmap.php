@@ -25,63 +25,60 @@ return [
         'version' => '3.2.2',
     ],
     'flowbite/plugin' => [
-        'version' => '2.2.0',
+        'version' => '2.2.1',
     ],
     'mini-svg-data-uri' => [
         'version' => '1.4.4',
     ],
     'tailwindcss/plugin' => [
-        'version' => '3.3.6',
+        'version' => '3.4.0',
     ],
     'tailwindcss/defaultTheme' => [
-        'version' => '3.3.6',
+        'version' => '3.4.0',
     ],
     'tailwindcss/colors' => [
-        'version' => '3.3.6',
+        'version' => '3.4.0',
     ],
     'picocolors' => [
         'version' => '1.0.0',
     ],
     'flowbite' => [
-        'version' => '2.2.0',
-    ],
-    '@popperjs/core' => [
-        'version' => '2.11.8',
+        'version' => '2.2.1',
     ],
     'flowbite/dist/flowbite.min.css' => [
-        'version' => '2.2.0',
+        'version' => '2.2.1',
         'type' => 'css',
     ],
     'hls.js' => [
-        'version' => '1.4.13',
+        'version' => '1.4.14',
     ],
     '@hotwired/turbo' => [
-        'version' => '7.3.0',
+        'version' => '8.0.0-beta.2',
     ],
     'filepond' => [
-        'version' => '4.30.4',
+        'version' => '4.30.6',
     ],
     'filepond/dist/filepond.min.css' => [
-        'version' => '4.30.4',
+        'version' => '4.30.6',
         'type' => 'css',
     ],
     'tom-select' => [
         'version' => '2.3.1',
     ],
     'prettier-plugin-tailwindcss' => [
-        'version' => '0.5.9',
+        'version' => '0.5.10',
     ],
     'tailwind-scrollbar' => [
         'version' => '3.0.5',
     ],
     'tailwindcss/lib/util/flattenColorPalette' => [
-        'version' => '3.3.6',
+        'version' => '3.4.0',
     ],
     'tailwindcss/lib/util/toColorValue' => [
-        'version' => '3.3.6',
+        'version' => '3.4.0',
     ],
     'tailwindcss/lib/featureFlags' => [
-        'version' => '3.3.6',
+        'version' => '3.4.0',
     ],
     'mediaplayer' => [
         'version' => '2.0.1',
@@ -97,9 +94,19 @@ return [
         'version' => '0.3.0',
     ],
     'stimulus-use' => [
-        'version' => '0.52.1',
+        'version' => '0.52.2',
     ],
     'stimulus-popover' => [
         'version' => '6.2.0',
+    ],
+    'tom-select/dist/css/tom-select.default.css' => [
+        'version' => '2.3.1',
+        'type' => 'css',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    '@tailwindcss/container-queries' => [
+        'version' => '0.1.1',
     ],
 ];

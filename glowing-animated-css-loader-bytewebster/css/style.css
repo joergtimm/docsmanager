@@ -57,9 +57,8 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(to top, transparent, rgba(0, 255, 249, 0.5));
   background-size: 100px 180px;
-  background-repeat: no-repeat;
+  background: linear-gradient(to top, transparent, rgba(0, 255, 249, 0.5)) no-repeat;
   border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
 }

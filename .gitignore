@@ -28,3 +28,7 @@
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 /tools/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
