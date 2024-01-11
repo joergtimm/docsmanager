@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Video;
 use App\Repository\VideoRepository;
+use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -43,8 +44,6 @@ final class VideoFactory extends ModelFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
     public function __construct()
     {
@@ -53,15 +52,23 @@ final class VideoFactory extends ModelFactory
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
      */
     protected function getDefaults(): array
     {
         return [
-            'createAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'createAt' => \DateTimeImmutable::createFromMutable(
+                self::faker()->dateTimeBetween('-2 years', '-10 days')
+            ),
+            'updateAt' => \DateTimeImmutable::createFromMutable(
+                self::faker()->dateTimeBetween('-9 days', '-1 days')
+            ),
             'isverrifyted' => self::faker()->boolean(),
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->text(50),
+            'mimeType' => 'video/mp4',
+            'ish264' => self::faker()->boolean(),
+            'ish265' => self::faker()->boolean(),
+            'videoKey' => Uuid::v1(),
+
 
         ];
     }

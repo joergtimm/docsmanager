@@ -59,8 +59,10 @@ final class MandnatFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'conId' => self::faker()->randomNumber(),
-            'name' => self::faker()->text(255),
+            'conId' => strval(self::faker()->numberBetween(25414785, 95847123)),
+            'name' => self::faker()->name(),
+            'status' => self::faker()->randomElement(['beantragt', 'arbeit', 'sandbox', 'prod' ]),
+            'customNr' => strval(self::faker()->numberBetween(14254, 95412)),
         ];
     }
 
@@ -70,7 +72,8 @@ final class MandnatFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this
-             ->afterInstantiate(function(Mandnat $mandnat): void {})
+             ->afterInstantiate(function (Mandnat $mandnat): void {
+             })
         ;
     }
 

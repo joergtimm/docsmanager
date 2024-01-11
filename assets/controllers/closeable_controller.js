@@ -3,7 +3,7 @@ import { useTransition } from 'stimulus-use';
 
 export default class extends Controller {
     static values = {
-        auto: Number,
+        autoClose: Number,
     };
 
     static targets = ['timerbar']
@@ -17,10 +17,10 @@ export default class extends Controller {
             transitioned: true,
         });
 
-        if (this.autoValue) {
+        if (this.autoCloseValue) {
             setTimeout(() => {
                 this.close();
-            }, this.autoValue);
+            }, this.autoCloseValue);
 
             if (this.hasTimerbarTarget) {
                 setTimeout(() => {
@@ -32,10 +32,6 @@ export default class extends Controller {
 
     close()
     {
-        if (this.hasTimerbarTarget) {
-            this.timerbarTarget.remove();
-        }
-
         this.leave();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,25 @@ class VideoRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Video::class);
+    }
+
+    public function findBySearch(?string $query, ?string $sort = null, string $direction = 'desc'): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('v');
+
+        $qb->leftJoin('v.videoActors', 'va')
+                ->leftJoin('va.actor', 'a')
+                ->addSelect('va', 'a');
+
+        if ($query) {
+            $qb->andWhere('v.title LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+        if ($sort) {
+            $qb->orderBy('v.' . $sort, $direction);
+        }
+
+        return $qb;
     }
 
 //    /**

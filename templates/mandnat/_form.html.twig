@@ -1,11 +1,1 @@
-{{ form_start(form) }}
-<div class="grid grid-cols-2 gap-2">
-    <div class="border-2 border-solid rounded-lg border-gray-100 dark:border-gray-600 h-48 md:h-72 p-8">
-        {{ form_row(form.name) }}
-        {{ form_row(form.conId) }}
-    </div>
-    <div class="border-2 border-solid rounded-lg border-gray-100 dark:border-gray-600 h-48 md:h-72 p-8">
-        <button class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">{{ button_label|default('Save') }}</button>
-    </div>
-</div>
-{{ form_end(form) }}
+<twig:ClientForm :form="form" :initialFormData="mandnat" />

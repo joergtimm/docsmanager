@@ -9,10 +9,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/actor')]
 class ActorController extends AbstractController
@@ -23,18 +24,44 @@ class ActorController extends AbstractController
         #[MapQueryParameter] int $page = 1,
         #[MapQueryParameter] string $query = null,
         #[MapQueryParameter] string $sort = 'name',
-        #[MapQueryParameter] string $sortDirection = 'ASC',
+        #[MapQueryParameter] string $sortDirection = 'asc',
+        #[MapQueryParameter] string $viewMode = 'list',
+        #[MapQueryParameter] int $listItems = 10,
+        #[MapQueryParameter] int $gridItems = 12,
     ): Response {
+        $validSorts = ['name', 'bornAt'];
+        $sort = in_array($sort, $validSorts) ? $sort : 'name';
 
-       // $this->addFlash('success', 'Planet created - wow!');
+        $validViewModes = ['list', 'grid'];
+        $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
+        $validSortDirections = ['asc', 'desc'];
+        $sortDirection = in_array($sortDirection, $validSortDirections) ? $sortDirection : 'asc';
+
+        $validListItems = [10, 20, 30];
+        $listItems = in_array($listItems, $validListItems) ? $listItems : 10;
+
+        $validGridItems = [12, 24, 36];
+        $gridItems = in_array($gridItems, $validGridItems) ? $gridItems : 12;
+
+        $items = $gridItems;
+
+        if ($viewMode === 'list') {
+            $items = $listItems;
+        }
+
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($actorRepository->findBySearch($query, $sort, $sortDirection)),
             $page,
-            10
+            $items
         );
 
         return $this->render('actor/index.html.twig', [
             'pages' => $pager,
+            'sortDirection' => $sortDirection,
+            'sort' => $sort,
+            'viewMode' => $viewMode,
+            'listItems' => $listItems,
+            'gridItems' => $gridItems
         ]);
     }
 
@@ -42,12 +69,22 @@ class ActorController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $actor = new Actor();
-        $form = $this->createForm(ActorType::class, $actor);
+        $form = $this->createActorForm($actor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($actor);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Video wurde angelegt');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('actor/new.html.twig', 'stream_success', [
+                    'item' => $actor
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
 
             return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,11 +106,21 @@ class ActorController extends AbstractController
     #[Route('/{id}/edit', name: 'app_actor_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Actor $actor, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ActorType::class, $actor);
+        $form = $this->createActorForm($actor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash('success', 'Dasteller wurde geändert');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('actor/edit.html.twig', 'stream_success', [
+                    'item' => $actor
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
 
             return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -93,5 +140,14 @@ class ActorController extends AbstractController
         }
 
         return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createActorForm(Actor $actor = null): FormInterface
+    {
+        $actor = $actor ?? new Actor();
+
+        return $this->createForm(ActorType::class, $actor, [
+            'action' => $actor->getId() ? $this->generateUrl('app_actor_edit', ['id' => $actor->getId()]) : $this->generateUrl('app_actor_new'),
+        ]);
     }
 }

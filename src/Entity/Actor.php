@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,14 @@ class Actor
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilepic = null;
+
+    #[ORM\OneToMany(mappedBy: 'actor', targetEntity: VideoActors::class)]
+    private Collection $videoActors;
+
+    public function __construct()
+    {
+        $this->videoActors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +85,36 @@ class Actor
     public function setProfilepic(?string $profilepic): static
     {
         $this->profilepic = $profilepic;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VideoActors>
+     */
+    public function getVideoActors(): Collection
+    {
+        return $this->videoActors;
+    }
+
+    public function addVideoActor(VideoActors $videoActor): static
+    {
+        if (!$this->videoActors->contains($videoActor)) {
+            $this->videoActors->add($videoActor);
+            $videoActor->setActor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideoActor(VideoActors $videoActor): static
+    {
+        if ($this->videoActors->removeElement($videoActor)) {
+            // set the owning side to null (unless already changed)
+            if ($videoActor->getActor() === $this) {
+                $videoActor->setActor(null);
+            }
+        }
 
         return $this;
     }

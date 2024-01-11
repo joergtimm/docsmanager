@@ -37,6 +37,7 @@ class ActorType extends AbstractType
                 'multiple' => false
             ])
 
+
         ;
     }
 

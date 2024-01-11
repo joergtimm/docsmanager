@@ -1,0 +1,19 @@
+
+{% if item.status == 'beantragt' %}
+    {% set bg = 'cyan' %}
+{% endif %}
+
+{% if item.status == 'arbeit' %}
+    {% set bg = 'amber' %}
+{% endif %}
+
+{% if item.status == 'sandbox' %}
+    {% set bg = 'pink' %}
+{% endif %}
+
+{% if item.status == 'prod' %}
+    {% set bg = 'green' %}
+{% endif %}
+<div class="center relative inline-block select-none whitespace-nowrap rounded-lg bg-{{ bg }}-500 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
+    <div class="mt-px">{{ item.status }}</div>
+</div>

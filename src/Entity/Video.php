@@ -4,7 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoRepository;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
@@ -19,8 +24,13 @@ class Video
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createAt", type="datetime_immutable")
+     */
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    private ?DateTimeImmutable $createAt;
 
     #[ORM\Column]
     private ?bool $isverrifyted = null;
@@ -28,8 +38,13 @@ class Video
     #[ORM\ManyToOne(inversedBy: 'videos')]
     private ?Production $production = null;
 
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateAt", type="datetime_immutable")
+     */
+    #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updateAt = null;
+    private ?DateTimeImmutable $updateAt;
 
     #[ORM\Column(nullable: true)]
     private ?array $metadata = null;
@@ -43,8 +58,16 @@ class Video
     #[ORM\Column(nullable: true)]
     private ?bool $is_h265 = null;
 
-    #[ORM\Column(type: 'uuid', nullable: true)]
-    private ?Uuid $videoKey = null;
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $videoKey;
+
+    #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoActors::class)]
+    private Collection $videoActors;
+
+    public function __construct()
+    {
+        $this->videoActors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -164,10 +187,39 @@ class Video
         return $this->videoKey;
     }
 
-    public function setVideoKey(?Uuid $videoKey): static
+    public function setVideoKey(Uuid $videoKey): void
     {
         $this->videoKey = $videoKey;
+    }
+
+    /**
+     * @return Collection<int, VideoActors>
+     */
+    public function getVideoActors(): Collection
+    {
+        return $this->videoActors;
+    }
+
+    public function addVideoActor(VideoActors $videoActor): static
+    {
+        if (!$this->videoActors->contains($videoActor)) {
+            $this->videoActors->add($videoActor);
+            $videoActor->setVideo($this);
+        }
 
         return $this;
     }
+
+    public function removeVideoActor(VideoActors $videoActor): static
+    {
+        if ($this->videoActors->removeElement($videoActor)) {
+            // set the owning side to null (unless already changed)
+            if ($videoActor->getVideo() === $this) {
+                $videoActor->setVideo(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

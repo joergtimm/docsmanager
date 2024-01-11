@@ -5,20 +5,62 @@ namespace App\Controller;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 
 #[Route('/video')]
 class VideoController extends AbstractController
 {
     #[Route('/', name: 'app_video_index', methods: ['GET'])]
-    public function index(VideoRepository $videoRepository): Response
-    {
+    public function index(
+        VideoRepository $videoRepository,
+        #[MapQueryParameter] int $page = 1,
+        #[MapQueryParameter] string $query = null,
+        #[MapQueryParameter] string $sort = 'title',
+        #[MapQueryParameter] string $sortDirection = 'ASC',
+        #[MapQueryParameter] string $viewMode = 'list',
+        #[MapQueryParameter] int $listItems = 10,
+        #[MapQueryParameter] int $gridItems = 12,
+    ): Response {
+        $validSorts = ['title', 'createAt'];
+        $sort = in_array($sort, $validSorts) ? $sort : 'title';
+
+        $validViewModes = ['list', 'grid'];
+        $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
+        $validSortDirections = ['asc', 'desc'];
+        $sortDirection = in_array($sortDirection, $validSortDirections) ? $sortDirection : 'asc';
+
+        $validListItems = [10, 20, 30];
+        $listItems = in_array($listItems, $validListItems) ? $listItems : 10;
+
+        $validGridItems = [12, 24, 36];
+        $gridItems = in_array($gridItems, $validGridItems) ? $gridItems : 12;
+
+        $items = $gridItems;
+
+        if ($viewMode === 'list') {
+            $items = $listItems;
+        }
+
+        $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($videoRepository->findBySearch($query, $sort, $sortDirection)),
+            $page,
+            $items
+        );
+
         return $this->render('video/index.html.twig', [
-            'videos' => $videoRepository->findAll(),
+            'pager' => $pager,
+            'sortDirection' => $sortDirection,
+            'sort' => $sort
         ]);
     }
 
@@ -26,12 +68,28 @@ class VideoController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $video = new Video();
-        $form = $this->createForm(VideoType::class, $video);
+        $video->setCreateAt(new \DateTimeImmutable());
+        $form = $this->createVideoForm($video);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var Video $video */
+            $video = $form->getData();
+            $video->setCreateAt(new \DateTimeImmutable());
+            $video->setUpdateAt(new \DateTimeImmutable());
+            $video->setVideoKey(Uuid::v1());
             $entityManager->persist($video);
             $entityManager->flush();
+            $this->addFlash('success', 'Video wurde angelegt');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('/video/new.html.twig', 'stream_success', [
+                    'item' => $video
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
 
             return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -53,11 +111,25 @@ class VideoController extends AbstractController
     #[Route('/{id}/edit', name: 'app_video_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Video $video, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(VideoType::class, $video);
+        $form = $this->createVideoForm($video);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Video $video */
+            $video = $form->getData();
+            $video->setUpdateAt(new DateTimeImmutable('now'));
+            $entityManager->persist($video);
             $entityManager->flush();
+            $this->addFlash('success', 'Video wurde geändert');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('/video/edit.html.twig', 'stream_success', [
+                    'item' => $video
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
+
 
             return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -77,5 +149,14 @@ class VideoController extends AbstractController
         }
 
         return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createVideoForm(Video $video = null): FormInterface
+    {
+        $video = $video ?? new Video();
+
+        return $this->createForm(VideoType::class, $video, [
+            'action' => $video->getId() ? $this->generateUrl('app_video_edit', ['id' => $video->getId()]) : $this->generateUrl('app_video_new'),
+        ]);
     }
 }

@@ -9,7 +9,7 @@ input{
 }
 
 .toggle-password-button {
-    color: #f3f4f6;;
+    color: #343435;;
 }
 
 .notification-tab > .active {
@@ -96,4 +96,10 @@ input{
     background: #b0b0b0;
     border-radius: 50%;
     z-index: 1;
+}
+
+.active {background: white; border-radius: 9999px; color: #63b3ed;}
+
+[x-cloak] {
+    display: none;
 }

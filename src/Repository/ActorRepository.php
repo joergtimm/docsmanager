@@ -31,6 +31,9 @@ class ActorRepository extends ServiceEntityRepository
             $qb->andWhere('a.name LIKE :query')
                 ->setParameter('query', '%' . $query . '%');
         }
+        if ($sort) {
+            $qb->orderBy('a.' . $sort, $direction);
+        }
 
         return $qb;
     }

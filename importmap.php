@@ -115,4 +115,13 @@ return [
     '@tailwindcss/aspect-ratio' => [
         'version' => '0.4.2',
     ],
+    'pdf.js' => [
+        'version' => '0.1.0',
+    ],
+    'jsdelivr' => [
+        'version' => '0.1.2',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
 ];

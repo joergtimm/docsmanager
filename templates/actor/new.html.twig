@@ -1,19 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'modalBase.html.twig' %}
 
 {% block title %}New Actor{% endblock %}
 
-{% block boardcontent %}
-    <div class="mt-4 mb-5">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create new Actor</h1>
-        <hr>
-    </div>
-    <div class="m-4 bg-gray-800 p-3 border-2 rounded-2">
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            {{ include('actor/_form.html.twig') }}
+{% block main_content %}
+    <div class="m-4 p-4 modal:m-0 modal:p-0 bg-gray-50 rounded-lg">
+        <div class="flex justify-between">
+            <h1 class="text-xl font-semibold text-gray-800 mb-4">Create New Actor</h1>
 
-            <a class="flex items-center font-semibold text-primary hover:text-primary light:text-primary truncate" href="javascript:void(0);">">back to list</a>
+            <div class="mr-4">
+                <a href="{{ path('app_actor_index') }}" class="text-sm font-medium text-gray-800">
+                    Back to list
+                </a>
+                <div class="inline-block">
+                    {% if form.vars.data.id|default %}
+                        {{ include('actor/_delete_form.html.twig') }}
+                    {% endif %}
+                </div>
+            </div>
         </div>
+        {{ include('actor/_form.html.twig') }}
     </div>
+{% endblock %}
 
-
+{% block stream_success %}
+    <turbo-stream action="prepend" targets="#actor-list tbody">
+        <template>
+            {{ include('actor/_row.html.twig') }}
+        </template>
+    </turbo-stream>
 {% endblock %}

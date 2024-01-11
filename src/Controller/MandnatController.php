@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Mandnat;
+use App\Entity\Video;
 use App\Form\MandnatType;
+use App\Form\VideoType;
 use App\Repository\MandnatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/mandnat')]
 class MandnatController extends AbstractController
@@ -23,12 +26,12 @@ class MandnatController extends AbstractController
         #[MapQueryParameter] int $page = 1,
         #[MapQueryParameter] string $query = null,
         #[MapQueryParameter] string $sort = 'name',
-        #[MapQueryParameter] string $sortDirection = 'ASC',
+        #[MapQueryParameter] string $sortDirection = 'asc',
         #[MapQueryParameter] string $viewMode = 'list',
         #[MapQueryParameter] int $listItems = 10,
         #[MapQueryParameter] int $gridItems = 12,
     ): Response {
-        $validSorts = ['name', 'conId'];
+        $validSorts = ['name', 'conId', 'status', 'custom_nr'];
         $sort = in_array($sort, $validSorts) ? $sort : 'name';
 
         $validViewModes = ['list', 'grid'];
@@ -42,7 +45,7 @@ class MandnatController extends AbstractController
         $validGridItems = [12, 24, 36];
             $gridItems = in_array($gridItems, $validGridItems) ? $gridItems : 12;
 
-            $items = $gridItems;
+        $items = $gridItems;
 
         if ($viewMode === 'list') {
                 $items = $listItems;
@@ -57,7 +60,10 @@ class MandnatController extends AbstractController
         return $this->render('mandnat/index.html.twig', [
             'pages' => $pager,
             'sortDirection' => $sortDirection,
-            'sort' => $sort
+            'sort' => $sort,
+            'viewMode' => $viewMode,
+            'listItems' => $listItems,
+            'gridItems' => $gridItems
         ]);
     }
 
@@ -65,12 +71,22 @@ class MandnatController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $mandnat = new Mandnat();
-        $form = $this->createForm(MandnatType::class, $mandnat);
+        $form = $this->createMandantForm($mandnat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($mandnat);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Mandant wurde angelegt');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('mandnat/new.html.twig', 'stream_success', [
+                    'item' => $mandnat
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
 
             return $this->redirectToRoute('app_mandnat_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -116,5 +132,17 @@ class MandnatController extends AbstractController
         }
 
         return $this->redirectToRoute('app_mandnat_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createMandantForm(Mandnat $mandnat = null): FormInterface
+    {
+        $mandnat = $mandnat ?? new Mandnat();
+
+        return $this->createForm(MandnatType::class, $mandnat, [
+            'action' => $mandnat->getId() ? $this->generateUrl(
+                'app_mandnat_edit',
+                ['id' => $mandnat->getId()]
+            ) : $this->generateUrl('app_mandnat_new'),
+        ]);
     }
 }

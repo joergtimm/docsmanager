@@ -11,6 +11,7 @@
                 {% set common_classes = "border block w-full p-2.5 rounded-lg" %}
                 {% set light_mode_classes = "bg-gray-50 border-gray-300 text-gray-900 focus:ring-primary-500 focus:border-primary-500" %}
                 {% set dark_mode_classes = "dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %}
+                <h1 class="text-4xl m-3 p-2">Mandanten</h1>
                 <form class="flex items-center" data-controller="autosubmit">
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative w-full">
@@ -35,13 +36,16 @@
                 </form>
             </div>
             <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
-                <button type="button" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                    <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
-                    </svg>
-                    Add Mandant
-                </button>
-                {{ include('_modaL.html.twig') }}
+                <twig:Button
+                        tag="a"
+                        href="{{ path('app_mandnat_new') }}"
+                        data-turbo-frame="modal"
+                        class="flex items-center space-x-1 font-bold"
+                >
+                    <span>Mandant neu</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M9 12h6" /><path d="M12 9v6" /></svg>
+                </twig:Button>
+
                 <div class="flex items-center w-full space-x-3 md:w-auto">
                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
                         <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -90,7 +94,7 @@
     </div>
     <div class="border-2 border-solid rounded-lg border-gray-100 dark:border-gray-600 h-full mb-4 p-3">
         {% block mandant_list_frame %}
-            <turbo-frame id="mandants" data-turbo-action="advance">
+            <turbo-frame id="mandant-list" data-turbo-action="advance">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -123,31 +127,32 @@
                                     </a>
                                 </div>
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                <div class="flex items-center">
+                                    <a href="{{ path('app_mandnat_index', {
+                                        ...app.request.query.all(),
+                                        sort: 'custom_nr',
+                                        sortDirection: sort == 'custom_nr' and sortDirection == 'asc' ? 'desc' : 'asc',
+                                    }) }}">
+                                        customNr {{ _self.sortArrow('custom_nr', sort, sortDirection) }}
+                                    </a>
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <div class="flex items-center">
+                                    <a href="{{ path('app_mandnat_index', {
+                                        ...app.request.query.all(),
+                                        sort: 'status',
+                                        sortDirection: sort == 'status' and sortDirection == 'asc' ? 'desc' : 'asc',
+                                    }) }}">
+                                        Status {{ _self.sortArrow('status', sort, sortDirection) }}
+                                    </a>
+                                </div>
+                            </th>
                         </thead>
                         <tbody>
                         {% for item in pages %}
-                            <tr id="mandant-{{ item.id }}" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-table-search-{{ loop.index }}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-table-search-{{ loop.index }}" class="sr-only">checkbox</label>
-                                    </div>
-                                </td>
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <p class="mb-0 font-semibold leading-tight text-xs">Deutschland</p>
-                                    <p class="mb-0 leading-tight text-xs text-slate-400">Berlin</p>
-                                </th>
-                                <td class="px-6 py-4">
-                                    <p class="mb-0 font-semibold leading-tight text-xs">{{ item.name }}</p>
-                                    <p class="mb-0 leading-tight text-xs text-slate-400">{{ item.conId }}</p>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="bg-gradient-to-tl from-green-600 to-lime-400 px-1 text-xs rounded-1.8 py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Online</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <a href="{{ path('app_mandnat_edit', {id: item.id}) }}" target="_self" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                </td>
-                            </tr>
+                           {{ include('mandnat/_row.html.twig') }}
                         {% endfor %}
                         </tbody>
                     </table>
