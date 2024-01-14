@@ -35,35 +35,38 @@
         <div class=" min-h-[50px] w-full overflow-x-scroll rounded-lg  lg:overflow-visible">
             <div class="flex items-center -space-x-4">
                 {% for videoActor in item.videoActors %}
-                <div
-                        data-controller="popover"
-                        data-action="mouseenter->popover#show mouseleave->popover#hide"
-                        class="relative"
-                >
-                    <img
+                    <div
+                            data-controller="popover"
+                            data-action="mouseenter->popover#show mouseleave->popover#hide"
+                            class="relative"
+                    >
+                        <img
                         alt="{{ videoActor.actor.id }}-{{ videoActor.actor.name }}"
                         src="{{ asset('img/'~videoActor.actor.profilepic) }}"
                         class="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
-                    />
-                    <template data-popover-target="content">
-                        <div
-                                data-popover-target="card"
-                                class="max-w-sm rounded shadow-lg bg-white absolute left-0 z-50"
-                                style="bottom: 2rem; width: max-content;"
-                        >
-                            <turbo-frame loading="lazy" id="actor-pop-card-{{ videoActor.actor.id }}" target="_top" src="{{ path('app_actor_show_popcard', {
-                                'id': videoActor.actor.id,
-                            }) }}">
-                                <div class="p-10">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="animate-spin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M12 3a9 9 0 1 0 9 9"></path>
-                                    </svg>
-                                </div>
-                            </turbo-frame>
-                        </div>
-                    </template>
-                </div>
+                        />
+                        <template data-popover-target="content">
+                            <div
+                                    data-popover-target="card"
+                                    class="max-w-sm rounded shadow-lg bg-white absolute left-0 z-50"
+                                    style="bottom: 2rem; width: max-content;"
+                            >
+                                <turbo-frame loading="lazy" id="actor-pop-card-{{ videoActor.actor.id }}" target="_top"
+                                             src="{{ path('app_actor_show_popcard', {
+                                                 'id': videoActor.actor.id,
+                                             }) }}">
+                                    <div class="p-10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="animate-spin" width="24"
+                                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M12 3a9 9 0 1 0 9 9"></path>
+                                        </svg>
+                                    </div>
+                                </turbo-frame>
+                            </div>
+                        </template>
+                    </div>
 
                 {% endfor %}
             </div>

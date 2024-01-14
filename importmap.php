@@ -127,4 +127,7 @@ return [
     'stimulus-checkbox-select-all' => [
         'version' => '5.3.0',
     ],
+    'chart.js/auto' => [
+        'version' => '3.9.1',
+    ],
 ];

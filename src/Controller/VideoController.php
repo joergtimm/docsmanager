@@ -69,7 +69,7 @@ class VideoController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $video = new Video();
-        $video->setCreateAt(new \DateTimeImmutable());
+        $video->setCreateAt(new DateTimeImmutable());
         $form = $this->createVideoForm($video);
         $form->handleRequest($request);
 
@@ -77,8 +77,8 @@ class VideoController extends AbstractController
 
             /** @var Video $video */
             $video = $form->getData();
-            $video->setCreateAt(new \DateTimeImmutable());
-            $video->setUpdateAt(new \DateTimeImmutable());
+            $video->setCreateAt(new DateTimeImmutable());
+            $video->setUpdateAt(new DateTimeImmutable());
             $video->setVideoKey(Uuid::v1());
             $entityManager->persist($video);
             $entityManager->flush();

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ParticipantRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
@@ -22,7 +23,7 @@ class Participant
     private ?string $firstName = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $bornAt = null;
+    private ?DateTimeImmutable $bornAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $birthName = null;
@@ -34,10 +35,10 @@ class Participant
     private ?string $idNumber = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createAt = null;
+    private ?DateTimeImmutable $createAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updateAt = null;
+    private ?DateTimeImmutable $updateAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
@@ -76,12 +77,12 @@ class Participant
         return $this;
     }
 
-    public function getBornAt(): ?\DateTimeImmutable
+    public function getBornAt(): ?DateTimeImmutable
     {
         return $this->bornAt;
     }
 
-    public function setBornAt(\DateTimeImmutable $bornAt): static
+    public function setBornAt(DateTimeImmutable $bornAt): static
     {
         $this->bornAt = $bornAt;
 
@@ -124,24 +125,24 @@ class Participant
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreateAt(): ?DateTimeImmutable
     {
         return $this->createAt;
     }
 
-    public function setCreateAt(\DateTimeImmutable $createAt): static
+    public function setCreateAt(DateTimeImmutable $createAt): static
     {
         $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?DateTimeImmutable
     {
         return $this->updateAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): static
+    public function setUpdateAt(DateTimeImmutable $updateAt): static
     {
         $this->updateAt = $updateAt;
 

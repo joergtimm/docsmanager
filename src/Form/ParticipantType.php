@@ -24,9 +24,8 @@ class ParticipantType extends AbstractType
             ->add('updateAt')
             ->add('video', EntityType::class, [
                 'class' => Video::class,
-'choice_label' => 'id',
-            ])
-        ;
+                'choice_label' => 'id',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

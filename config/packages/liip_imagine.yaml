@@ -43,11 +43,11 @@ liip_imagine:
                 scale:
                     dim: [ 380, 480 ]
         video_card_thumbnail:
-            filters:
-                thumbnail:
-                    size: [ 800, 450 ]
-                    mode: outbound
-                    allow_upscale: true
+          filters:
+            thumbnail:
+              size: [ 800, 450 ]
+              mode: outbound
+              allow_upscale: true
 
         squared_thumbnail_md_ob:
             filters:

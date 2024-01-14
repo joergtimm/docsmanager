@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Actor;
 use App\Repository\ActorRepository;
+use DateTimeImmutable;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 
@@ -45,7 +46,7 @@ final class ActorFactory extends ModelFactory
     {
         return [
             'name' => self::faker()->name('female'),
-            'bornAt' => \DateTimeImmutable::createFromMutable(
+            'bornAt' => DateTimeImmutable::createFromMutable(
                 self::faker()->dateTimeBetween('-40 years', '-18 years')
             ),
             'gender' => self::faker()->randomElement(['female', 'male', 'diverse']),

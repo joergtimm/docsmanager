@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\DataView;
 use App\Form\DataViewType;
 use App\Repository\DataViewRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,18 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/_data/view')]
 class DataViewController extends AbstractController
 {
+    #[Route('/_get', name: 'app_data_view_show', methods: ['GET'])]
+    public function getViewParams(
+        DataViewRepository $dataViewRepository,
+        #[MapQueryParameter] string $type = 'home',
+    ): Response {
+        $dataView = $dataViewRepository->findOneBy(['user' => $this->getUser(), 'type' => $type]);
+        if (!$dataView) {
+            $dataView = $this->new();
+        }
+        return $dataView;
+    }
+
     #[Route('/new', name: 'app_data_view_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
@@ -25,7 +38,7 @@ class DataViewController extends AbstractController
     ): DataView {
         $dataView = new DataView();
 
-        $dataView->setUpdateAt(new \DateTimeImmutable())
+        $dataView->setUpdateAt(new DateTimeImmutable())
             ->setUser($this->getUser())
             ->setTitle($title)
             ->setGridlist($gridlist)
@@ -35,18 +48,6 @@ class DataViewController extends AbstractController
         $em->persist($dataView);
         $em->flush();
 
-        return $dataView;
-    }
-
-    #[Route('/_get', name: 'app_data_view_show', methods: ['GET'])]
-    public function getViewParams(
-        DataViewRepository $dataViewRepository,
-        #[MapQueryParameter] string $type = 'home',
-    ): Response {
-        $dataView = $dataViewRepository->findOneBy(['user' => $this->getUser(), 'type' => $type ]);
-        if (!$dataView) {
-                $dataView = $this->new();
-        }
         return $dataView;
     }
 

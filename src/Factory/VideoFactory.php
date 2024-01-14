@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Video;
 use App\Repository\VideoRepository;
+use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -56,10 +57,10 @@ final class VideoFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'createAt' => \DateTimeImmutable::createFromMutable(
+            'createAt' => DateTimeImmutable::createFromMutable(
                 self::faker()->dateTimeBetween('-2 years', '-10 days')
             ),
-            'updateAt' => \DateTimeImmutable::createFromMutable(
+            'updateAt' => DateTimeImmutable::createFromMutable(
                 self::faker()->dateTimeBetween('-9 days', '-1 days')
             ),
             'isverrifyted' => self::faker()->boolean(),

@@ -15,19 +15,6 @@ class ParticipantControllerTest extends WebTestCase
     private EntityRepository $repository;
     private string $path = '/participant/';
 
-    protected function setUp(): void
-    {
-        $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->repository = $this->manager->getRepository(Participant::class);
-
-        foreach ($this->repository->findAll() as $object) {
-            $this->manager->remove($object);
-        }
-
-        $this->manager->flush();
-    }
-
     public function testIndex(): void
     {
         $crawler = $this->client->request('GET', $this->path);
@@ -156,5 +143,18 @@ class ParticipantControllerTest extends WebTestCase
 
         self::assertResponseRedirects('/participant/');
         self::assertSame(0, $this->repository->count([]));
+    }
+
+    protected function setUp(): void
+    {
+        $this->client = static::createClient();
+        $this->manager = static::getContainer()->get('doctrine')->getManager();
+        $this->repository = $this->manager->getRepository(Participant::class);
+
+        foreach ($this->repository->findAll() as $object) {
+            $this->manager->remove($object);
+        }
+
+        $this->manager->flush();
     }
 }

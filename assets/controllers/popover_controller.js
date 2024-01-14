@@ -1,16 +1,15 @@
-import Popover from 'stimulus-popover';
+import Popover from 'stimulus-popover'
 
 export default class extends Popover {
-    async show(t)
-    {
+    async show (t) {
         if (this.hasCardTarget) {
-            this.cardTarget.classList.remove('hidden');
-            return;
+            this.cardTarget.classList.remove('hidden')
+            return
         }
-        super.show(t);
+        super.show(t)
     }
-    hide()
-    {
-        this.hasCardTarget && this.cardTarget.classList.add('hidden');
+
+    hide () {
+        this.hasCardTarget && this.cardTarget.classList.add('hidden')
     }
 }

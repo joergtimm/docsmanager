@@ -15,19 +15,6 @@ class DataViewControllerTest extends WebTestCase
     private EntityRepository $repository;
     private string $path = '/data/view/';
 
-    protected function setUp(): void
-    {
-        $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->repository = $this->manager->getRepository(DataView::class);
-
-        foreach ($this->repository->findAll() as $object) {
-            $this->manager->remove($object);
-        }
-
-        $this->manager->flush();
-    }
-
     public function testIndex(): void
     {
         $crawler = $this->client->request('GET', $this->path);
@@ -144,5 +131,18 @@ class DataViewControllerTest extends WebTestCase
 
         self::assertResponseRedirects('/data/view/');
         self::assertSame(0, $this->repository->count([]));
+    }
+
+    protected function setUp(): void
+    {
+        $this->client = static::createClient();
+        $this->manager = static::getContainer()->get('doctrine')->getManager();
+        $this->repository = $this->manager->getRepository(DataView::class);
+
+        foreach ($this->repository->findAll() as $object) {
+            $this->manager->remove($object);
+        }
+
+        $this->manager->flush();
     }
 }
