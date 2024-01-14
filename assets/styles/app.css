@@ -98,8 +98,21 @@ input{
     z-index: 1;
 }
 
-.active {background: white; border-radius: 9999px; color: #63b3ed;}
+.active {
+    background: white;
+    border-radius: 9999px;
+    color: #63b3ed;
+}
 
 [x-cloak] {
     display: none;
+}
+
+[data-popover-target='card']::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    border-width: 0.75rem;
+    border-color: #ffffff transparent transparent transparent;
 }

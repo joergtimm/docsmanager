@@ -1,0 +1,14 @@
+<turbo-frame id="actor-pop-card-{{ actor.id }}">
+    <div class="px-2 py-4 flex">
+            <img src="{{ asset('img/'~actor.profilepic) }}"
+                 class="mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                 alt="actor-{{ actor.id }}"/>
+
+        <div>
+            <div class="flex flex-col">
+                <h4 class="mb-0 leading-normal text-sm">{{ actor.name }}</h4>
+                <p class="mb-0 leading-tight text-xs text-slate-400">{{ actor.gender }}</p>
+            </div>
+        </div>
+    </div>
+</turbo-frame>

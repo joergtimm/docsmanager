@@ -124,4 +124,7 @@ return [
     'jquery' => [
         'version' => '3.7.1',
     ],
+    'stimulus-checkbox-select-all' => [
+        'version' => '5.3.0',
+    ],
 ];

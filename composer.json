@@ -14,11 +14,11 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
         "gedmo/doctrine-extensions": "^3.14",
-        "knplabs/knp-snappy-bundle": "^1.10",
+      "knplabs/knp-snappy-bundle": "^1.10",
         "knplabs/knp-time-bundle": "^2.2",
         "league/flysystem-bundle": "^3.3",
         "liip/imagine-bundle": "^2.12",
-        "monolog/monolog": "^3.5",
+      "monolog/monolog": "^3.5",
         "nelmio/cors-bundle": "^2.4",
         "nelmio/security-bundle": "^3.1",
         "oneup/flysystem-bundle": "^4.11",
@@ -62,10 +62,10 @@
         "symfony/validator": "7.0.*",
         "symfony/web-link": "7.0.*",
         "symfony/yaml": "7.0.*",
-        "symfonycasts/dynamic-forms": "^0.1.1",
+      "symfonycasts/dynamic-forms": "^0.1.1",
         "symfonycasts/sass-bundle": "^0.3.0",
         "symfonycasts/tailwind-bundle": "^0.2.1",
-        "symfonycasts/verify-email-bundle": "^1.16",
+      "symfonycasts/verify-email-bundle": "^1.16",
         "tales-from-a-dev/flowbite-bundle": "^0.3.0",
         "twig/extra-bundle": "^3.8",
         "twig/twig": "^2.12|^3.0"
@@ -101,8 +101,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+          "assets:install %PUBLIC_DIR%": "symfony-cmd",
+          "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

@@ -64,9 +64,16 @@ class Video
     #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoActors::class)]
     private Collection $videoActors;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumb = null;
+
+    #[ORM\OneToMany(mappedBy: 'video', targetEntity: Participant::class)]
+    private Collection $participants;
+
     public function __construct()
     {
         $this->videoActors = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,4 +229,45 @@ class Video
         return $this;
     }
 
+    public function getThumb(): ?string
+    {
+        return $this->thumb;
+    }
+
+    public function setThumb(?string $thumb): static
+    {
+        $this->thumb = $thumb;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participant>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): static
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
+            $participant->setVideo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): static
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getVideo() === $this) {
+                $participant->setVideo(null);
+            }
+        }
+
+        return $this;
+    }
 }

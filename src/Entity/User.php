@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,6 +34,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: DataView::class)]
+    private Collection $dataViews;
+
+    public function __construct()
+    {
+        $this->dataViews = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,6 +133,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DataView>
+     */
+    public function getDataViews(): Collection
+    {
+        return $this->dataViews;
+    }
+
+    public function addDataView(DataView $dataView): static
+    {
+        if (!$this->dataViews->contains($dataView)) {
+            $this->dataViews->add($dataView);
+            $dataView->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDataView(DataView $dataView): static
+    {
+        if ($this->dataViews->removeElement($dataView)) {
+            // set the owning side to null (unless already changed)
+            if ($dataView->getUser() === $this) {
+                $dataView->setUser(null);
+            }
+        }
 
         return $this;
     }

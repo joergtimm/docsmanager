@@ -60,7 +60,8 @@ class VideoController extends AbstractController
         return $this->render('video/index.html.twig', [
             'pager' => $pager,
             'sortDirection' => $sortDirection,
-            'sort' => $sort
+            'sort' => $sort,
+            'viewMode' => $viewMode
         ]);
     }
 

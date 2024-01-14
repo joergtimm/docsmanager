@@ -103,6 +103,15 @@ class ActorController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/popcard', name: 'app_actor_show_popcard', methods: ['GET'])]
+    public function showPopCard(Actor $actor): Response
+    {
+
+        return $this->render('actor/_popcard.html.twig', [
+            'actor' => $actor,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_actor_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Actor $actor, EntityManagerInterface $entityManager): Response
     {

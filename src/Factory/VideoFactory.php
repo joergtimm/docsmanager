@@ -68,6 +68,23 @@ final class VideoFactory extends ModelFactory
             'ish264' => self::faker()->boolean(),
             'ish265' => self::faker()->boolean(),
             'videoKey' => Uuid::v1(),
+            'thumb' => self::faker()->randomElement([
+                'img001.jpg',
+                'img002.jpg',
+                'img003.jpg',
+                'img004.jpg',
+                'img005.jpg',
+                'img006.jpg',
+                'img007.jpg',
+                'img008.jpg',
+                'img009.jpg',
+            ]),
+            'metadata' => [
+                'bitrate' => '1500',
+                'codec' => 'h264',
+                'frame_rate' => '60',
+                'duration' => '540'
+            ]
 
 
         ];
