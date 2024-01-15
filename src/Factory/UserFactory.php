@@ -43,13 +43,12 @@ final class UserFactory extends ModelFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
      *
-     * @todo add your default values here
      */
     protected function getDefaults(): array
     {
         return [
             'email' => self::faker()->email(),
-            'password' => self::faker()->password(8, 12),
+            'password' => '+c123456',
             'roles' => ["ROLE_USER"],
             'username' => self::faker()->userName()
         ];

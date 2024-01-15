@@ -44,9 +44,6 @@ class Participant
     #[ORM\JoinColumn(nullable: false)]
     private ?Video $video = null;
 
-    #[ORM\OneToOne(inversedBy: 'participant', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Client $owner = null;
 
     public function getId(): ?int
     {
@@ -161,15 +158,4 @@ class Participant
         return $this;
     }
 
-    public function getOwner(): ?Client
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(Client $owner): static
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
 }

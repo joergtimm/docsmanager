@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f8da384e2793c8c30037d3aedf3a857",
+    "content-hash": "fed937ac9edae44340806ce62118b139",
     "packages": [
         {
             "name": "api-platform/core",
@@ -9796,16 +9796,16 @@
         },
         {
             "name": "symfonycasts/sass-bundle",
-            "version": "v0.3.0",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/sass-bundle.git",
-                "reference": "8acdac8241e400f7d44b1b067697a3c8dd849dd5"
+                "reference": "50bc699fab4d2999ecfc681d0bf73c9d529eb63e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/sass-bundle/zipball/8acdac8241e400f7d44b1b067697a3c8dd849dd5",
-                "reference": "8acdac8241e400f7d44b1b067697a3c8dd849dd5",
+                "url": "https://api.github.com/repos/SymfonyCasts/sass-bundle/zipball/50bc699fab4d2999ecfc681d0bf73c9d529eb63e",
+                "reference": "50bc699fab4d2999ecfc681d0bf73c9d529eb63e",
                 "shasum": ""
             },
             "require": {
@@ -9845,9 +9845,9 @@
             ],
             "support": {
                 "issues": "https://github.com/SymfonyCasts/sass-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.3.0"
+                "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.5.0"
             },
-            "time": "2023-11-22T17:37:40+00:00"
+            "time": "2024-01-05T17:18:25+00:00"
         },
         {
             "name": "symfonycasts/tailwind-bundle",

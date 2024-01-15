@@ -70,6 +70,10 @@ class Video
     #[ORM\OneToMany(mappedBy: 'video', targetEntity: Participant::class)]
     private Collection $participants;
 
+    #[ORM\ManyToOne(inversedBy: 'videos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $owner = null;
+
     public function __construct()
     {
         $this->videoActors = new ArrayCollection();
@@ -267,6 +271,18 @@ class Video
                 $participant->setVideo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?Client
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Client $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

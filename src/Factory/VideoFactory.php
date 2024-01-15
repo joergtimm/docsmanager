@@ -85,7 +85,8 @@ final class VideoFactory extends ModelFactory
                 'codec' => 'h264',
                 'frame_rate' => '60',
                 'duration' => '540'
-            ]
+            ],
+
 
 
         ];

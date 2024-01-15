@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -21,8 +23,17 @@ class Client
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $company = null;
 
-    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
-    private ?Participant $participant = null;
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Production::class)]
+    private Collection $productions;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Video::class)]
+    private Collection $videos;
+
+    public function __construct()
+    {
+        $this->productions = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,19 +64,64 @@ class Client
         return $this;
     }
 
-    public function getParticipant(): ?Participant
+
+
+    /**
+     * @return Collection<int, Production>
+     */
+    public function getProductions(): Collection
     {
-        return $this->participant;
+        return $this->productions;
     }
 
-    public function setParticipant(Participant $participant): static
+    public function addProduction(Production $production): static
     {
-        // set the owning side of the relation if necessary
-        if ($participant->getOwner() !== $this) {
-            $participant->setOwner($this);
+        if (!$this->productions->contains($production)) {
+            $this->productions->add($production);
+            $production->setOwner($this);
         }
 
-        $this->participant = $participant;
+        return $this;
+    }
+
+    public function removeProduction(Production $production): static
+    {
+        if ($this->productions->removeElement($production)) {
+            // set the owning side to null (unless already changed)
+            if ($production->getOwner() === $this) {
+                $production->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Video>
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): static
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos->add($video);
+            $video->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): static
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getOwner() === $this) {
+                $video->setOwner(null);
+            }
+        }
 
         return $this;
     }

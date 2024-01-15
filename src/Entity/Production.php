@@ -32,6 +32,12 @@ class Production
     #[ORM\ManyToOne(inversedBy: 'productions')]
     private ?Producer $producer = null;
 
+    #[ORM\ManyToOne(inversedBy: 'productions')]
+    private ?Client $owner = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title = null;
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();
@@ -116,6 +122,30 @@ class Production
     public function setProducer(?Producer $producer): static
     {
         $this->producer = $producer;
+
+        return $this;
+    }
+
+    public function getOwner(): ?Client
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Client $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): static
+    {
+        $this->title = $title;
 
         return $this;
     }
