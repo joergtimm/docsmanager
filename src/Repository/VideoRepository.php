@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Client;
 use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -22,13 +23,18 @@ class VideoRepository extends ServiceEntityRepository
         parent::__construct($registry, Video::class);
     }
 
-    public function findBySearch(?string $query, ?string $sort = null, string $direction = 'desc'): QueryBuilder
+    public function findBySearch(?Client $client, ?string $query, ?string $sort = null, string $direction = 'desc'): QueryBuilder
     {
         $qb = $this->createQueryBuilder('v');
 
         $qb->leftJoin('v.videoActors', 'va')
                 ->leftJoin('va.actor', 'a')
                 ->addSelect('va', 'a');
+
+        if ($client) {
+            $qb->andWhere('v.owner = :client')
+                ->setParameter('client', $client);
+        }
 
         if ($query) {
             $qb->andWhere('v.title LIKE :query')

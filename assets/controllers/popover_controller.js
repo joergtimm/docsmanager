@@ -1,7 +1,8 @@
 import Popover from 'stimulus-popover'
 
 export default class extends Popover {
-    async show (t) {
+    async show(t)
+    {
         if (this.hasCardTarget) {
             this.cardTarget.classList.remove('hidden')
             return
@@ -9,7 +10,8 @@ export default class extends Popover {
         super.show(t)
     }
 
-    hide () {
+    hide()
+    {
         this.hasCardTarget && this.cardTarget.classList.add('hidden')
     }
 }

@@ -38,6 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DataView::class)]
     private Collection $dataViews;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserSetting $userSetting = null;
+
     public function __construct()
     {
         $this->dataViews = new ArrayCollection();
@@ -163,6 +166,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $dataView->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserSetting(): ?UserSetting
+    {
+        return $this->userSetting;
+    }
+
+    public function setUserSetting(UserSetting $userSetting): static
+    {
+        // set the owning side of the relation if necessary
+        if ($userSetting->getUser() !== $this) {
+            $userSetting->setUser($this);
+        }
+
+        $this->userSetting = $userSetting;
 
         return $this;
     }

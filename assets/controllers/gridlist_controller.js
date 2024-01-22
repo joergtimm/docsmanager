@@ -5,7 +5,7 @@ import { Controller } from '@hotwired/stimulus'
  * Manages the view mode and local storage for the grid and list buttons.
  */
 export default class extends Controller {
-  static targets = ['gridbtn', 'listbtn']
+    static targets = ['gridbtn', 'listbtn']
     static values = {
         viewMode: String,
         listItems: Number,
@@ -20,15 +20,15 @@ export default class extends Controller {
     initial()
     {
         if (!('viewMode' in localStorage)) {
-          localStorage.setItem('viewMode', this.viewModeValue)
+            localStorage.setItem('viewMode', this.viewModeValue)
         }
         if (!('listItems' in localStorage)) {
-          localStorage.setItem('listItems', this.listItemsValue)
+            localStorage.setItem('listItems', this.listItemsValue)
         }
         if (!('gridItems' in localStorage)) {
-          localStorage.setItem('gridItems', this.gridItemsValue)
+            localStorage.setItem('gridItems', this.gridItemsValue)
         }
-      this.connect()
+        this.connect()
     }
 
   /**
@@ -38,17 +38,17 @@ export default class extends Controller {
    */
     connect()
     {
-      this.viewModeValue = localStorage.getItem('viewMode')
-      this.listItemsValue = localStorage.getItem('listItems')
-      this.gridItemsValue = localStorage.getItem('gridItems')
+        this.viewModeValue = localStorage.getItem('viewMode')
+        this.listItemsValue = localStorage.getItem('listItems')
+        this.gridItemsValue = localStorage.getItem('gridItems')
 
         if (this.viewModeValue === 'grid') {
-          this.gridbtnTarget.classList.remove('active')
-          this.listbtnTarget.classList.add('active')
+            this.gridbtnTarget.classList.remove('active')
+            this.listbtnTarget.classList.add('active')
         }
         if (this.viewModeValue === 'list') {
-          this.gridbtnTarget.classList.add('active')
-          this.listbtnTarget.classList.remove('active')
+            this.gridbtnTarget.classList.add('active')
+            this.listbtnTarget.classList.remove('active')
         }
     }
 
@@ -63,15 +63,15 @@ export default class extends Controller {
     toggle()
     {
         if (this.viewModeValue === 'list') {
-          this.viewModeValue = 'grid'
-          this.gridbtnTarget.classList.add('active')
-          this.listbtnTarget.classList.remove('active')
-          localStorage.setItem('viewMode', 'grid')
+            this.viewModeValue = 'grid'
+            this.gridbtnTarget.classList.add('active')
+            this.listbtnTarget.classList.remove('active')
+            localStorage.setItem('viewMode', 'grid')
         } else {
-          this.viewModeValue = 'list'
-          this.gridbtnTarget.classList.remove('active')
-          this.listbtnTarget.classList.add('active')
-          localStorage.setItem('viewMode', 'list')
+            this.viewModeValue = 'list'
+            this.gridbtnTarget.classList.remove('active')
+            this.listbtnTarget.classList.add('active')
+            localStorage.setItem('viewMode', 'list')
         }
     }
 }

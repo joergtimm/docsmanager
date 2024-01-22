@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
+use App\Service\DataViewManager;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
@@ -23,6 +25,7 @@ class VideoController extends AbstractController
     #[Route('/', name: 'app_video_index', methods: ['GET'])]
     public function index(
         VideoRepository $videoRepository,
+        DataViewManager $dataViewManager,
         #[MapQueryParameter] int $page = 1,
         #[MapQueryParameter] string $query = null,
         #[MapQueryParameter] string $sort = 'title',
@@ -51,8 +54,10 @@ class VideoController extends AbstractController
             $items = $listItems;
         }
 
+        $client = $dataViewManager->getClient($this->getUser());
+
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
-            new QueryAdapter($videoRepository->findBySearch($query, $sort, $sortDirection)),
+            new QueryAdapter($videoRepository->findBySearch($client, $query, $sort, $sortDirection)),
             $page,
             $items
         );
@@ -159,5 +164,11 @@ class VideoController extends AbstractController
         return $this->createForm(VideoType::class, $video, [
             'action' => $video->getId() ? $this->generateUrl('app_video_edit', ['id' => $video->getId()]) : $this->generateUrl('app_video_new'),
         ]);
+    }
+
+    #[Route('/play/{id}', name: 'app_video_play')]
+    public function play(Video $video)
+    {
+
     }
 }

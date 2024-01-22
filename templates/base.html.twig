@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html lang="{{ app.request.locale }}" class="">
     <head>
         <meta charset="UTF-8">
         {% block header %}
@@ -77,9 +77,9 @@
             </svg>
         {% endif %}
     {% endmacro %}
-    <body class="bg-white dark:bg-black" data-controller="dark">
+    <body class="bg-white dark:bg-gray-800 h-full" data-controller="dark">
         {% block body %}
-            <div class="antialiased bg-gray-50 dark:bg-gray-900">
+            <div class="antialiased bg-gray-50 dark:bg-gray-900 h-full">
                 <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
                     <div class="flex flex-wrap justify-between items-center">
                         <div class="flex justify-start items-center">
@@ -125,36 +125,6 @@
                                 />
                                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Legal Manager</span>
                             </a>
-                            {#
-                            <form action="#" method="GET" class="hidden md:block md:pl-2">
-                                <label for="topbar-search" class="sr-only">Search</label>
-                                <div class="relative md:w-64 md:w-96">
-                                    <div
-                                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                                    >
-                                        <svg
-                                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                    fill-rule="evenodd"
-                                                    clip-rule="evenodd"
-                                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                            ></path>
-                                        </svg>
-                                    </div>
-                                    <input
-                                            type="text"
-                                            name="email"
-                                            id="topbar-search"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Search"
-                                    />
-                                </div>
-                            </form>
-                            #}
                         </div>
                         <div class="flex items-center lg:order-2">
                             <button
@@ -837,29 +807,29 @@
                     {{ include('_sidebar.html.twig') }}
                 {% endblock %}
 
-                <main class="p-4 md:ml-64 h-auto pt-20">
+                <main class="p-4 md:ml-64 h-[calc(100%-1rem)] pt-20">
                     {% block main_content %}
                         <turbo-frame id="maincontent">
                             <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">
-                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8">
-                                    <dt class="text-sm font-medium leading-6 text-gray-500">Revenue</dt>
-                                    <dd class="text-xs font-medium text-gray-700">+4.75%</dd>
-                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">$405,091.00</dd>
+                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+                                    <dt class="text-sm font-medium leading-6 text-gray-500 dark:text-white">Revenue</dt>
+                                    <dd class="text-xs font-medium text-gray-700 dark:text-white">+4.75%</dd>
+                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 dark:text-white">$405,091.00</dd>
                                 </div>
-                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8">
-                                    <dt class="text-sm font-medium leading-6 text-gray-500">Overdue invoices</dt>
+                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+                                    <dt class="text-sm font-medium leading-6 text-gray-500 dark:text-white">Overdue invoices</dt>
                                     <dd class="text-xs font-medium text-rose-600">+54.02%</dd>
-                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">$12,787.00</dd>
+                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 dark:text-white">$12,787.00</dd>
                                 </div>
-                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8">
-                                    <dt class="text-sm font-medium leading-6 text-gray-500">Outstanding invoices</dt>
-                                    <dd class="text-xs font-medium text-gray-700">-1.39%</dd>
-                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">$245,988.00</dd>
+                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+                                    <dt class="text-sm font-medium leading-6 text-gray-500 dark:text-white">Outstanding invoices</dt>
+                                    <dd class="text-xs font-medium text-gray-700 dark:text-white">-1.39%</dd>
+                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 dark:text-white">$245,988.00</dd>
                                 </div>
-                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white px-4 py-10 sm:px-6 xl:px-8">
-                                    <dt class="text-sm font-medium leading-6 text-gray-500">Expenses</dt>
+                                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+                                    <dt class="text-sm font-medium leading-6 text-gray-500 dark:text-white">Expenses</dt>
                                     <dd class="text-xs font-medium text-rose-600">+10.18%</dd>
-                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">$30,156.00</dd>
+                                    <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 dark:text-white">$30,156.00</dd>
                                 </div>
                             </dl>
 
@@ -899,16 +869,16 @@
 
                     <div class="grid grid-cols-2 gap-4 mb-4 mt-3">
                         <div
-                                class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-100 md:h-100"
+                                class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-100 md:h-100 dark:text-white dark:bg-gray-800"
                         >
                             <div class="flex flex-col justify-center items-center">
                                 <div
-                                        class="relative flex w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none"
+                                        class="relative flex w-full flex-col rounded-[10px] border-[1px] border-gray-200 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:bg-gray-800 dark:text-white dark:shadow-none"
                                 >
                                     <div
-                                            class="flex h-fit w-full items-center justify-between rounded-t-2xl bg-white px-4 pb-[20px] pt-4 shadow-2xl shadow-gray-100 dark:!bg-navy-700 dark:shadow-none"
+                                            class="flex h-fit w-full items-center justify-between rounded-t-2xl bg-white px-4 pb-[20px] pt-4 shadow-2xl shadow-gray-100 dark:bg-gray-700 dark:shadow-none"
                                     >
-                                        <h4 class="text-lg font-bold text-navy-700 dark:text-white">
+                                        <h4 class="text-lg font-bold text-navy-700 dark:text-white dark:bg-gray-700">
                                             Top Creators
                                         </h4>
                                         <button
@@ -1334,7 +1304,16 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div
                                 class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
-                        ></div>
+                        >
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-blue-500 to-violet-500 align-baseline font-bold uppercase leading-none text-white">chip blue</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-slate-600 to-slate-300 align-baseline font-bold uppercase leading-none text-white">chip slate</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-blue-700 to-cyan-500 align-baseline font-bold uppercase leading-none text-white">chip cyan</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-emerald-500 to-teal-400 align-baseline font-bold uppercase leading-none text-white">chip emerald</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-red-600 to-orange-600 align-baseline font-bold uppercase leading-none text-white">chip red</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-orange-500 to-yellow-500 align-baseline font-bold uppercase leading-none text-white">chip orange</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-gray-400 to-gray-100 align-baseline font-bold uppercase leading-none text-slate-500">chip gray</span>
+                            <span class="py-1.4 px-2.5 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl from-zinc-800 to-zinc-700 align-baseline font-bold uppercase leading-none text-white">chip dark</span>
+                        </div>
                         <div
                                 class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
                         ></div>

@@ -1,0 +1,9 @@
+{% block client_form %}
+<turbo-frame id="clientfilter">
+    {{ form_start(form, { 'attr': {'data-controller': 'autosubmit'} }) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+</turbo-frame>
+{% endblock %}
+
+

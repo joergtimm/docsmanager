@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserSetting index{% endblock %}
+
+{% block body %}
+    <h1>UserSetting index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IsClientFilter</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_setting in user_settings %}
+            <tr>
+                <td>{{ user_setting.id }}</td>
+                <td>{{ user_setting.isClientFilter ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_user_setting_show', {'id': user_setting.id}) }}">show</a>
+                    <a href="{{ path('app_user_setting_edit', {'id': user_setting.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_setting_new') }}">Create new</a>
+{% endblock %}

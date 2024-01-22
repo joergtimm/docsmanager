@@ -3,7 +3,7 @@ symfonycasts_sass:
 
   sass_options:
   # The output style for the compiled CSS files: expanded or compressed. Defaults to expanded.
-  style: expanded
+  # style: expanded
 
   # Emit a @charset or BOM for CSS with non-ASCII characters. Defaults to true in Dart Sass.
   # charset: true
@@ -15,7 +15,7 @@ symfonycasts_sass:
   # embed_sources:
 
   # Embed source map contents in CSS. Defaults to false.
-  embed_source_map:
+  # embed_source_map:
 
   # Don't print warnings. Defaults to false.
   # quiet:
