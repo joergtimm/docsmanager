@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\DocumentsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: DocumentsRepository::class)]
+#[Vich\Uploadable]
 class Documents
 {
     #[ORM\Id]
@@ -14,17 +17,11 @@ class Documents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $tokenId = null;
-
     #[ORM\Column(length: 50)]
     private ?string $type = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createAt = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $file = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isValid = null;
@@ -32,30 +29,36 @@ class Documents
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $myme = null;
+    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'imageName', size: 'imageSize')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $originalname = null;
+    private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $size = null;
+    private ?int $imageSize = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'pdfName', size: 'pdfSize')]
+    private ?File $pdfFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pdfName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $pdfSize = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $genFileName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mimeType = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTokenId(): ?int
-    {
-        return $this->tokenId;
-    }
-
-    public function setTokenId(int $tokenId): static
-    {
-        $this->tokenId = $tokenId;
-
-        return $this;
     }
 
     public function getType(): ?string
@@ -78,18 +81,6 @@ class Documents
     public function setCreateAt(\DateTimeImmutable $createAt): static
     {
         $this->createAt = $createAt;
-
-        return $this;
-    }
-
-    public function getFile(): ?string
-    {
-        return $this->file;
-    }
-
-    public function setFile(?string $file): static
-    {
-        $this->file = $file;
 
         return $this;
     }
@@ -118,38 +109,125 @@ class Documents
         return $this;
     }
 
-    public function getMyme(): ?string
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->myme;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
-    public function setMyme(?string $myme): static
+    public function getImageFile(): ?File
     {
-        $this->myme = $myme;
+        return $this->imageFile;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): static
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }
 
-    public function getOriginalname(): ?string
+    public function getImageSize(): ?int
     {
-        return $this->originalname;
+        return $this->imageSize;
     }
 
-    public function setOriginalname(?string $originalname): static
+    public function setImageSize(?int $imageSize): static
     {
-        $this->originalname = $originalname;
+        $this->imageSize = $imageSize;
 
         return $this;
     }
 
-    public function getSize(): ?int
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->size;
+        return $this->updatedAt;
     }
 
-    public function setSize(?int $size): static
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
-        $this->size = $size;
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPdfFile(): ?File
+    {
+        return $this->pdfFile;
+    }
+
+    public function setPdfFile(?File $pdfFile = null): void
+    {
+        $this->pdfFile = $pdfFile;
+
+        if (null !== $pdfFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getPdfName(): string
+    {
+        return $this->pdfName;
+    }
+
+    public function setPdfName(?string $pdfName): static
+    {
+        $this->pdfName = $pdfName;
+
+        return $this;
+    }
+
+    public function getPdfSize(): ?int
+    {
+        return $this->pdfSize;
+    }
+
+    public function setPdfSize(?int $pdfSize): static
+    {
+        $this->pdfSize = $pdfSize;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        $name = $this->imageName;
+
+        return $this->imageName;
+    }
+
+    public function getGenFileName(): ?string
+    {
+        return $this->genFileName;
+    }
+
+    public function setGenFileName(?string $genFileName): static
+    {
+        $this->genFileName = $genFileName;
+
+        return $this;
+    }
+
+    public function getMimeType(): ?string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(?string $mimeType): static
+    {
+        $this->mimeType = $mimeType;
 
         return $this;
     }

@@ -21,10 +21,10 @@
                                 { name: 'Employees-2', children: [] },
                                 { name: 'Human Resources-2', children: [] }
                             ]
-                        },
+                    },
                         { name: 'Human Resources', children: [] }
                     ]
-                },
+            },
                 { name: 'Employees ', children: [] }
             ]
         },
@@ -40,10 +40,10 @@
                                 { name: 'Employees', children: [] },
                                 { name: 'Human Resources', children: [] }
                             ]
-                        },
+                    },
                         { name: 'Human Resources', children: [] }
                     ]
-                }
+            }
             ]
         },
         { name: 'TECH3', children: [] },

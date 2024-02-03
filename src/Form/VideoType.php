@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
+use TalesFromADev\FlowbiteBundle\Form\Type\SwitchType;
 
 class VideoType extends AbstractType
 {
@@ -17,8 +18,10 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('createAt')
-            ->add('isverrifyted')
+            ->add('isverrifyted', SwitchType::class, [
+                'label' => 'verrify',
+                'required' => false,
+            ]);
 
         ;
     }

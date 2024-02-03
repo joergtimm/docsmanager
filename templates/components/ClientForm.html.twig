@@ -2,7 +2,7 @@
     {{ form_start(form) }}
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div
-                class="rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
+                class="rounded-lg border-gray-300 dark:border-gray-600"
         >
             {{ form_row(form.name) }}
             {{ form_row(form.conId) }}
@@ -10,12 +10,12 @@
             {{ form_row(form.status) }}
         </div>
         <div
-                class="rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
-        >,,
+                class="rounded-lg border-gray-300 dark:border-gray-600"
+        >
         </div>
     </div>
 
-    <div class="flex items-center space-x-4">
+    <div class="flex items-center space-x-4 h-72">
         <twig:Button
                 formvalidate
                 variant="success"

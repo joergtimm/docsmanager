@@ -13,6 +13,7 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
+        "dompdf/dompdf": "^2.0",
         "gedmo/doctrine-extensions": "^3.14",
         "knplabs/knp-snappy-bundle": "^1.10",
         "knplabs/knp-time-bundle": "^2.2",
@@ -69,7 +70,8 @@
         "symfonycasts/verify-email-bundle": "^1.16",
         "tales-from-a-dev/flowbite-bundle": "^0.3.0",
         "twig/extra-bundle": "^3.8",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^2.3"
     },
     "config": {
         "allow-plugins": {

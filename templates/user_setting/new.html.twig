@@ -1,11 +1,14 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}New UserSetting{% endblock %}
-
-{% block body %}
-    <h1>Create new UserSetting</h1>
-
-    {{ include('user_setting/_form.html.twig') }}
-
-    <a href="{{ path('app_user_setting_index') }}">back to list</a>
+{% block client_form %}
+    <turbo-frame id="clientfilter">
+        {{ include('user_setting/_form.html.twig') }}
+    </turbo-frame>
+{% endblock %}
+{% block user_stream_success %}
+    <turbo-stream action="update" targets="clientfilter">
+        <template>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </template>
+    </turbo-stream>
 {% endblock %}

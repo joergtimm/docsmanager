@@ -7,6 +7,8 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ApiResource]
@@ -23,6 +25,9 @@ class Client
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $company = null;
 
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $clientKey;
+
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Production::class)]
     private Collection $productions;
 
@@ -33,6 +38,7 @@ class Client
     {
         $this->productions = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->clientKey = Uuid::v1();
     }
 
     public function getId(): ?int
@@ -124,5 +130,15 @@ class Client
         }
 
         return $this;
+    }
+
+    public function getClientKey(): Uuid
+    {
+        return $this->clientKey;
+    }
+
+    public function setClientKey(Uuid $clientKey): void
+    {
+        $this->clientKey = $clientKey;
     }
 }

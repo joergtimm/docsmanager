@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
@@ -17,9 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/video')]
+#[Route('/admin/video')]
+#[IsGranted('ROLE_ADMIN')]
 class VideoController extends AbstractController
 {
     #[Route('/', name: 'app_video_index', methods: ['GET'])]
@@ -34,6 +35,7 @@ class VideoController extends AbstractController
         #[MapQueryParameter] int $listItems = 10,
         #[MapQueryParameter] int $gridItems = 12,
     ): Response {
+        $dataView = $dataViewManager->getClient($this->getUser());
         $validSorts = ['title', 'createAt'];
         $sort = in_array($sort, $validSorts) ? $sort : 'title';
 
@@ -71,8 +73,11 @@ class VideoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_video_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        DataViewManager $dataViewManager
+    ): Response {
         $video = new Video();
         $video->setCreateAt(new DateTimeImmutable());
         $form = $this->createVideoForm($video);
@@ -85,6 +90,9 @@ class VideoController extends AbstractController
             $video->setCreateAt(new DateTimeImmutable());
             $video->setUpdateAt(new DateTimeImmutable());
             $video->setVideoKey(Uuid::v1());
+            $client = $dataViewManager->getClient($this->getUser());
+            $video->setOwner($client);
+
             $entityManager->persist($video);
             $entityManager->flush();
             $this->addFlash('success', 'Video wurde angelegt');
@@ -93,7 +101,6 @@ class VideoController extends AbstractController
                 $stream = $this->renderBlockView('/video/new.html.twig', 'stream_success', [
                     'item' => $video
                 ]);
-
                 $this->addFlash('stream', $stream);
             }
 
@@ -169,6 +176,5 @@ class VideoController extends AbstractController
     #[Route('/play/{id}', name: 'app_video_play')]
     public function play(Video $video)
     {
-
     }
 }

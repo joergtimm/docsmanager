@@ -45,10 +45,12 @@ class UserSettingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UserSetting $userSetting */
+            $userSetting = $form->getData();
             $entityManager->flush();
 
             if ($request->headers->has('turbo-frame')) {
-                $stream = $this->renderBlockView('user_setting/_stream.html.twig', 'stream_success', [
+                $stream = $this->renderBlockView('user_setting/_stream.html.twig', 'user_stream_success', [
                     'user_setting' => $userSetting,
                     'form' => $form,
                 ]);
@@ -57,7 +59,7 @@ class UserSettingController extends AbstractController
             }
         }
 
-        return $this->render('user_setting/_form.html.twig', [
+        return $this->render('user_setting/new.html.twig', [
             'user_setting' => $userSetting,
             'form' => $form,
         ]);

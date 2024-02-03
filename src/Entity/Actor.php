@@ -31,9 +31,13 @@ class Actor
     #[ORM\OneToMany(mappedBy: 'actor', targetEntity: VideoActors::class)]
     private Collection $videoActors;
 
+    #[ORM\OneToMany(mappedBy: 'actor', targetEntity: VideoParticipiant::class)]
+    private Collection $videoParticipiants;
+
     public function __construct()
     {
         $this->videoActors = new ArrayCollection();
+        $this->videoParticipiants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +117,36 @@ class Actor
             // set the owning side to null (unless already changed)
             if ($videoActor->getActor() === $this) {
                 $videoActor->setActor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VideoParticipiant>
+     */
+    public function getVideoParticipiants(): Collection
+    {
+        return $this->videoParticipiants;
+    }
+
+    public function addVideoParticipiant(VideoParticipiant $videoParticipiant): static
+    {
+        if (!$this->videoParticipiants->contains($videoParticipiant)) {
+            $this->videoParticipiants->add($videoParticipiant);
+            $videoParticipiant->setActor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideoParticipiant(VideoParticipiant $videoParticipiant): static
+    {
+        if ($this->videoParticipiants->removeElement($videoParticipiant)) {
+            // set the owning side to null (unless already changed)
+            if ($videoParticipiant->getActor() === $this) {
+                $videoParticipiant->setActor(null);
             }
         }
 

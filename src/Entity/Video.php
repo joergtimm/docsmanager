@@ -74,10 +74,15 @@ class Video
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $owner = null;
 
+    #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoParticipiant::class)]
+    private Collection $videoParticipiants;
+
     public function __construct()
     {
         $this->videoActors = new ArrayCollection();
         $this->participants = new ArrayCollection();
+        $this->isverrifyted = false;
+        $this->videoParticipiants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -283,6 +288,36 @@ class Video
     public function setOwner(?Client $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VideoParticipiant>
+     */
+    public function getVideoParticipiants(): Collection
+    {
+        return $this->videoParticipiants;
+    }
+
+    public function addVideoParticipiant(VideoParticipiant $videoParticipiant): static
+    {
+        if (!$this->videoParticipiants->contains($videoParticipiant)) {
+            $this->videoParticipiants->add($videoParticipiant);
+            $videoParticipiant->setVideo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideoParticipiant(VideoParticipiant $videoParticipiant): static
+    {
+        if ($this->videoParticipiants->removeElement($videoParticipiant)) {
+            // set the owning side to null (unless already changed)
+            if ($videoParticipiant->getVideo() === $this) {
+                $videoParticipiant->setVideo(null);
+            }
+        }
 
         return $this;
     }

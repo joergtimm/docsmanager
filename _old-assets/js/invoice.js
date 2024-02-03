@@ -4,14 +4,14 @@
     let checkAll = document.querySelector('.check-all');
     checkAll.addEventListener('click', checkAllFn)
 
-    function checkAllFn() {
+    function checkAllFn()
+    {
         if (checkAll.checked) {
             document.querySelectorAll('.invoice-checkbox input').forEach(function (e) {
                 e.closest('.invoice-list').classList.add('selected');
                 e.checked = true;
             });
-        }
-        else {
+        } else {
             document.querySelectorAll('.invoice-checkbox input').forEach(function (e) {
                 e.closest('.invoice-list').classList.remove('selected');
                 e.checked = false;
@@ -31,48 +31,48 @@
 
     let index = 0
     document.querySelector(".invoice-add-item").onclick = () => {
-        let element = `<tr class="invoice-list">
-        <td class=""><input type="number" class="ti-form-input " placeholder="s.no"></td>
-        <td class=""><input type="text" class="ti-form-input " placeholder="Product name"></td>
-        <td class="font-semibold ">
-            <div class="flex rounded-sm shadow-sm">
-            <button type="button"
-              class="quantity-minus inline-flex flex-shrink-0 justify-center items-center h-8 w-8 ltr:rounded-l-sm rtl:rounded-r-sm border border-transparent font-semibold bg-primary text-white hover:bg-primary focus:z-10 focus:outline-none focus:ring-2 focus:ring-primary transition-all text-sm">
-              <i class="ti ti-minus"></i>
-            </button>
-            <input type="text" id="quantity-${index}" name="quantity"
-              class="p-0 ti-form-input w-20 rounded-none shadow-sm focus:z-10 text-center"
-               value=0 readonly>
-            <button type="button"
-              class="quantity-plus inline-flex flex-shrink-0 justify-center items-center h-8 w-8  ltr:rounded-r-sm rtl:rounded-l-sm border border-transparent font-semibold bg-primary text-white hover:bg-primary focus:z-10 focus:outline-none focus:ring-2 focus:ring-primary transition-all text-sm">
-              <i class="ti ti-plus"></i>
-            </button>
-          </div>
-        </td>
-        <td class=""><input type="number" class="ti-form-input " placeholder="value"></td>
-        <td class= " font-medium"><input type="number" class="ti-form-input " placeholder="Total amount"></td>
-        <td class= " font-medium">
-                                            <div class="hs-tooltip ti-main-tooltip">
-                                                <a href="javascript:void(0);"
-                                                    class="invoice-btn m-0 hs-tooltip-toggle w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none bg-danger/10 border-danger/10 text-danger hover:bg-danger/30 hover:border-danger hover:text-danger">
-                                                    <i class="ti ti-trash"></i>
-                                                    <span
-                                                        class="hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
-                                                        role="tooltip">
+        let element = ` < tr class = "invoice-list" >
+        < td class = "" > < input type = "number" class = "ti-form-input " placeholder = "s.no" > < / td >
+        < td class = "" > < input type = "text" class = "ti-form-input " placeholder = "Product name" > < / td >
+        < td class = "font-semibold " >
+            < div class = "flex rounded-sm shadow-sm" >
+            < button type = "button"
+              class = "quantity-minus inline-flex flex-shrink-0 justify-center items-center h-8 w-8 ltr:rounded-l-sm rtl:rounded-r-sm border border-transparent font-semibold bg-primary text-white hover:bg-primary focus:z-10 focus:outline-none focus:ring-2 focus:ring-primary transition-all text-sm" >
+              < i class = "ti ti-minus" > < / i >
+            <  / button >
+            < input type = "text" id = "quantity-${index}" name = "quantity"
+              class = "p-0 ti-form-input w-20 rounded-none shadow-sm focus:z-10 text-center"
+               value = 0 readonly >
+            < button type = "button"
+              class = "quantity-plus inline-flex flex-shrink-0 justify-center items-center h-8 w-8  ltr:rounded-r-sm rtl:rounded-l-sm border border-transparent font-semibold bg-primary text-white hover:bg-primary focus:z-10 focus:outline-none focus:ring-2 focus:ring-primary transition-all text-sm" >
+              < i class = "ti ti-plus" > < / i >
+            <  / button >
+          <  / div >
+        <  / td >
+        < td class = "" > < input type = "number" class = "ti-form-input " placeholder = "value" > < / td >
+        < td class = " font-medium" > < input type = "number" class = "ti-form-input " placeholder = "Total amount" > < / td >
+        < td class = " font-medium" >
+                                            < div class = "hs-tooltip ti-main-tooltip" >
+                                                < a href = "javascript:void(0);"
+                                                    class = "invoice-btn m-0 hs-tooltip-toggle w-8 h-8 ti-btn rounded-full p-0 transition-none focus:outline-none bg-danger/10 border-danger/10 text-danger hover:bg-danger/30 hover:border-danger hover:text-danger" >
+                                                    < i class = "ti ti-trash" > < / i >
+                                                    < span
+                                                        class = "hs-tooltip-content ti-main-tooltip-content py-1 px-2 bg-gray-900 text-xs font-medium text-white shadow-sm dark:bg-slate-700"
+                                                        role = "tooltip" >
                                                         Delete
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </td>
-        </tr>`
+                                                    <  / span >
+                                                <  / a >
+                                            <  / div >
+                                        <  / td >
+        <  / tr > `
         document.querySelector(".invoice-body").innerHTML += element
         index = index + 1
     }
 
     var minusBtn = document.querySelectorAll(".quantity-minus"),
         PlusBtn = document.querySelectorAll(".quantity-plus"),
-        
-       
+
+
         minValue = 0,
         maxValue = 30;
 
@@ -82,7 +82,7 @@
             let value =  e.currentTarget.nextElementSibling.value
             if (value > minValue) {
                 value = value - 1;
-                e.currentTarget.nextElementSibling.value=value;
+                e.currentTarget.nextElementSibling.value = value;
             }
         }
     })
@@ -91,7 +91,7 @@
             let value =  e.currentTarget.previousElementSibling.value
             if (value < maxValue) {
                 value = Number(value) + 1;
-                e.currentTarget.previousElementSibling.value=value;
+                e.currentTarget.previousElementSibling.value = value;
             }
         }
     })
@@ -149,9 +149,9 @@ document.getElementById("invoice-create").onclick = () => {
     document.querySelector(".invoice-title").innerHTML = "Create Invoice"
 
 }
-let invoicePrint = (ele)=>{
+let invoicePrint = (ele) => {
     document.querySelector(".invoice-edit").click()
-    setTimeout(()=>{
+    setTimeout(() => {
         window.print()
     },100)
 }

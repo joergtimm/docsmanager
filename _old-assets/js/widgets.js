@@ -9,7 +9,7 @@
             series: [
                 {
                     data: [34, 55, 41, 67, 22, 43, 21]
-                },
+            },
             ],
             chart: {
                 sparkline: {
@@ -74,7 +74,7 @@
             series: [
                 {
                     data: [34, 55, 41, 47, 32, 53, 31]
-                },
+            },
             ],
             chart: {
                 sparkline: {
@@ -139,7 +139,7 @@
             series: [
                 {
                     data: [31, 53, 32, 47, 41, 55, 44]
-                },
+            },
             ],
             chart: {
                 sparkline: {
@@ -204,7 +204,7 @@
             series: [
                 {
                     data: [21, 43, 22, 45, 35, 55, 34]
-                },
+            },
             ],
             chart: {
                 sparkline: {
@@ -321,15 +321,15 @@
                 {
                     name: "Tablet",
                     data: [[10, 35, 80]]
-                },
+            },
                 {
                     name: "Mobile",
                     data: [[22, 10, 80]]
-                },
+            },
                 {
                     name: "Desktop",
                     data: [[25, 25, 150]]
-                },
+            },
             ],
             chart: {
                 height: 350,
@@ -416,7 +416,7 @@
             }
         },
         ];
-    
+
         var element = document.getElementById("users-map");
         if (element !== null) {
             element.innerHTML = "";
@@ -464,7 +464,8 @@
 })();
 
 // Target report chart
-export function targetReport(myVarVal) {
+export function targetReport(myVarVal)
+{
     var options = {
         series: [{
             data: [17, 22, 37, 47, 39, 28, 14],
@@ -557,7 +558,8 @@ export function targetReport(myVarVal) {
     chart.render();
 }
 
-export function pageviews(myVarVal) {
+export function pageviews(myVarVal)
+{
     var options = {
         series: [{
             name: 'Job Applied',

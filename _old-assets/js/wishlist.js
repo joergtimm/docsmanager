@@ -6,13 +6,13 @@
         eleBtn.onclick = () => {
             let wishlist = eleBtn.closest(".wishlist-box");
             wishlist.remove();
-            if(!document.querySelectorAll(".wishlist").length){
+            if (!document.querySelectorAll(".wishlist").length) {
                 document.querySelector(".whishlist-empty").classList.remove("hidden")
                 document.querySelector(".whishlist-full").classList.add("hidden")
             }
         }
     })
 
-    
+
 })();
 

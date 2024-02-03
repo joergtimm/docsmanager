@@ -130,4 +130,92 @@ return [
     'chart.js/auto' => [
         'version' => '3.9.1',
     ],
+    'dropzone' => [
+        'version' => '6.0.0-beta.2',
+    ],
+    'just-extend' => [
+        'version' => '5.1.1',
+    ],
+    'video.js' => [
+        'version' => '8.10.0',
+    ],
+    'global/window' => [
+        'version' => '4.4.0',
+    ],
+    'global/document' => [
+        'version' => '4.4.0',
+    ],
+    'keycode' => [
+        'version' => '2.2.0',
+    ],
+    'safe-json-parse/tuple' => [
+        'version' => '4.0.0',
+    ],
+    '@videojs/xhr' => [
+        'version' => '2.6.0',
+    ],
+    'videojs-vtt.js' => [
+        'version' => '0.15.5',
+    ],
+    '@babel/runtime/helpers/extends' => [
+        'version' => '7.23.8',
+    ],
+    '@videojs/vhs-utils/es/resolve-url.js' => [
+        'version' => '4.1.0',
+    ],
+    'm3u8-parser' => [
+        'version' => '7.1.0',
+    ],
+    '@videojs/vhs-utils/es/codecs.js' => [
+        'version' => '4.1.0',
+    ],
+    '@videojs/vhs-utils/es/media-types.js' => [
+        'version' => '4.1.0',
+    ],
+    '@videojs/vhs-utils/es/byte-helpers' => [
+        'version' => '4.1.0',
+    ],
+    'mpd-parser' => [
+        'version' => '1.3.0',
+    ],
+    'mux.js/lib/tools/parse-sidx' => [
+        'version' => '7.0.2',
+    ],
+    '@videojs/vhs-utils/es/id3-helpers' => [
+        'version' => '4.1.0',
+    ],
+    '@videojs/vhs-utils/es/containers' => [
+        'version' => '4.1.0',
+    ],
+    'mux.js/lib/utils/clock' => [
+        'version' => '7.0.2',
+    ],
+    'video.js/dist/video-js.min.css' => [
+        'version' => '8.10.0',
+        'type' => 'css',
+    ],
+    'is-function' => [
+        'version' => '1.0.2',
+    ],
+    'url-toolkit' => [
+        'version' => '2.2.5',
+    ],
+    '@videojs/vhs-utils/es/stream.js' => [
+        'version' => '3.0.5',
+    ],
+    '@videojs/vhs-utils/es/decode-b64-to-uint8-array.js' => [
+        'version' => '3.0.5',
+    ],
+    '@videojs/vhs-utils/es/resolve-url' => [
+        'version' => '4.1.0',
+    ],
+    '@videojs/vhs-utils/es/media-groups' => [
+        'version' => '4.1.0',
+    ],
+    '@videojs/vhs-utils/es/decode-b64-to-uint8-array' => [
+        'version' => '4.1.0',
+    ],
+    '@xmldom/xmldom' => [
+        'version' => '0.8.10',
+    ],
 ];

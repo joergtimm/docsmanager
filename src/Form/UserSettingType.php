@@ -26,7 +26,8 @@ class UserSettingType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'attr' => [
-                    'data-action' => 'autosubmit#debouncedSubmit'
+                    'data-action' => 'autosubmit#debouncedSubmit',
+                    'data-turbo-frames' => "videos"
                 ]
             ])
         ;

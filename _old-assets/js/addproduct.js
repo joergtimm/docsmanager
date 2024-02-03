@@ -41,9 +41,9 @@
         FilePondPluginImageResize,
         FilePondPluginImageTransform
     );
-    
-  const MultipleElement = document.querySelector('.multiple-filepond');
-  FilePond.create(MultipleElement);
+
+    const MultipleElement = document.querySelector('.multiple-filepond');
+    FilePond.create(MultipleElement);
 
     /* Start::Choices JS */
     document.addEventListener('DOMContentLoaded', function () {
@@ -54,11 +54,11 @@
                 allowHTML: true,
                 paste: false,
                 duplicateItemsAllowed: false,
-                editItems: true, 
+                editItems: true,
                 removeItemButton: true,
             });
         }
-    }); 
+    });
     /* Start::Choices JS */
     document.addEventListener('DOMContentLoaded', function () {
         var genericExamples = document.querySelectorAll('.product-search');
@@ -70,7 +70,7 @@
                 removeItemButton: true,
             });
         }
-    }); 
+    });
 
      //To choose date and time
     flatpickr("#product-datetime", {

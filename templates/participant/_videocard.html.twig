@@ -1,7 +1,8 @@
-<div class="mb-6 rounded-lg bg-white p-6">
+<a href="#" class="">
+<div class="mb-6 rounded-lg bg-yellow-50 p-6">
     <div class="flex items-center justify-between">
         <div class="flex items-center">
-                        <img class="mr-2 h-12 w-12 rounded-full object-cover" src="{{ asset('img/'~partic.actor.profilepic) }}" alt="{{ partic.actor.id }}-{{ partic.actor.name }}" />
+            <img class="mr-2 h-12 w-12 rounded-full object-cover" src="{{ asset('img/'~partic.actor.profilepic) }}" alt="{{ partic.actor.id }}-{{ partic.actor.name }}" />
             <div>
                 <h3 class="text-base font-semibold text-gray-900">{{ partic.actor.name }}</h3>
                 <span class="block text-xs font-normal text-gray-500">UI / UX Designer</span>
@@ -9,33 +10,25 @@
         </div>
         <p class="text-sm font-medium text-indigo-500"><span class="mr-0.5">+</span>Follow</p>
     </div>
-
-    <div class="mt-6 flex items-center justify-between text-sm font-semibold text-gray-900">
-        <div class="flex gap-2">
-            <div class="center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                </svg>
-                <div class="mt-px">ID-SHOT</div>
+    <div class="-m-2 text-center">
+        <div class="p-2">
+            <div class="inline-flex items-center bg-red-500 leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
+                <span class="inline-flex text-red-600 rounded-full h-6 px-3 justify-center items-center">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17v-5h1.5a1.5 1.5 0 1 1 0 3H5m12 2v-5h2m-2 3h2M5 10V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1v6M5 19v1c0 .6.4 1 1 1h12c.6 0 1-.4 1-1v-1M10 3v4c0 .6-.4 1-1 1H5m6 4v5h1.4a1.6 1.6 0 0 0 1.6-1.6v-1.8a1.6 1.6 0 0 0-1.6-1.6H11Z"></path>
+                    </svg>
+                </span>
+                <span class="inline-flex px-2">ID-shot</span>
             </div>
-            <div class="center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                </svg>
-                <div class="mt-px">ID-CARD FRONT</div>
-            </div>
-            <div class="center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                </svg>
-                <div class="mt-px">ID-CARD BACK</div>
-            </div>
-            <div class="center relative inline-block select-none whitespace-nowrap rounded-lg bg-gradient-to-tr from-pink-600 to-pink-400 py-2 px-3.5 align-baseline font-sans text-xs font-bold uppercase leading-none text-white">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                </svg>
-                <div class="mt-px">VERTRAG</div>
+            <div class="inline-flex items-center bg-red-400 leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
+                <span class="inline-flex bg-pink-600 text-red-400 rounded-full h-6 px-3 justify-center items-center">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 17v-5h1.5a1.5 1.5 0 1 1 0 3H5m12 2v-5h2m-2 3h2M5 10V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1v6M5 19v1c0 .6.4 1 1 1h12c.6 0 1-.4 1-1v-1M10 3v4c0 .6-.4 1-1 1H5m6 4v5h1.4a1.6 1.6 0 0 0 1.6-1.6v-1.8a1.6 1.6 0 0 0-1.6-1.6H11Z"></path>
+                    </svg>
+                </span>
+                <span class="inline-flex px-2">ID-shot</span>
             </div>
         </div>
     </div>
 </div>
+</a>
