@@ -218,4 +218,17 @@ return [
     '@xmldom/xmldom' => [
         'version' => '0.8.10',
     ],
+    'plyr' => [
+        'version' => '3.7.8',
+    ],
+    'plyr/dist/plyr.min.css' => [
+        'version' => '3.7.8',
+        'type' => 'css',
+    ],
+    '@pdftron/pdfjs-express-viewer' => [
+        'version' => '8.7.4',
+    ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
 ];

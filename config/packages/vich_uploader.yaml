@@ -1,0 +1,9 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        documents:
+            uri_prefix: /documents
+            upload_destination: oneup_flysystem.documents_filesystem
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            directory_namer: ~

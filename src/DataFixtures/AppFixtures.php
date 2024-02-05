@@ -13,11 +13,20 @@ use App\Factory\ProductionFactory;
 use App\Factory\UserFactory;
 use App\Factory\VideoActorsFactory;
 use App\Factory\VideoFactory;
+use App\Service\DocumentManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use League\Flysystem\FilesystemException;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(private DocumentManager $documentManager)
+    {
+    }
+
+    /**
+     * @throws FilesystemException
+     */
     public function load(ObjectManager $manager): void
     {
         UserFactory::createOne(['email' => 'timm.jrg@gmail.com',
@@ -41,5 +50,8 @@ class AppFixtures extends Fixture
         ContractBlocksFactory::createMany(20);
 
         $manager->flush();
+
+        $this->documentManager->purgeFixturesVodeoActorDocs();
+        $this->documentManager->copyVideoActorDocsFixtures();
     }
 }

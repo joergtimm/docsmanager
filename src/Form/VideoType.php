@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Actor;
 use App\Entity\Video;
+use App\Entity\VideoActors;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -21,7 +22,12 @@ class VideoType extends AbstractType
             ->add('isverrifyted', SwitchType::class, [
                 'label' => 'verrify',
                 'required' => false,
-            ]);
+            ])
+            ->add('videoActors', CollectionType::class, [
+                'entry_type' => VideoActorType::class
+            ])
+        ;
+
 
         ;
     }

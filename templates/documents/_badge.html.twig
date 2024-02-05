@@ -1,0 +1,6 @@
+
+<a href="{{ path('admin_document_load', { id: doc.id }) }}" target="_top">
+<span class="py-2.5 px-2.5 mx-1 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl {{ doc.isValid ? 'from-emerald-500 to-teal-400' : 'from-red-600 to-orange-600' }} align-baseline font-bold uppercase leading-none text-white">
+    {{ doc.type }}
+</span>
+</a>

@@ -1,0 +1,3 @@
+liip_imagine:
+  controller:
+    redirect_response_code: 302

@@ -56,6 +56,10 @@ class Documents
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mimeType = null;
 
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?VideoActors $videoActor = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -228,6 +232,18 @@ class Documents
     public function setMimeType(?string $mimeType): static
     {
         $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getVideoActor(): ?VideoActors
+    {
+        return $this->videoActor;
+    }
+
+    public function setVideoActor(?VideoActors $videoActor): static
+    {
+        $this->videoActor = $videoActor;
 
         return $this;
     }

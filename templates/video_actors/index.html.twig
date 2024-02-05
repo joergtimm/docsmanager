@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}VideoActors index{% endblock %}
+
+{% block body %}
+    <h1>VideoActors index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>CreateAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for video_actor in video_actors %}
+            <tr>
+                <td>{{ video_actor.id }}</td>
+                <td>{{ video_actor.createAt ? video_actor.createAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_video_actors_show', {'id': video_actor.id}) }}">show</a>
+                    <a href="{{ path('app_video_actors_edit', {'id': video_actor.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_video_actors_new') }}">Create new</a>
+{% endblock %}

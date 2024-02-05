@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
 class Actor
@@ -25,6 +27,9 @@ class Actor
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $gender = null;
 
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $actorKey;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilepic = null;
 
@@ -38,6 +43,7 @@ class Actor
     {
         $this->videoActors = new ArrayCollection();
         $this->videoParticipiants = new ArrayCollection();
+        $this->actorKey = Uuid::v1();
     }
 
     public function getId(): ?int
@@ -151,5 +157,10 @@ class Actor
         }
 
         return $this;
+    }
+
+    public function getActorKey(): Uuid
+    {
+        return $this->actorKey;
     }
 }

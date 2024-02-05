@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Video;
 use App\Entity\VideoActors;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,6 +21,17 @@ class VideoActorsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, VideoActors::class);
     }
+
+    public function findByVideo(Video $video): array
+    {
+        return $this->createQueryBuilder('va')
+            ->andWhere('va.video = :video')
+            ->setParameter('video', $video)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return VideoActors[] Returns an array of VideoActors objects
