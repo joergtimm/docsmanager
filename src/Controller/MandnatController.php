@@ -114,6 +114,16 @@ class MandnatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Mandant wurde bearbeitet');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('mandnat/edit.html.twig', 'stream_success', [
+                    'item' => $mandnat
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
+
             return $this->redirectToRoute('app_mandnat_index', [], Response::HTTP_SEE_OTHER);
         }
 

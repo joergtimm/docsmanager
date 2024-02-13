@@ -21,6 +21,9 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -31,13 +34,13 @@ return [
         'version' => '1.4.4',
     ],
     'tailwindcss/plugin' => [
-        'version' => '3.4.0',
+        'version' => '3.4.1',
     ],
     'tailwindcss/defaultTheme' => [
-        'version' => '3.3.5',
+        'version' => '3.4.1',
     ],
     'tailwindcss/colors' => [
-        'version' => '3.3.5',
+        'version' => '3.4.1',
     ],
     'picocolors' => [
         'version' => '1.0.0',
@@ -50,7 +53,7 @@ return [
         'type' => 'css',
     ],
     'hls.js' => [
-        'version' => '1.4.14',
+        'version' => '1.5.4',
     ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',
@@ -66,19 +69,19 @@ return [
         'version' => '2.3.1',
     ],
     'prettier-plugin-tailwindcss' => [
-        'version' => '0.5.10',
+        'version' => '0.5.11',
     ],
     'tailwind-scrollbar' => [
-        'version' => '3.0.5',
+        'version' => '3.1.0',
     ],
     'tailwindcss/lib/util/flattenColorPalette' => [
-        'version' => '3.4.0',
+        'version' => '3.4.1',
     ],
     'tailwindcss/lib/util/toColorValue' => [
-        'version' => '3.4.0',
+        'version' => '3.4.1',
     ],
     'tailwindcss/lib/featureFlags' => [
-        'version' => '3.4.0',
+        'version' => '3.4.1',
     ],
     'mediaplayer' => [
         'version' => '2.0.1',
@@ -128,13 +131,13 @@ return [
         'version' => '5.3.0',
     ],
     'chart.js/auto' => [
-        'version' => '3.9.1',
+        'version' => '4.4.1',
     ],
     'dropzone' => [
         'version' => '6.0.0-beta.2',
     ],
     'just-extend' => [
-        'version' => '5.1.1',
+        'version' => '6.2.0',
     ],
     'video.js' => [
         'version' => '8.10.0',
@@ -146,7 +149,7 @@ return [
         'version' => '4.4.0',
     ],
     'keycode' => [
-        'version' => '2.2.0',
+        'version' => '2.2.1',
     ],
     'safe-json-parse/tuple' => [
         'version' => '4.0.0',
@@ -158,37 +161,37 @@ return [
         'version' => '0.15.5',
     ],
     '@babel/runtime/helpers/extends' => [
-        'version' => '7.23.8',
+        'version' => '7.23.9',
     ],
     '@videojs/vhs-utils/es/resolve-url.js' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     'm3u8-parser' => [
         'version' => '7.1.0',
     ],
     '@videojs/vhs-utils/es/codecs.js' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/media-types.js' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/byte-helpers' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     'mpd-parser' => [
         'version' => '1.3.0',
     ],
     'mux.js/lib/tools/parse-sidx' => [
-        'version' => '7.0.2',
+        'version' => '6.3.0',
     ],
     '@videojs/vhs-utils/es/id3-helpers' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/containers' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     'mux.js/lib/utils/clock' => [
-        'version' => '7.0.2',
+        'version' => '6.3.0',
     ],
     'video.js/dist/video-js.min.css' => [
         'version' => '8.10.0',
@@ -201,19 +204,19 @@ return [
         'version' => '2.2.5',
     ],
     '@videojs/vhs-utils/es/stream.js' => [
-        'version' => '3.0.5',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/decode-b64-to-uint8-array.js' => [
-        'version' => '3.0.5',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/resolve-url' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/media-groups' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     '@videojs/vhs-utils/es/decode-b64-to-uint8-array' => [
-        'version' => '4.1.0',
+        'version' => '4.0.0',
     ],
     '@xmldom/xmldom' => [
         'version' => '0.8.10',
@@ -228,10 +231,25 @@ return [
     '@pdftron/pdfjs-express-viewer' => [
         'version' => '8.7.4',
     ],
-    '@symfony/ux-live-component' => [
-        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
-    ],
     'alpinejs' => [
         'version' => '3.13.5',
+    ],
+    '@alpinejs/collapse' => [
+        'version' => '3.13.5',
+    ],
+    'postcss' => [
+        'version' => '8.4.35',
+    ],
+    'nanoid/non-secure' => [
+        'version' => '5.0.5',
+    ],
+    'postcss-loader' => [
+        'version' => '8.1.0',
+    ],
+    '@kurkle/color' => [
+        'version' => '0.3.2',
+    ],
+    'flowbite-datepicker' => [
+        'version' => '1.2.6',
     ],
 ];

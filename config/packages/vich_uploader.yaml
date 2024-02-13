@@ -1,9 +1,14 @@
 vich_uploader:
     db_driver: orm
+    storage: flysystem
+    metadata:
+        auto_detection: true
+        cache: file
+        type: attribute
 
     mappings:
         documents:
             uri_prefix: /documents
-            upload_destination: oneup_flysystem.documents_filesystem
+            upload_destination: default.storage
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             directory_namer: ~

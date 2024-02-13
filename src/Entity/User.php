@@ -41,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserSetting $userSetting = null;
 
+    private bool $isMe = false;
     public function __construct()
     {
         $this->dataViews = new ArrayCollection();
@@ -185,5 +186,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userSetting = $userSetting;
 
         return $this;
+    }
+
+    public function isMe(): bool
+    {
+        return $this->isMe;
+    }
+
+    public function setIsMe(bool $isMe): void
+    {
+        $this->isMe = $isMe;
     }
 }

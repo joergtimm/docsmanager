@@ -2,7 +2,8 @@ import './bootstrap.js';
 import './styles/app.css';
 import 'flowbite';
 import { shouldPerformTransition, performTransition } from "turbo-view-transitions";
-import Alpine from 'alpinejs';
+
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -10,9 +11,8 @@ import Alpine from 'alpinejs';
  * which should already be in your base.html.twig.
  */
 
-window.Alpine = Alpine
 
-Alpine.start();
+
 
 /*
 Turbo.session.drive = false;
@@ -33,6 +33,10 @@ document.addEventListener('turbo:load', () => {
     // if (shouldPerformTransition()) Turbo.cache.exemptPageFromCache();
 });
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    document.getElementById('updateProductButton').click();
+});
+
 document.addEventListener('turbo:before-frame-render', (event) => {
     if (shouldPerformTransition() && !event.target.hasAttribute('data-skip-transition')) {
         event.preventDefault();
@@ -51,6 +55,7 @@ document.addEventListener('turbo:before-frame-render', (event) => {
           });
     }
 });
+
 
 
 

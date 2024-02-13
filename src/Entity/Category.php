@@ -174,7 +174,7 @@ class Category
      * )
      */
     #[ORM\OneToMany(mappedBy: 'object', targetEntity: CategoryTranslation::class, cascade: ['persist', 'remove'])]
-    private $translations;
+    private ArrayCollection $translations;
 
     public function __construct()
     {

@@ -17,7 +17,7 @@ class Documents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: "enumdoctype", length: 50)]
     private ?string $type = null;
 
     #[ORM\Column]
@@ -41,7 +41,7 @@ class Documents
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'pdfName', size: 'pdfSize')]
+    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'pdfName', size: 'pdfSize', mimeType: 'imageMimeType', originalName: 'imageOriginalName', dimensions: 'imageDimensions')]
     private ?File $pdfFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -59,6 +59,15 @@ class Documents
     #[ORM\ManyToOne(inversedBy: 'documents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?VideoActors $videoActor = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageMimeType = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageOriginalName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageDimensions = null;
 
     public function getId(): ?int
     {
@@ -244,6 +253,42 @@ class Documents
     public function setVideoActor(?VideoActors $videoActor): static
     {
         $this->videoActor = $videoActor;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(?string $imageMimeType): static
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
+    public function getImageOriginalName(): ?string
+    {
+        return $this->imageOriginalName;
+    }
+
+    public function setImageOriginalName(?string $imageOriginalName): static
+    {
+        $this->imageOriginalName = $imageOriginalName;
+
+        return $this;
+    }
+
+    public function getImageDimensions(): ?string
+    {
+        return $this->imageDimensions;
+    }
+
+    public function setImageDimensions(?string $imageDimensions): static
+    {
+        $this->imageDimensions = $imageDimensions;
 
         return $this;
     }

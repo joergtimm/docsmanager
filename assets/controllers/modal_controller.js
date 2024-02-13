@@ -51,8 +51,11 @@ export default class extends Controller {
 
     clickOutside(event)
     {
-        if (event.target === this.dialogTarget) {
-            this.dialogTarget.close()
+        if (event.target !== this.dialogTarget) {
+            return;
+        }
+        if (!this.#isClickInElement(event, this.dialogTarget)) {
+            this.dialogTarget.close();
         }
     }
 
@@ -64,5 +67,16 @@ export default class extends Controller {
         }
 
         this.dynamicContentTarget.innerHTML = this.loadingTemplateTarget.innerHTML
+    }
+
+    #isClickInElement(event, element)
+    {
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
     }
 }

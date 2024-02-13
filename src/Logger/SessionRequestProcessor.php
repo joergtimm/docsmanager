@@ -2,11 +2,14 @@
 
 namespace App\Logger;
 
+use Monolog\Attribute\AsMonologProcessor;
 use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
+use Monolog\Processor\WebProcessor;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+#[AsMonologProcessor]
 class SessionRequestProcessor implements ProcessorInterface
 {
     public function __construct(
@@ -26,9 +29,9 @@ class SessionRequestProcessor implements ProcessorInterface
             return $record;
         }
 
-        $sessionId = substr($session->getId(), 0, 8) ?: '????????';
+        $sessionId = substr($session->getId(), 0, length: 8) ?: '????????';
 
-        $record->extra['token'] = $sessionId . '-' . substr(uniqid('', true), -8);
+        $record->extra['token'] = sprintf("%s-%s", $sessionId, substr(uniqid('', true), -8));
 
         return $record;
     }
