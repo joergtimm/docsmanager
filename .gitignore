@@ -38,3 +38,4 @@ phpstan.neon
 ###< liip/imagine-bundle ###
 /_old-assets/
 /_old-assets2/
+/storage/documents/
