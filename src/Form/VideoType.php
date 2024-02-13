@@ -19,12 +19,10 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('title')
+
             ->add('isverrifyted', SwitchType::class, [
                 'label' => 'verrify',
                 'required' => false,
-            ])
-            ->add('videoActors', CollectionType::class, [
-                'entry_type' => VideoActorType::class
             ])
         ;
 

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/_data/view')]
 class DataViewController extends AbstractController
 {
-    #[Route('/_get', name: 'app_data_view_show', methods: ['GET'])]
+    #[Route('/_get', name: 'app_data_view_show', methods: ['GET', 'POST'])]
     public function getViewParams(
         DataViewRepository $dataViewRepository,
         #[MapQueryParameter] string $type = 'home',

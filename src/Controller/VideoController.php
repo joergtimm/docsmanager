@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
@@ -10,6 +11,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +25,7 @@ use Symfony\Component\Uid\Uuid;
 #[IsGranted('ROLE_ADMIN')]
 class VideoController extends AbstractController
 {
-    #[Route('/', name: 'app_video_index', methods: ['GET'])]
+    #[Route('/', name: 'app_video_index', methods: ['GET', 'POST'])]
     public function index(
         VideoRepository $videoRepository,
         DataViewManager $dataViewManager,
@@ -35,9 +37,16 @@ class VideoController extends AbstractController
         #[MapQueryParameter] int $listItems = 10,
         #[MapQueryParameter] int $gridItems = 12,
     ): Response {
-        $dataView = $dataViewManager->getClient($this->getUser());
-        $validSorts = ['title', 'createAt'];
-        $sort = in_array($sort, $validSorts) ? $sort : 'title';
+
+
+        /** @var User $me */
+        $me = $this->getUser();
+        $dataView = $dataViewManager->setDataView($me, DataViewManager::VIDEO);
+        $validSorts = $dataView->getSearchProbs();
+        $firstSort = reset($validSorts);
+        $firstSort = (string) $firstSort;
+
+        $sort = in_array($sort, $validSorts) ? $sort : $firstSort;
 
         $validViewModes = ['list', 'grid'];
         $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
@@ -56,10 +65,8 @@ class VideoController extends AbstractController
             $items = $listItems;
         }
 
-        $client = $dataViewManager->getClient($this->getUser());
-
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
-            new QueryAdapter($videoRepository->findBySearch($client, $query, $sort, $sortDirection)),
+            new QueryAdapter($videoRepository->findBySearch(null, $query, $sort, $sortDirection)),
             $page,
             $items
         );
@@ -113,7 +120,7 @@ class VideoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_video_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_video_show', methods: ['GET', 'POST'])]
     public function show(Video $video): Response
     {
         return $this->render('video/show.html.twig', [

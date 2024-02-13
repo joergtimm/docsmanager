@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/video/actors')]
 class VideoActorsController extends AbstractController
 {
-    #[Route('/{id}', name: 'app_video_actors_index', methods: ['GET'])]
+    #[Route('/list/{id}', name: 'app_video_actors_index', methods: ['GET', 'POST'])]
     public function listVideoActors(Video $video, VideoActorsRepository $videoActorsRepository): Response
     {
         $videoActors = $videoActorsRepository->findBy(['video' => $video]);

@@ -83,6 +83,7 @@ class Video
         $this->participants = new ArrayCollection();
         $this->isverrifyted = false;
         $this->videoParticipiants = new ArrayCollection();
+        $this->createAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

@@ -2,13 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\UserSetting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<UserSetting>
- *
  * @method UserSetting|null find($id, $lockMode = null, $lockVersion = null)
  * @method UserSetting|null findOneBy(array $criteria, array $orderBy = null)
  * @method UserSetting[]    findAll()
@@ -20,6 +20,7 @@ class UserSettingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserSetting::class);
     }
+
 
 //    /**
 //     * @return UserSetting[] Returns an array of UserSetting objects

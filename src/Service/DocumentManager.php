@@ -3,21 +3,17 @@
 namespace App\Service;
 
 use App\DTO\VideoActrorsInfo;
-use App\Entity\Actor;
 use App\Entity\Documents;
 use App\Entity\Video;
 use App\Entity\VideoActors;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Gedmo\Sluggable\Util\Urlizer;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Uid\Uuid;
-
+use Traversable;
 
 class DocumentManager
 {
@@ -28,7 +24,6 @@ class DocumentManager
 
     public function __construct(private ?VideoRepository $videoRepository, private readonly ?FilesystemOperator $documentsFilesystem, private readonly ?SluggerInterface $slugger, private ?EntityManagerInterface $em)
     {
-
     }
 
     public function getMime(UploadedFile $uploadedFile): ?string
@@ -39,10 +34,14 @@ class DocumentManager
     /**
      * @throws FilesystemException
      */
-    public function uploadDocument(UploadedFile $uploadedFile, string $type, VideoActors $videoActor)
+    public function uploadDocument(UploadedFile $uploadedFile, string $type, VideoActors $videoActor): void
     {
 
-        $destination = $this->getVideoActorDocFolder($videoActor).'/'.$this->buildUniqidFilename($videoActor, $type);
+        $destination = sprintf(
+            "%s/%s",
+            $this->getVideoActorDocFolder($videoActor),
+            $this->buildUniqidFilename($videoActor, $type)
+        );
 
 
         if ($uploadedFile->getMimeType() == 'application/pdf') {
@@ -59,7 +58,7 @@ class DocumentManager
             'image/gif'
         ) {
             $this->documentsFilesystem->write(
-                 self::ID_CARD_FRONT,
+                self::ID_CARD_FRONT,
                 file_get_contents($uploadedFile->getPathname())
             );
         }
@@ -75,7 +74,14 @@ class DocumentManager
         }
 
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $newFilename = $this->slugger->slug(Urlizer::urlize($originalFilename) . '-' . uniqid('type', true) . '.' . $uploadedFile->guessExtension(), '-');
+        if (isset($this->slugger)) {
+            $newFilename = $this->slugger->slug(sprintf(
+                "%s-%s.%s",
+                Urlizer::urlize($originalFilename),
+                uniqid('type', true),
+                $uploadedFile->guessExtension()
+            ), '-');
+        }
     }
 
     public function buildUniqidFilename(VideoActors $videoActor, string $type): string
@@ -87,9 +93,7 @@ class DocumentManager
         $ownerKey = $owner->getClientKey();
         $actorKey = $actor->getActorKey();
 
-        $filename = $type.'-c-'.$ownerKey.'-v-'.$videoKey.'-a-'.$actorKey.'.pdf';
-
-        return $filename;
+        return sprintf("%s-c-%s-v-%s-a-%s.pdf", $type, $ownerKey, $videoKey, $actorKey);
     }
 
     /**
@@ -97,7 +101,6 @@ class DocumentManager
      */
     public function buildVideoActorInfoDTO(
         VideoActors $videoActor,
-
     ): VideoActrorsInfo {
         $dto = new VideoActrorsInfo(
             $videoActor
@@ -112,10 +115,10 @@ class DocumentManager
      */
     public function getVideoDocFolder(Video $video): ?string
     {
-        $videoFolder = $video->getOwner()->getClientKey().'/'.$video->getVideoKey();
+        $videoFolder = sprintf("%s/%s", $video->getOwner()->getClientKey(), $video->getVideoKey());
         if (!$this->documentsFilesystem->has($videoFolder)) {
                 $this->documentsFilesystem->createDirectory($videoFolder);
-            }
+        }
 
         return $videoFolder;
     }
@@ -128,16 +131,16 @@ class DocumentManager
 
         $video = $videoActor->getVideo();
 
-        $videoActorDocFolder = $this->getVideoDocFolder($video).'/'.$videoActor->getActor()->getActorKey();
+        $videoActorDocFolder = $this->getVideoDocFolder($video) . '/' . $videoActor->getActor()->getActorKey();
         if (!$this->documentsFilesystem->has($videoActorDocFolder)) {
                 $this->documentsFilesystem->createDirectory($videoActorDocFolder);
-            }
+        }
 
 
         return $videoActorDocFolder;
     }
 
-    public function setIsDocFile( VideoActrorsInfo $dto): VideoActrorsInfo
+    public function setIsDocFile(VideoActrorsInfo $dto): VideoActrorsInfo
     {
         $videoActorDocs = $dto->getVideoActorDocs();
         foreach ($videoActorDocs as $videoActorDoc) {
@@ -164,7 +167,7 @@ class DocumentManager
     /**
      * @throws FilesystemException
      */
-    public function getDocIterator(VideoActors $videoActor): \Traversable
+    public function getDocIterator(VideoActors $videoActor): Traversable
     {
         return $this->documentsFilesystem->listContents($this->getVideoActorDocFolder($videoActor))->getIterator();
     }
@@ -188,31 +191,26 @@ class DocumentManager
                     'checksum' => $this->documentsFilesystem->checksum($item['path']),
                     'docType' => $this->getDocType(basename($item['path'])),
                 ];
-              }
+            }
         }
         return $documents;
     }
 
     public function getDocType(?string $basename): ?string
     {
-        if (str_contains( $basename, self::ID_SHOT))
-        {
-
+        if (str_contains($basename, self::ID_SHOT)) {
             return self::ID_SHOT;
         }
 
-        if (str_contains($basename, self::ID_CARD_FRONT))
-        {
+        if (str_contains($basename, self::ID_CARD_FRONT)) {
             return self::ID_CARD_FRONT;
         }
 
-        if (str_contains($basename, self::ID_CARD_BACK))
-        {
+        if (str_contains($basename, self::ID_CARD_BACK)) {
             return self::ID_CARD_BACK;
         }
 
-        if (str_contains($basename, self::CONTRACT))
-        {
+        if (str_contains($basename, self::CONTRACT)) {
             return self::CONTRACT;
         }
 
@@ -226,12 +224,11 @@ class DocumentManager
     {
         $videos = $this->videoRepository->findAll();
 
-        foreach ($videos as $video)
-        {
+        foreach ($videos as $video) {
             $videoActors = $video->getVideoActors();
             foreach ($videoActors as $videoActor) {
                 $destinationFolder = $this->getVideoActorDocFolder($videoActor);
-                $this->copyFixtureFile($videoActor, $destinationFolder ,[self::ID_SHOT, self::ID_CARD_FRONT, self::ID_CARD_BACK, self::CONTRACT] );
+                $this->copyFixtureFile($videoActor, $destinationFolder, [self::ID_SHOT, self::ID_CARD_FRONT, self::ID_CARD_BACK, self::CONTRACT]);
             }
         }
     }
@@ -241,10 +238,9 @@ class DocumentManager
      */
     public function copyFixtureFile(VideoActors $videoActor, string $destinationFolder, array $types): void
     {
-        foreach ($types as $type)
-        {
-            $destination = $destinationFolder.'/'.$this->buildUniqidFilename($videoActor, $type);
-            $this->documentsFilesystem->copy('fixtures/pdf/'.$type.'.pdf', $destination);
+        foreach ($types as $type) {
+            $destination = $destinationFolder . '/' . $this->buildUniqidFilename($videoActor, $type);
+            $this->documentsFilesystem->copy('fixtures/pdf/' . $type . '.pdf', $destination);
 
             $doc = new Documents();
             $doc
@@ -267,14 +263,12 @@ class DocumentManager
     {
         $content = $this->documentsFilesystem->listContents('/')->getIterator();
         foreach ($content as $item) {
-                if ($item['type'] === 'file' && str_contains($item['path'], 'fixtures')) {
-                    $this->documentsFilesystem->delete($item['path']);
-                }
-                if ($item['type'] === 'directory' && str_contains($item['path'], 'fixtures')) {
-                    $this->documentsFilesystem->delete($item['path']);
-                }
+            if ($item['type'] === 'file' && str_contains($item['path'], 'fixtures')) {
+                $this->documentsFilesystem->delete($item['path']);
             }
-
+            if ($item['type'] === 'directory' && str_contains($item['path'], 'fixtures')) {
+                $this->documentsFilesystem->delete($item['path']);
+            }
+        }
     }
-
 }

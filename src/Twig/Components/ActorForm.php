@@ -3,9 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Entity\Actor;
-use App\Entity\Mandnat;
 use App\Form\ActorType;
-use App\Form\MandnatType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -13,7 +11,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent]
+#[AsLiveComponent(method: 'get')]
 final class ActorForm extends AbstractController
 {
     use DefaultActionTrait;

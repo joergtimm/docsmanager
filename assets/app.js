@@ -2,6 +2,7 @@ import './bootstrap.js';
 import './styles/app.css';
 import 'flowbite';
 import { shouldPerformTransition, performTransition } from "turbo-view-transitions";
+import Alpine from 'alpinejs';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -9,9 +10,14 @@ import { shouldPerformTransition, performTransition } from "turbo-view-transitio
  * which should already be in your base.html.twig.
  */
 
+window.Alpine = Alpine
+
+Alpine.start();
+
 /*
 Turbo.session.drive = false;
-
+*/
+let skipNextRenderTransition = false;
 document.addEventListener('turbo:before-render', (event) => {
     if (shouldPerformTransition() && !skipNextRenderTransition) {
         event.preventDefault();
@@ -23,20 +29,16 @@ document.addEventListener('turbo:before-render', (event) => {
 });
 
 document.addEventListener('turbo:load', () => {
-  // View Transitions don't play nicely with Turbo cache
-    if (shouldPerformTransition()) {
-        Turbo.cache.exemptPageFromCache();
-    }
+    // View Transitions don't play nicely with Turbo cache
+    // if (shouldPerformTransition()) Turbo.cache.exemptPageFromCache();
 });
-*/
-let skipNextRenderTransition = false;
-/*
+
 document.addEventListener('turbo:before-frame-render', (event) => {
     if (shouldPerformTransition() && !event.target.hasAttribute('data-skip-transition')) {
         event.preventDefault();
 
-      // workaround for data-turbo-action="advance", which triggers
-      // turbo:before-render (and we want THAT to not try to transition)
+        // workaround for data-turbo-action="advance", which triggers
+        // turbo:before-render (and we want THAT to not try to transition)
         skipNextRenderTransition = true;
         setTimeout(() => {
             skipNextRenderTransition = false;
@@ -44,10 +46,14 @@ document.addEventListener('turbo:before-frame-render', (event) => {
 
         performTransition(event.target, event.detail.newFrame, async() => {
             await event.detail.resume();
-        });
+        }).then(() => {
+            e(event.target, { activeAttr: 'data-active' });
+          });
     }
 });
-*/
+
+
+
 
 
 

@@ -3,9 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Entity\Mandnat;
-use App\Entity\Video;
 use App\Form\MandnatType;
-use App\Form\VideoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -13,7 +11,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent]
+#[AsLiveComponent(method: 'get')]
 final class ClientForm extends AbstractController
 {
     use DefaultActionTrait;

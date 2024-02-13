@@ -55,7 +55,7 @@ class DocumentsController extends AbstractController
 
         });
         $response->headers->set('Content-Type', 'application/pdf');
-
+        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 
 
         return $response;

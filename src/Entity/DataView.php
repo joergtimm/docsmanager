@@ -37,6 +37,33 @@ class DataView
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updateAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $page = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $query = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sort = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sortDirection = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $viewMode = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $listItems = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $gridItems = null;
+
+    public function __construct()
+    {
+        $this->createAt = new \DateTimeImmutable();
+        $this->updateAt = new \DateTimeImmutable();
+        $this->user = null;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +149,90 @@ class DataView
     public function setUpdateAt(?DateTimeImmutable $updateAt): static
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getPage(): ?int
+    {
+        return $this->page;
+    }
+
+    public function setPage(?int $page): static
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    public function getQuery(): ?string
+    {
+        return $this->query;
+    }
+
+    public function setQuery(?string $query): static
+    {
+        $this->query = $query;
+
+        return $this;
+    }
+
+    public function getSort(): ?string
+    {
+        return $this->sort;
+    }
+
+    public function setSort(?string $sort): static
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getSortDirection(): ?string
+    {
+        return $this->sortDirection;
+    }
+
+    public function setSortDirection(?string $sortDirection): static
+    {
+        $this->sortDirection = $sortDirection;
+
+        return $this;
+    }
+
+    public function getViewMode(): ?string
+    {
+        return $this->viewMode;
+    }
+
+    public function setViewMode(?string $viewMode): static
+    {
+        $this->viewMode = $viewMode;
+
+        return $this;
+    }
+
+    public function getListItems(): ?int
+    {
+        return $this->listItems;
+    }
+
+    public function setListItems(?int $listItems): static
+    {
+        $this->listItems = $listItems;
+
+        return $this;
+    }
+
+    public function getGridItems(): ?int
+    {
+        return $this->gridItems;
+    }
+
+    public function setGridItems(?int $gridItems): static
+    {
+        $this->gridItems = $gridItems;
 
         return $this;
     }

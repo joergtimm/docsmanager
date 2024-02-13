@@ -21,6 +21,31 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            translatable:
+                type: attribute # or annotation or xml
+                alias: Gedmo
+                prefix: Gedmo\Translatable\Entity
+                # make sure vendor library location is correct
+                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Translatable/Entity"
+            loggable:
+                type: attribute # or annotation or xml
+                alias: Gedmo
+                prefix: Gedmo\Loggable\Entity
+                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity"
+            tree:
+                type: attribute # or annotation or xml
+                alias: Gedmo
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Tree/Entity"
+        dql:
+            datetime_functions:
+                YEARWEEK: DoctrineExtensions\Query\Mysql\YearWeek
+                YEARMONTH: DoctrineExtensions\Query\Mysql\YearMonth
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                WEEK: DoctrineExtensions\Query\Mysql\Week
+                DAY: DoctrineExtensions\Query\Mysql\Day
+                DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat
+                NOW: DoctrineExtensions\Query\Mysql\Now
 
 when@test:
     doctrine:
