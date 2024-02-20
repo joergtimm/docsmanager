@@ -24,7 +24,7 @@ document.addEventListener('turbo:before-render', (event) => {
 
         performTransition(document.body, event.detail.newBody, async() => {
             await event.detail.resume();
-        });
+        }).then(() => { console.log('performTransition')});
     }
 });
 

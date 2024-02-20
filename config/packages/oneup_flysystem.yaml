@@ -3,10 +3,16 @@ oneup_flysystem:
     adapters:
         default_adapter:
             local:
-                location: '%kernel.project_dir%/filestorage'
+                location: '%kernel.project_dir%/public/storage'
+        documents_adapter:
+            local:
+                location: '%kernel.project_dir%/public/storage/documents'
 
     filesystems:
         default_filesystem:
             adapter: default_adapter
             alias: League\Flysystem\Filesystem
+        documents:
+            adapter: documents_adapter
+            mount: documents
 

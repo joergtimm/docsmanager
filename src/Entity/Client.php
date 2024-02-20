@@ -34,11 +34,15 @@ class Client
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Video::class)]
     private Collection $videos;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ActorClient::class)]
+    private Collection $actorClients;
+
     public function __construct()
     {
         $this->productions = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->clientKey = Uuid::v1();
+        $this->actorClients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,5 +144,35 @@ class Client
     public function setClientKey(Uuid $clientKey): void
     {
         $this->clientKey = $clientKey;
+    }
+
+    /**
+     * @return Collection<int, ActorClient>
+     */
+    public function getActorClients(): Collection
+    {
+        return $this->actorClients;
+    }
+
+    public function addActorClient(ActorClient $actorClient): static
+    {
+        if (!$this->actorClients->contains($actorClient)) {
+            $this->actorClients->add($actorClient);
+            $actorClient->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActorClient(ActorClient $actorClient): static
+    {
+        if ($this->actorClients->removeElement($actorClient)) {
+            // set the owning side to null (unless already changed)
+            if ($actorClient->getClient() === $this) {
+                $actorClient->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

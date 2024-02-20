@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class DataViewManager
 {
     public const VIDEO = 'video';
+    public const CLIENT = 'client';
 
     public function __construct(private DataViewRepository $repository, private EntityManagerInterface $em)
     {
@@ -27,6 +28,14 @@ class DataViewManager
                     'gridlist' => 'list',
                     'searchProbs' =>
                         ['title', 'createAt']
+                ];
+                break;
+            case self::CLIENT:
+                $defaults = [
+                    'title' => 'Clients',
+                    'gridlist' => 'list',
+                    'searchProbs' =>
+                        ['Name', 'company']
                 ];
                 break;
         }

@@ -21,16 +21,15 @@
                             </svg>
                         </div>
                         <input
-                                type="search"
-                                id="search-bar"
-                                class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search"
-                                name="query"
-                                data-turbo-frames="mandants"
-                                value="{{ app.request.query.get('query') }}"
-                                data-action="autosubmit#debouncedSubmit"
-                                />
-
+                            type="search"
+                            id="search-bar"
+                            class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="Search"
+                            name="query"
+                            data-turbo-frames="mandants"
+                            value="{{ app.request.query.get('query') }}"
+                            data-action="autosubmit#debouncedSubmit"
+                            />
                     </div>
                 </form>
             </div>
@@ -44,10 +43,10 @@
                     <span>Mandant neu</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline" viewBox="0 0 24 24" stroke-width="2"
                          stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
-                        <path d="M9 12h6"/>
-                        <path d="M12 9v6"/>
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                        <path d="M9 12h6"></path>
+                        <path d="M12 9v6"></path>
                     </svg>
                 </twig:Button>
 
@@ -106,20 +105,15 @@
                         <tr>
                             <th scope="col" class="p-4">
                                 <div class="flex items-center">
-                                    <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-all-search" class="sr-only">checkbox</label>
+
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <div class="flex items-center">
-                                    <a href="{{ path('app_mandnat_index', {
-                                        ...app.request.query.all(),
-                                        sort: 'name',
-                                        sortDirection: sort == 'name' and sortDirection == 'asc' ? 'desc' : 'asc',
-                                    }) }}">
-                                        Name {{ _self.sortArrow('name', sort, sortDirection) }}
-                                    </a>
-                                </div>
+                                <twig:TableColTitle
+                                        fieldname="name"
+                                        routename="app_mandnat_index"
+                                        label="Name"
+                                        direction="asc"/>
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 <div class="flex items-center">

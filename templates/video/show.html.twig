@@ -34,7 +34,7 @@
                                 <td class="py-2 pl-10">Status</td>
                                 <td class="py-2">{{ include('video/_online-badge.html.twig', {item: video}) }}</td>
                             </tr>
-                            {#  <tr>
+                             <tr>
                                 <td class="py-2 pl-10">Participants</td>
                                 <td class="py-2">
                                     <div class="flex items-center -space-x-4">
@@ -76,7 +76,6 @@
                                     </div>
                                 </td>
                             </tr>
-                            #}
                             </tbody>
                         </table>
 
@@ -84,7 +83,7 @@
 
                     <div class="h-full">
                         <div class="border-b-2 block md:flex">
-                            <div class="w-full md:w-2/5 p-4 sm:p-6 lg:p-8 bg-white shadow-md">
+                            <div class="w-full bg-white shadow-md">
                                 {% for partic in video.videoActors %}
                                     {{ include('participant/_videocard.html.twig') }}
                                 {% endfor %}
@@ -98,75 +97,11 @@
                     <div>
                         <h1>Videoplayer</h1>
                         {% if video.isverrifyted %}
-                        <script src="https://cdn.jwplayer.com/players/LHndc4SE-7B8RK64Y.js"></script>
+                            <script src="https://cdn.jwplayer.com/players/gKXpcb4h-rlG78VZV.js"></script>
                         {% else %}
                         <p>Nicht freigegeben</p>
                         {% endif %}
                     </div>
-                    <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
-                        <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
-                            <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-                                <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-                                    <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                                        <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                            <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9V4c0-.6-.4-1-1-1H9a1 1 0 0 0-.8.3l-4 4a1 1 0 0 0-.2.6V20c0 .6.4 1 1 1h4M9 3v4c0 .6-.4 1-1 1H4m11 6v4m-2-2h4m3 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z"></path>
-                                            </svg>
-                                            Add
-                                        </button>
-                                        <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                            <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"></path>
-                                            </svg>
-                                            Export
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
-                                            <th scope="col" class="p-4">
-                                                <div class="flex items-center">
-                                                    <input id="checkbox-all" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                    <label for="checkbox-all" class="sr-only">checkbox</label>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="px-4 py-3">Document</th>
-                                            <th scope="col" class="px-4 py-3">Status</th>
-                                            <th scope="col" class="px-4 py-3">...</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                            <td class="w-4 px-4 py-3">
-                                                <div class="flex items-center">
-                                                    <input id="checkbox-table-search-1" type="checkbox"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                                </div>
-                                            </td>
-                                            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Just now</td>
-                                            <td class="px-4 py-2">
-                                                <span class="bg-success text-primary-800 text-xs font-medium px-2 py-2 rounded dark:bg-primary-900 dark:text-primary-300">
-                                                    Desktop PC
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="grid place-items-center bg-emerald-800 p-16 min-h-screen">
-                        <label>
-                            <input class="peer/showLabel absolute scale-0" type="checkbox" />
-                            <span class="block max-h-14 max-w-xs overflow-hidden rounded-lg bg-emerald-100 px-4 py-0 text-cyan-800 shadow-lg transition-all duration-300 peer-checked/showLabel:max-h-52">
-      <h3 class="flex h-14 cursor-pointer items-center font-bold">Expand & Collapse Me</h3>
-      <p class="mb-2">You've crafted a sleek collapsible panel using Tailwind CSS without the need for JavaScript. Impressive! 😎</p>
-    </span>
-                        </label>
-                    </section>
                 </div>
                 {#
                 {{ form_start(form) }}

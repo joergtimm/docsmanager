@@ -23,8 +23,12 @@ class VideoRepository extends ServiceEntityRepository
         parent::__construct($registry, Video::class);
     }
 
-    public function findBySearch(?Client $client, ?string $query, ?string $sort = null, string $direction = 'desc'): QueryBuilder
-    {
+    public function findBySearch(
+        ?Client $client = null,
+        ?string $query = null,
+        ?string $sort = null,
+        string $direction = 'desc'
+    ): QueryBuilder {
         $qb = $this->createQueryBuilder('v');
 
         $qb->leftJoin('v.videoActors', 'va')

@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Actor;
 use App\Entity\Client;
+use App\Factory\ActorClientFactory;
 use App\Factory\ActorFactory;
 use App\Factory\ClientFactory;
 use App\Factory\ContractBlocksFactory;
@@ -17,6 +18,7 @@ use App\Service\DocumentManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AppFixtures extends Fixture
 {
@@ -29,12 +31,20 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        UserFactory::createOne(['email' => 'timm.jrg@gmail.com',
+        UserFactory::createOne(['email' => 'admin@example.com',
             'password' => '+SuperPassword123',
             'roles' => ["ROLE_ADMIN", "ROLE_SUPER_ADMIN"]]);
         UserFactory::createMany(15);
-        $clients = ClientFactory::createMany(22);
-        ActorFactory::createMany(50);
+        $clients = ClientFactory::createMany(50);
+        $actors = ActorFactory::createMany(50, function () use ($clients) {
+            return [
+                'actorClients' => ActorClientFactory::new(function () use ($clients) {
+                    return [
+                        'client' => $clients[array_rand($clients)],
+                    ];
+                })->many(2, 4),
+            ];
+        });
         ProductionFactory::createMany(50);
         MandnatFactory::createMany(50);
         VideoFactory::createMany(100, function () use ($clients) {
@@ -48,6 +58,32 @@ class AppFixtures extends Fixture
             ];
         });
         ContractBlocksFactory::createMany(20);
+
+        foreach ($actors as $actor) {
+            $files = ['fm1.jpg',
+                'fm2.jpg',
+                'fm3.jpg',
+                'fm4.jpg',
+                'fm5.jpg',
+                'fm6.jpg',
+                'fm7.jpg',
+                'fm8.jpg',
+                'fm9.jpg',
+                'fm10.jpg',
+                'fm11.jpg',
+                'fm12.jpg'];
+
+            $rand_keys = array_rand($files, 11);
+            $imgName = __DIR__ . "/../../assets/img/" . $files[$rand_keys[1]];
+            $profile = new UploadedFile(
+                $imgName,
+                $imgName,
+                null,
+                null,
+                false,
+            );
+            $actor->setImageFile($profile);
+        }
 
         $manager->flush();
 

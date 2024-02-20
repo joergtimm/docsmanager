@@ -7,15 +7,15 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class RegisterValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
-        /* @var App\Validator\Register $constraint */
+        /* @var  $constraint */
 
         if (null === $value || '' === $value) {
             return;
         }
 
-        // TODO: implement the validation here
+
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $value)
             ->addViolation();

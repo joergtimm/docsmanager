@@ -3,21 +3,23 @@
 namespace App\Service;
 
 use App\Entity\Documents;
-use Knp\Snappy\Pdf;
-use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
+use setasign\Fpdi\PdfParser\StreamReader;
 
 class PdfManager
 {
-    public function __construct(private readonly ?FilesystemOperator $documentsFilesystem)
-    {
+    public function __construct(
+        private StreamReader $streamReader
+    ) {
     }
 
     /**
-     * @throws FilesystemException
+     * @param Documents $documents
+     *
+     * @return resource
      */
     public function readPdf(Documents $documents)
     {
-        return $this->documentsFilesystem->readStream($documents->getGenFileName());
+        return $this->streamReader->getStream();
     }
 }

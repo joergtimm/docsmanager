@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserSettingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: UserSettingRepository::class)]
 class UserSetting
@@ -20,7 +21,7 @@ class UserSetting
     #[ORM\ManyToOne]
     private ?Client $clientInUse = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $isClientFilter = null;
 
     public function getId(): ?int

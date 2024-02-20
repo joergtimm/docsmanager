@@ -1,0 +1,78 @@
+{% macro svgIcon(path, class) %}
+    <svg xmlns="http://www.w3.org/2000/svg" class="{{ class|default('inline-block w-4 h-4') }}" width="24" height="24"
+         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+         stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="{{ path }}"></path>
+    </svg>
+{% endmacro %}
+
+{% macro sortArrow(sortName, sort, sortDirection) %}
+    {% if sort == sortName %}
+        {% if sortDirection == 'asc' %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4" width="24" height="24"
+                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M6 15l6 -6l6 6"></path>
+            </svg>
+        {% else %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4" width="24" height="24"
+                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M6 9l6 6l6 -6"></path>
+            </svg>
+        {% endif %}
+    {% else %}
+        <!-- up and down arrow svg -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 text-slate-600" width="24" height="24"
+             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+             stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M8 9l4 -4l4 4"></path>
+            <path d="M16 15l-4 4l-4 -4"></path>
+        </svg>
+    {% endif %}
+{% endmacro %}
+<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+        <th scope="col" class="p-4">
+            <div class="flex items-center">
+                <input id="checkbox-all-search" type="checkbox"
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                       data-checkbox-select-all-target="checkboxAll"
+                >
+                <label for="checkbox-all-search" class="sr-only">checkbox</label>
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3">
+            <div class="flex items-center">
+                <a href="{{ path('app_client_index', {
+                    ...app.request.query.all(),
+                    sort: 'Name',
+                    sortDirection: sort == 'Name' and sortDirection == 'asc' ? 'desc' : 'asc',
+                }) }}">
+                    Name {{ _self.sortArrow('Name', sort, sortDirection) }}
+                </a>
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3">
+            <div class="flex items-center">
+                <a href="{{ path('app_client_index', {
+                    ...app.request.query.all(),
+                    sort: 'company',
+                    sortDirection: sort == 'company' and sortDirection == 'asc' ? 'desc' : 'asc',
+                }) }}">
+                    Company {{ _self.sortArrow('company', sort, sortDirection) }}
+                </a>
+            </div>
+        </th>
+    </thead>
+    <tbody>
+    {% for item in pager %}
+        {{ include('client/_row.html.twig') }}
+    {% endfor %}
+    </tbody>
+</table>

@@ -28,7 +28,7 @@ return [
         'version' => '3.2.2',
     ],
     'flowbite/plugin' => [
-        'version' => '2.2.1',
+        'version' => '2.3.0',
     ],
     'mini-svg-data-uri' => [
         'version' => '1.4.4',
@@ -46,14 +46,14 @@ return [
         'version' => '1.0.0',
     ],
     'flowbite' => [
-        'version' => '2.2.1',
+        'version' => '2.3.0',
     ],
     'flowbite/dist/flowbite.min.css' => [
-        'version' => '2.2.1',
+        'version' => '2.3.0',
         'type' => 'css',
     ],
     'hls.js' => [
-        'version' => '1.5.4',
+        'version' => '1.5.5',
     ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',

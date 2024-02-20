@@ -10,10 +10,72 @@
         <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
             <h1 class="text-4xl m-3">Document</h1>
         </div>
-        <div class="border-2 border-solid rounded-lg border-gray-100 dark:border-gray-600 h-full mb-4 p-3">
-            <div class="mx-auto grid grid-cols-12 gap-4 bg-zinc-50 p-1">
-                <div class="col-span-12 rounded-lg bg-gray-50 p-2 sm:col-span-8">
-                    <!-- Main Content -->
+        <div class="grid grid-cols-2 sm:grid-cols-1 gap-4">
+            <div
+                    class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 flex items-center justify-between"
+            >
+                <img src="{{ vich_uploader_asset(document)|imagine_filter('document_img_thumbnail') }}" class="object-cover w-full rounded-lg shadow-lg">
+
+            </div>
+            <div
+                    class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600"
+            >
+                <div class="bg-gray-500 p-6 w-full">
+                    <div class="relative mt-5">
+                        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="bg-white px-2 text-lg text-gray-500">Document</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-200  shadow shadow-lg p-3">
+                        <ul class="list-none">
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'Type', value: document.type }) }}
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'Last Update', value: document.updatedAt|date('d.m.Y') }) }}
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'Unique ID', value: document.documentKey }) }}
+
+                            <li class="border-b-2 border-gray-900 flex items-center justify-between">
+                            <span>
+                                Is Valid
+                            </span>
+                                <span>
+                                {{ document.isValid ? include('_state-badge.html.twig', {value: true}) : include('_state-badge.html.twig', {value: false}) }}
+                            </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="relative mt-5">
+                        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="bg-white px-2 text-lg text-gray-500">Video</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-200  shadow shadow-lg p-3">
+                        <ul class="list-none">
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'Title', value: document.videoActor.video.title }) }}
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'Create at', value: document.videoActor.video.createAt|date('d.m.Y') }) }}
+                        </ul>
+                    </div>
+                    <div class="relative mt-5">
+                        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="bg-white px-2 text-lg text-gray-500">Actor</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-200  shadow shadow-lg p-3">
+                        <ul class="list-none">
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'Name', value: document.videoActor.actor.name }) }}
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'born at', value: document.videoActor.actor.bornAt|date('d.m.Y') }) }}
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'age', value: document.videoActor.actor.bornAt|age }) }}
+                            {{ include('documents/_docinfo-row.html.twig', { lable: 'gender', value: document.videoActor.actor.gender }) }}
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -3,22 +3,76 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\User;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
+use App\Service\DataViewManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/client')]
 class ClientController extends AbstractController
 {
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
-    public function index(ClientRepository $clientRepository): Response
-    {
+    public function index(
+        ClientRepository $clientRepository,
+        DataViewManager $dataViewManager,
+        #[MapQueryParameter] int $page = 1,
+        #[MapQueryParameter] string $query = null,
+        #[MapQueryParameter] string $sort = 'title',
+        #[MapQueryParameter] string $sortDirection = 'ASC',
+        #[MapQueryParameter] string $viewMode = 'list',
+        #[MapQueryParameter] int $listItems = 10,
+        #[MapQueryParameter] int $gridItems = 12,
+    ): Response {
+        /** @var User $me */
+        $me = $this->getUser();
+        $dataView = $dataViewManager->setDataView($me, DataViewManager::CLIENT);
+
+        $validSorts = $dataView->getSearchProbs();
+        $firstSort = reset($validSorts);
+        $firstSort = (string) $firstSort;
+
+        $sort = in_array($sort, $validSorts) ? $sort : $firstSort;
+
+        $validViewModes = ['list', 'grid'];
+        $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
+        $validSortDirections = ['asc', 'desc'];
+        $sortDirection = in_array($sortDirection, $validSortDirections) ? $sortDirection : 'asc';
+
+        $validListItems = [10, 20, 30];
+        $listItems = in_array($listItems, $validListItems) ? $listItems : 10;
+
+        $validGridItems = [12, 24, 36];
+        $gridItems = in_array($gridItems, $validGridItems) ? $gridItems : 12;
+
+        $items = $gridItems;
+
+        if ($viewMode === 'list') {
+            $items = $listItems;
+        }
+        $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($clientRepository->findBySearch(
+                null,
+                $query,
+                $sort,
+                $sortDirection
+            )),
+            $page,
+            $items
+        );
+
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+            'pager' => $pager,
+            'sortDirection' => $sortDirection,
+            'sort' => $sort,
+            'viewMode' => $viewMode
         ]);
     }
 
@@ -71,7 +125,7 @@ class ClientController extends AbstractController
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->request->get('_token'))) {
             $entityManager->remove($client);
             $entityManager->flush();
         }

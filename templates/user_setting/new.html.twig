@@ -3,12 +3,3 @@
         {{ include('user_setting/_form.html.twig') }}
     </turbo-frame>
 {% endblock %}
-{% block user_stream_success %}
-    <turbo-stream action="update" targets="clientfilter">
-        <template>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-        </template>
-    </turbo-stream>
-{% endblock %}

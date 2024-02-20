@@ -1,11 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'modalBase.html.twig' %}
 
-{% block title %}New Documents{% endblock %}
+{% block title %}New Document{% endblock %}
 
-{% block body %}
-    <h1>Create new Documents</h1>
+{% block main_content %}
+    <div class="m-4 p-4 modal:m-0 modal:p-0 bg-gray-50 rounded-lg">
+        <div class="flex justify-between">
+            <h1 class="text-xl font-semibold text-gray-800 mb-4">Create New Document</h1>
 
-    {{ include('documents/_form.html.twig') }}
+            <div class="mr-4">
+                <a href="#" class="text-sm font-medium text-gray-800">
+                    Back to list
+                </a>
+                <div class="inline-block">
+                    {% if form.vars.data.id|default %}
 
-    <a href="{{ path('app_documents_index') }}">back to list</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {{ include('documents/_form.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block stream_success %}
+    <turbo-stream action="prepend" targets="#">
+        <template>
+
+        </template>
+    </turbo-stream>
 {% endblock %}

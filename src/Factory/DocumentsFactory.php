@@ -63,7 +63,7 @@ final class DocumentsFactory extends ModelFactory
                 'id_card_front',
                 'id_card_back',
                 'contract',
-            ]),
+            ])
         ];
     }
 

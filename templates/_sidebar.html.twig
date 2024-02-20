@@ -5,15 +5,11 @@
         id="drawer-navigation"
 >
     <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-        {#
-        <div {{ stimulus_controller('autosubmit') }}>
-            {% block client_form %}
+        {% block client_form %}
                 <turbo-frame id="clientfilter" src="{{ path('app_user_setting_get') }}" loading="lazy">
-
+                    loading...
                 </turbo-frame>
-            {% endblock %}
-        </div>
-        #}
+        {% endblock %}
 
         <ul class="space-y-2">
             <li>
@@ -38,7 +34,7 @@
                 <a
                         data-turbo-frame="maincontent"
                         target="_top"
-                        href="{{ path('app_mandnat_index') }}"
+                        href="{{ path('app_client_index') }}"
                         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
                 >
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

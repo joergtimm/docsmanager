@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,6 +22,24 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+    public function findBySearch(
+        ?Client $client = null,
+        ?string $query = null,
+        ?string $sort = null,
+        string $direction = 'desc'
+    ): QueryBuilder {
+        $qb = $this->createQueryBuilder('c');
+
+        if ($query) {
+            $qb->andWhere('c.Name LIKE :query OR c.company LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+        if ($sort) {
+            $qb->orderBy('c.' . $sort, $direction);
+        }
+
+        return $qb;
+    }
 //    /**
 //     * @return Client[] Returns an array of Client objects
 //     */

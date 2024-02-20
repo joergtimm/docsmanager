@@ -4,7 +4,6 @@ namespace App\DTO;
 
 use App\Entity\VideoActors;
 
-
 class VideoActrorsInfo
 {
     public ?VideoActors $videoActor = null;
@@ -37,15 +36,13 @@ class VideoActrorsInfo
         bool $hasIdCardFront = false,
         bool $hasIdCardBack = false,
         bool $hasContract = false,
-    )
-    {
+    ) {
         $this->videoActor = $videoActor;
         $this->hasIdShot = $hasIdShot;
         $this->hasIdCardFront = $hasIdCardFront;
         $this->hasIdCardBack = $hasIdCardBack;
         $this->hasContract = $hasContract;
         $this->hasAllRequiredDocuments = $this->hasIdShot && $this->hasIdCardFront && $this->hasIdCardBack && $this->hasContract;
-
     }
 
     public function setHasIdShot(bool $hasIdShot): void

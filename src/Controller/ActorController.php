@@ -10,7 +10,6 @@ use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -30,7 +29,7 @@ class ActorController extends AbstractController
         #[MapQueryParameter] int $listItems = 10,
         #[MapQueryParameter] int $gridItems = 12,
     ): Response {
-        $validSorts = ['name', 'bornAt'];
+        $validSorts = ['name', 'bornAt', 'orgin'];
         $sort = in_array($sort, $validSorts) ? $sort : 'name';
 
         $validViewModes = ['list', 'grid'];
@@ -57,7 +56,7 @@ class ActorController extends AbstractController
         );
 
         return $this->render('actor/index.html.twig', [
-            'pages' => $pager,
+            'pager' => $pager,
             'sortDirection' => $sortDirection,
             'sort' => $sort,
             'viewMode' => $viewMode,
@@ -120,7 +119,6 @@ class ActorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->flush();
 
             $this->addFlash('success', 'Dasteller wurde geändert');
@@ -158,7 +156,10 @@ class ActorController extends AbstractController
         $actor = $actor ?? new Actor();
 
         return $this->createForm(ActorType::class, $actor, [
-            'action' => $actor->getId() ? $this->generateUrl('app_actor_edit', ['id' => $actor->getId()]) : $this->generateUrl('app_actor_new'),
+            'action' => $actor->getId() ? $this->generateUrl(
+                'app_actor_edit',
+                ['id' => $actor->getId()]
+            ) : $this->generateUrl('app_actor_new'),
         ]);
     }
 }

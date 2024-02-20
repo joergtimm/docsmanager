@@ -44,6 +44,12 @@ liip_imagine:
             filters:
                 scale:
                     dim: [ 380, 480 ]
+        document_img_thumbnail:
+            filters:
+                thumbnail:
+                    size: [ 800, 450 ]
+                    mode: outbound
+                    allow_upscale: true
         video_card_thumbnail:
           filters:
             thumbnail:

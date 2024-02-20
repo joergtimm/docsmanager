@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\DocumentsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Uid\Uuid;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: DocumentsRepository::class)]
@@ -17,7 +19,10 @@ class Documents
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: "enumdoctype", length: 50)]
+    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    private Uuid $documentKey;
+
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $type = null;
 
     #[ORM\Column]
@@ -29,7 +34,14 @@ class Documents
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Vich\UploadableField(
+        mapping: 'documents',
+        fileNameProperty: 'imageName',
+        size: 'imageSize',
+        mimeType: 'imageMimeType',
+        originalName: 'imageOriginalName',
+        dimensions: 'imageDimensions'
+    )]
     private ?File $imageFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -41,7 +53,7 @@ class Documents
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'pdfName', size: 'pdfSize', mimeType: 'imageMimeType', originalName: 'imageOriginalName', dimensions: 'imageDimensions')]
+    #[Vich\UploadableField(mapping: 'documents', fileNameProperty: 'pdfName', size: 'pdfSize')]
     private ?File $pdfFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -67,8 +79,13 @@ class Documents
     private ?string $imageOriginalName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imageDimensions = null;
+    private ?array $imageDimensions = null;
 
+    public function __construct()
+    {
+        $this->createAt = new \DateTimeImmutable();
+        $this->documentKey = Uuid::v1();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -84,6 +101,15 @@ class Documents
         $this->type = $type;
 
         return $this;
+    }
+    public function getMergeName(): ?string
+    {
+        $clientKey = $this->videoActor->getVideo()->getOwner()->getClientKey();
+        $videoKey = $this->videoActor->getVideo()->getVideoKey();
+        $actorKey = $this->videoActor->getActor()->getActorKey();
+        $type = $this->type;
+
+        return sprintf('%s%s%s%s', $clientKey, $videoKey, $actorKey, $type);
     }
 
     public function getCreateAt(): ?\DateTimeImmutable
@@ -122,7 +148,7 @@ class Documents
         return $this;
     }
 
-    public function setImageFile(?File $imageFile = null): void
+    public function setImageFile(?File $imageFile = null): static
     {
         $this->imageFile = $imageFile;
 
@@ -131,6 +157,7 @@ class Documents
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
         }
+        return $this;
     }
 
     public function getImageFile(): ?File
@@ -190,7 +217,7 @@ class Documents
         }
     }
 
-    public function getPdfName(): string
+    public function getPdfName(): ?string
     {
         return $this->pdfName;
     }
@@ -281,15 +308,23 @@ class Documents
         return $this;
     }
 
-    public function getImageDimensions(): ?string
+    public function getImageDimensions(): ?array
     {
         return $this->imageDimensions;
     }
 
-    public function setImageDimensions(?string $imageDimensions): static
+    public function setImageDimensions(?array $imageDimensions): void
     {
         $this->imageDimensions = $imageDimensions;
+    }
 
-        return $this;
+    public function getDocumentKey(): Uuid
+    {
+        return $this->documentKey;
+    }
+
+    public function setDocumentKey(Uuid $documentKey): void
+    {
+        $this->documentKey = $documentKey;
     }
 }

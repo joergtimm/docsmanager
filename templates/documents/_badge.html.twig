@@ -1,6 +1,33 @@
-
-<a href="{{ path('admin_document_load', { id: doc.id }) }}" target="_top">
-<span class="py-2.5 px-2.5 mx-1 text-xs rounded-1.8 inline-block whitespace-nowrap text-center bg-gradient-to-tl {{ doc.isValid ? 'from-emerald-500 to-teal-400' : 'from-red-600 to-orange-600' }} align-baseline font-bold uppercase leading-none text-white">
-    {{ doc.type }}
+<span
+        id="doc-list-item-{{ doc.id }}"
+        class="flex items-center justify-between py-2.5 px-2.5 mx-1 text-xs rounded-1.8 inline-block whitespace-nowrap shadow shadow-sm hover:shadow-md text-center bg-gradient-to-tl {{ doc.isValid ? 'from-emerald-500 to-teal-400' : 'from-red-600 to-orange-600' }} align-baseline font-bold uppercase leading-none text-white">
+    <p>{{ doc.type }}</p>
+    <div>
+    <button id="item-{{ doc.id }}" data-dropdown-toggle="dropdown-{{ doc.id }}"
+            class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-900 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+            type="button">
+                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z"></path>
+                    </svg>
+            </button>
+            <div id="dropdown-{{ doc.id }}"
+                 class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="apple-iphone-14-dropdown-button">
+                    <li>
+                        <a href="{{ path('admin_document_show', { id: doc.id }) }}" target="_top"
+                           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_document_edit', { id: doc.id }) }}" target="_top"
+                           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                    </li>
+                </ul>
+                <div class="py-1">
+                    <a href="#"
+                       class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                </div>
+            </div>
+    </div>
 </span>
-</a>
+

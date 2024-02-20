@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoRepository;
 use DateTimeImmutable;
@@ -10,10 +11,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['video:read']], denormalizationContext: ['groups' => ['video:write']])]
+#[ORM\UniqueConstraint(fields: ['id'])]
+#[ORM\UniqueConstraint(fields: ['videoKey'])]
+
 class Video
 {
     #[ORM\Id]
@@ -22,6 +27,7 @@ class Video
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['video:read', 'video:write'])]
     private ?string $title = null;
 
     /**
@@ -59,6 +65,7 @@ class Video
     private ?bool $is_h265 = null;
 
     #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[Groups(['video:read', 'video:write'])]
     private Uuid $videoKey;
 
     #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoActors::class)]

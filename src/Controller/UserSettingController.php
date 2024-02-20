@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\UserSetting;
 use App\Form\UserSettingType;
+use App\Repository\UserRepository;
 use App\Repository\UserSettingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,15 +30,21 @@ class UserSettingController extends AbstractController
         return $userSetting;
     }
 
-    #[Route('/', name: 'app_user_setting_get', methods: ['GET', 'POST'])]
+    #[Route('/get', name: 'app_user_setting_get', methods: ['GET', 'POST'])]
     public function getSettings(
         Request $request,
         UserSettingRepository $userSettingRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository
     ): Response {
+        $user = $userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $userSetting = $userSettingRepository->findOneBy(['user' => $this->getUser()]);
         if (!$userSetting) {
-            $userSetting = $this->new($entityManager);
+            $userSetting = new UserSetting();
+            $userSetting->setUser($user);
+            $userSetting->setIsClientFilter(false);
+            $entityManager->persist($userSetting);
+            $entityManager->flush();
         }
 
         $form = $this->createForm(UserSettingType::class, $userSetting, [
@@ -50,8 +58,8 @@ class UserSettingController extends AbstractController
             $entityManager->flush();
 
             if ($request->headers->has('turbo-frame')) {
-                $stream = $this->renderBlockView('user_setting/_stream.html.twig', 'user_stream_success', [
-                    'user_setting' => $userSetting,
+                $stream = $this->renderBlockView('user_setting/_stream.html.twig', 'stream_success', [
+                    'userSettings' => $userSetting,
                     'form' => $form,
                 ]);
 
@@ -60,7 +68,7 @@ class UserSettingController extends AbstractController
         }
 
         return $this->render('user_setting/new.html.twig', [
-            'user_setting' => $userSetting,
+            'userSettings' => $userSetting,
             'form' => $form,
         ]);
     }

@@ -22,7 +22,7 @@ class DocumentManager
     public const ID_CARD_BACK = 'id_card_back';
     public const CONTRACT = 'contract';
 
-    public function __construct(private ?VideoRepository $videoRepository, private readonly ?FilesystemOperator $documentsFilesystem, private readonly ?SluggerInterface $slugger, private ?EntityManagerInterface $em)
+    public function __construct(private ?VideoRepository $videoRepository, private readonly ?FilesystemOperator $defaultFilesystem, private readonly ?SluggerInterface $slugger, private ?EntityManagerInterface $em)
     {
     }
 
@@ -45,7 +45,7 @@ class DocumentManager
 
 
         if ($uploadedFile->getMimeType() == 'application/pdf') {
-            $this->documentsFilesystem->write(
+            $this->defaultFilesystem->write(
                 $destination,
                 file_get_contents($uploadedFile->getPathname())
             );
@@ -57,7 +57,7 @@ class DocumentManager
             'image/jpeg' || $uploadedFile->getMimeType() ==
             'image/gif'
         ) {
-            $this->documentsFilesystem->write(
+            $this->defaultFilesystem->write(
                 self::ID_CARD_FRONT,
                 file_get_contents($uploadedFile->getPathname())
             );
@@ -69,8 +69,8 @@ class DocumentManager
      */
     public function uploadPdf(UploadedFile $uploadedFile): void
     {
-        if (!$this->documentsFilesystem->has('owner')) {
-            $this->documentsFilesystem->createDirectory('owner');
+        if (!$this->defaultFilesystem->has('owner')) {
+            $this->defaultFilesystem->createDirectory('owner');
         }
 
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -116,8 +116,8 @@ class DocumentManager
     public function getVideoDocFolder(Video $video): ?string
     {
         $videoFolder = sprintf("%s/%s", $video->getOwner()->getClientKey(), $video->getVideoKey());
-        if (!$this->documentsFilesystem->has($videoFolder)) {
-                $this->documentsFilesystem->createDirectory($videoFolder);
+        if (!$this->defaultFilesystem->has($videoFolder)) {
+                $this->defaultFilesystem->createDirectory($videoFolder);
         }
 
         return $videoFolder;
@@ -132,8 +132,8 @@ class DocumentManager
         $video = $videoActor->getVideo();
 
         $videoActorDocFolder = $this->getVideoDocFolder($video) . '/' . $videoActor->getActor()->getActorKey();
-        if (!$this->documentsFilesystem->has($videoActorDocFolder)) {
-                $this->documentsFilesystem->createDirectory($videoActorDocFolder);
+        if (!$this->defaultFilesystem->has($videoActorDocFolder)) {
+                $this->defaultFilesystem->createDirectory($videoActorDocFolder);
         }
 
 
@@ -169,7 +169,7 @@ class DocumentManager
      */
     public function getDocIterator(VideoActors $videoActor): Traversable
     {
-        return $this->documentsFilesystem->listContents($this->getVideoActorDocFolder($videoActor))->getIterator();
+        return $this->defaultFilesystem->listContents($this->getVideoActorDocFolder($videoActor))->getIterator();
     }
 
     /**
@@ -179,6 +179,8 @@ class DocumentManager
     {
         $contenIterator = $this->getDocIterator($videoActor);
         $documents = [];
+
+
         foreach ($contenIterator as $item) {
             if ($item['type'] === 'file') {
                 $documents[] = [
@@ -187,8 +189,8 @@ class DocumentManager
                     'fileSize' => $item['fileSize'],
                     'visibility' => $item['visibility'],
                     'lastModified' => $item['lastModified'],
-                    'mimeType' => $this->documentsFilesystem->mimeType($item['path']),
-                    'checksum' => $this->documentsFilesystem->checksum($item['path']),
+                    'mimeType' => $this->defaultFilesystem->mimeType($item['path']),
+                    'checksum' => $this->defaultFilesystem->checksum($item['path']),
                     'docType' => $this->getDocType(basename($item['path'])),
                 ];
             }
@@ -228,19 +230,64 @@ class DocumentManager
             $videoActors = $video->getVideoActors();
             foreach ($videoActors as $videoActor) {
                 $destinationFolder = $this->getVideoActorDocFolder($videoActor);
-                $this->copyFixtureFile($videoActor, $destinationFolder, [self::ID_SHOT, self::ID_CARD_FRONT, self::ID_CARD_BACK, self::CONTRACT]);
+                $this->copyFixtureFile(
+                    $videoActor,
+                    $destinationFolder,
+                    [self::ID_SHOT,
+                        self::ID_CARD_FRONT,
+                        self::ID_CARD_BACK,
+                        self::CONTRACT]
+                );
             }
         }
     }
+
 
     /**
      * @throws FilesystemException
      */
     public function copyFixtureFile(VideoActors $videoActor, string $destinationFolder, array $types): void
     {
+
         foreach ($types as $type) {
             $destination = $destinationFolder . '/' . $this->buildUniqidFilename($videoActor, $type);
-            $this->documentsFilesystem->copy('fixtures/pdf/' . $type . '.pdf', $destination);
+            $this->defaultFilesystem->copy('fixtures/pdf/' . $type . '.pdf', $destination);
+
+            $ids = __DIR__ . "/../../assets/fixtures/pdf/id_shot.jpg";
+            $ids = new UploadedFile(
+                $ids,
+                'id_shot.jpg',
+                null,
+                null,
+                false,
+            );
+
+            $idf = __DIR__ . "/../../assets/fixtures/pdf/id_card_front.jpg";
+            $idf = new UploadedFile(
+                $idf,
+                'id_card_front.jpg',
+                null,
+                null,
+                false,
+            );
+
+            $idb = __DIR__ . "/../../assets/fixtures/pdf/id_card_back.jpg";
+            $idb = new UploadedFile(
+                $idb,
+                'id_card_back.jpg',
+                null,
+                null,
+                false,
+            );
+
+            $con = __DIR__ . "/../../assets/fixtures/pdf/contract.jpg";
+            $con = new UploadedFile(
+                $con,
+                'contract.jpg',
+                null,
+                null,
+                false,
+            );
 
             $doc = new Documents();
             $doc
@@ -251,6 +298,19 @@ class DocumentManager
                 ->setUpdatedAt(new \DateTimeImmutable())
                 ->setIsValid(true)
             ;
+            if ($doc->getType() === self::ID_SHOT) {
+                $doc->setImageFile($ids);
+            }
+            if ($doc->getType() === self::ID_CARD_FRONT) {
+                $doc->setImageFile($idf);
+            }
+            if ($doc->getType() === self::ID_CARD_BACK) {
+                $doc->setImageFile($idb);
+            }
+            if ($doc->getType() === self::CONTRACT) {
+                $doc->setImageFile($con);
+            }
+
             $this->em->persist($doc);
             $this->em->flush();
         }
@@ -261,13 +321,13 @@ class DocumentManager
      */
     public function purgeFixturesVodeoActorDocs(): void
     {
-        $content = $this->documentsFilesystem->listContents('/')->getIterator();
+        $content = $this->defaultFilesystem->listContents('/')->getIterator();
         foreach ($content as $item) {
             if ($item['type'] === 'file' && str_contains($item['path'], 'fixtures')) {
-                $this->documentsFilesystem->delete($item['path']);
+                $this->defaultFilesystem->delete($item['path']);
             }
             if ($item['type'] === 'directory' && str_contains($item['path'], 'fixtures')) {
-                $this->documentsFilesystem->delete($item['path']);
+                $this->defaultFilesystem->delete($item['path']);
             }
         }
     }

@@ -21,8 +21,16 @@
         </div>
     </th>
     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        <p class="mb-0 font-semibold leading-tight text-xs">Deutschland</p>
-        <p class="mb-0 leading-tight text-xs text-slate-400">Berlin</p>
+        <div class="">
+            {% for actorClient in item.actorClients %}
+                <a href="#">
+                    <span class="flex justify-between rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 border border-2 shadow shadow-md">
+                        <p>{{ actorClient.client.Name }}</p>
+                        <p>{{ actorClient.client.company }}</p>
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
     </th>
     <td class="px-6 py-4">
         <p class="mb-0 font-semibold leading-tight text-xs">{{ item.bornAt|date('d.m.Y') }}</p>
