@@ -18,13 +18,13 @@ class LoginFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'mapped' => false,
                 'attr' => [
-                    'data-target' => 'emailin'
+                    'data-login-target' => 'emailin'
                 ]
             ])
             ->add('password', PasswordType::class, [
                 'toggle' => true,
                 'attr' => [
-                    'data-target' => 'passwordin'
+                    'data-login-target' => 'passwordin'
                 ]
             ])
             ->add('_remember_me', CheckboxType::class, [

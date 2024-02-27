@@ -10,7 +10,10 @@ use App\Service\DocumentManager;
 use App\Service\PdfManager;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
+use setasign\Fpdi\PdfParser\Filter\FilterException;
 use setasign\Fpdi\PdfParser\PdfParserException;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 use setasign\Fpdi\PdfReader\PdfReaderException;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,21 +65,7 @@ class DocumentsController extends AbstractController
     #[Route('/admin/show/doc/{id}', name: 'admin_document_show')]
     public function show(Documents $documents): Response
     {
-        /*
-        $fpdi = new Fpdi();
-        $pageCount = $fpdi->setSourceFile($this->loadPdf($documents, $pdfManager));
-            $pageNumbers = range(1, $pageCount);
-            $pages = [];
-        foreach ($pageNumbers as $pageNumber) {
-            $templateId = $fpdi->importPage($pageNumber);
-            $size = $fpdi->getTemplateSize($templateId);
-            $pages[] = [
-                'number' => $pageNumber,
-                'size' => $size,
-            ];
-        }
 
-        */
 
         return $this->render('documents/show.html.twig', [
             'document' => $documents,

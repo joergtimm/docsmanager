@@ -26,9 +26,6 @@
             <meta name="msapplication-TileColor" content="#ffffff">
             <meta name="msapplication-TileImage" content="{{ asset('fav/ms-icon-144x144.png') }}">
             <meta name="theme-color" content="#ffffff">
-
-
-
             <meta name="apple-mobile-web-app-title" content="{{ 'prop.title.apple' }}">
             <meta name="application-name" content="{{ 'prop.app.name'}}">
         {% endblock %}
@@ -40,7 +37,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
         {% block stylesheets %}
-
+            <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
         {% endblock %}
 
         {% block javascripts %}
@@ -72,7 +69,7 @@
         {% else %}
             <!-- up and down arrow svg -->
             <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 text-slate-600" width="24" height="24"
-                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                 viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" fill="none" stroke-linecap="round"
                  stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M8 9l4 -4l4 4"></path>
@@ -122,11 +119,13 @@
                             </button>
                             <a href="#" class="flex items-center justify-between mr-4">
                                 <img
-                                        src="{{ asset('img/logo.png') }}"
+                                        src="{{ asset('img/logo.webp') }}"
                                         class="mr-3 h-12"
                                         alt="Flowbite Logo"
                                 />
-                                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Legal Manager</span>
+                                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                                    Legal Manager
+                                </span>
                             </a>
                         </div>
                         <div class="flex items-center lg:order-2">
@@ -622,7 +621,7 @@
                                         </div>
                                     </a>
                                     <a
-                                            href="#"
+                                            href="{{ path('app_logout') }}"
                                             class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                                     >
                                         <svg
@@ -785,6 +784,7 @@
                                 </ul>
 
                             </div>
+                            {#
                             <div class="ms-5 border-2 border-solid rounded-lg border-gray-100 dark:border-gray-600">
                                 <ul class="text-gray-700 dark:text-gray-300">
                                     <li id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
@@ -802,6 +802,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            #}
                         </div>
                     </div>
                 </nav>
@@ -810,9 +811,12 @@
                     {{ include('_sidebar.html.twig') }}
                 {% endblock %}
 
+
+
                 <main class="p-4 md:ml-64 h-[calc(100%-1rem)] pt-20">
                     {% block main_content %}
                         <turbo-frame id="maincontent">
+                            {#
                             <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">
                                 <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
                                     <dt class="text-sm font-medium leading-6 text-gray-500 dark:text-white">Revenue</dt>
@@ -835,13 +839,15 @@
                                     <dd class="w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 dark:text-white">$30,156.00</dd>
                                 </div>
                             </dl>
-
+                            #}
 
 
                     <div class="grid grid-cols-2 gap-4 mb-4 mt-3">
+                        {#
                         <div
                                 class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-100 md:h-100 dark:text-white dark:bg-gray-800"
                         >
+
                             <div class="flex flex-col justify-center items-center">
                                 <!-- Modal toggle -->
                                 <div class="flex justify-center m-5">
@@ -909,7 +915,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                        </div>#}
+                        {#
                         <div
                                 class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-100 md:h-100"
                         >
@@ -995,9 +1003,12 @@
                         <div
                                 class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
                         ></div>
+                        #}
+
                     </div>
                         </turbo-frame>
                     {% endblock %}
+
                 </main>
             </div>
 

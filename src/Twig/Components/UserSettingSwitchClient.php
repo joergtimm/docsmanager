@@ -24,7 +24,6 @@ final class UserSettingSwitchClient extends AbstractController
     #[LiveProp]
     public ?UserSetting $initialFormData = null;
 
-
     protected function instantiateForm(): FormInterface
     {
         $userSettings = $this->initialFormData ?? new UserSetting();

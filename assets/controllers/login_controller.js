@@ -7,8 +7,6 @@ export default class extends Controller {
 
     connect()
     {
-        console.log('login');
-        this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/login_controller.js';
         this.fillValues();
     }
 

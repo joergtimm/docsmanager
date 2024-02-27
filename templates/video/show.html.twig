@@ -31,6 +31,10 @@
                                 <td class="py-2">{{ video.updateAt|date('d.m.Y') }}</td>
                             </tr>
                             <tr>
+                                <td class="py-2 pl-6 font-medium">Video-Key</td>
+                                <td class="py-2">{{ video.videoKey }}</td>
+                            </tr>
+                            <tr>
                                 <td class="py-2 pl-10">Status</td>
                                 <td class="py-2">{{ include('video/_online-badge.html.twig', {item: video}) }}</td>
                             </tr>
@@ -71,16 +75,13 @@
                                                     </div>
                                                 </template>
                                             </div>
-
                                         {% endfor %}
                                     </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
                     </div>
-
                     <div class="h-full">
                         <div class="border-b-2 block md:flex">
                             <div class="w-full bg-white shadow-md">

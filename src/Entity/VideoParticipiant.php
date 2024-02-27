@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VideoParticipiantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VideoParticipiantRepository::class)]
-#[ApiResource]
 class VideoParticipiant
 {
     #[ORM\Id]

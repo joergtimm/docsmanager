@@ -9,7 +9,7 @@ use setasign\Fpdi\PdfParser\StreamReader;
 class PdfManager
 {
     public function __construct(
-        private StreamReader $streamReader
+
     ) {
     }
 
@@ -20,6 +20,6 @@ class PdfManager
      */
     public function readPdf(Documents $documents)
     {
-        return $this->streamReader->getStream();
+
     }
 }

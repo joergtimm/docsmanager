@@ -72,7 +72,8 @@ class ClientController extends AbstractController
             'pager' => $pager,
             'sortDirection' => $sortDirection,
             'sort' => $sort,
-            'viewMode' => $viewMode
+            'viewMode' => $viewMode,
+            'dataView' => $dataView
         ]);
     }
 

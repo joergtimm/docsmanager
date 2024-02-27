@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
                     return [
                         'client' => $clients[array_rand($clients)],
                     ];
-                })->many(2, 4),
+                })->many(1, 5),
             ];
         });
         ProductionFactory::createMany(50);

@@ -65,7 +65,6 @@ class VideoController extends AbstractController
             $items = $listItems;
         }
 
-
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($videoRepository->findBySearch(
                 $me->getUserSetting()->getClientInUse(),
@@ -81,7 +80,8 @@ class VideoController extends AbstractController
             'pager' => $pager,
             'sortDirection' => $sortDirection,
             'sort' => $sort,
-            'viewMode' => $viewMode
+            'viewMode' => $viewMode,
+            'dataView' => $dataView
         ]);
     }
 

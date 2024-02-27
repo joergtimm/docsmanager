@@ -38,3 +38,6 @@ phpstan.neon
 ###< liip/imagine-bundle ###
 /storage/documents/
 /public/videos/
+/public/storage/
+/public/media/
+/public/videos/

@@ -8,6 +8,11 @@
         <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
             <div class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
                 <div class="w-full md:w-1/2">
+                    <div class="flex items-center justify-between space-x-4 pt-3 mb-2">
+                        <div class="flex-1 flex items-center space-x-3">
+                            <h5 class="dark:text-white font-semibold">{{ dataView.title }}</h5>
+                        </div>
+                    </div>
                     {% set common_classes = "border block w-full p-2.5 rounded-lg" %}
                     {% set light_mode_classes = "bg-gray-50 border-gray-300 text-gray-900 focus:ring-primary-500 focus:border-primary-500" %}
                     {% set dark_mode_classes = "dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %}

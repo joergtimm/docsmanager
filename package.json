@@ -1,7 +1,7 @@
 {
   "name": "contentmanager",
   "version": "1.0.0",
-  "description": "",
+  "description": "dest",
   "main": "tailwind.config.js",
   "directories": {
     "test": "tests"
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Jörg Timm",
   "license": "ISC",
   "dependencies": {
     "flowbite": "^2.2.1"

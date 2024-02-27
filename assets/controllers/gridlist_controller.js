@@ -38,9 +38,11 @@ export default class extends Controller {
    */
     connect()
     {
-        this.viewModeValue = localStorage.getItem('viewMode')
-        this.listItemsValue = localStorage.getItem('listItems')
-        this.gridItemsValue = localStorage.getItem('gridItems')
+        // this.viewModeValue = localStorage.getItem('viewMode')
+        // this.listItemsValue = localStorage.getItem('listItems')
+        // this.gridItemsValue = localStorage.getItem('gridItems')
+
+        this.toggle();
 
         if (this.viewModeValue === 'grid') {
             this.gridbtnTarget.classList.remove('active')
