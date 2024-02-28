@@ -1,40 +1,4 @@
-{% macro svgIcon(path, class) %}
-    <svg xmlns="http://www.w3.org/2000/svg" class="{{ class|default('inline-block w-4 h-4') }}" width="24" height="24"
-         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-         stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <path d="{{ path }}"></path>
-    </svg>
-{% endmacro %}
-
-{% macro sortArrow(sortName, sort, sortDirection) %}
-    {% if sort == sortName %}
-        {% if sortDirection == 'asc' %}
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4" width="24" height="24"
-                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                 stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M6 15l6 -6l6 6"></path>
-            </svg>
-        {% else %}
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4" width="24" height="24"
-                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                 stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M6 9l6 6l6 -6"></path>
-            </svg>
-        {% endif %}
-    {% else %}
-        <!-- up and down arrow svg -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 text-slate-600" width="24" height="24"
-             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-             stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M8 9l4 -4l4 4"></path>
-            <path d="M16 15l-4 4l-4 -4"></path>
-        </svg>
-    {% endif %}
-{% endmacro %}
+{% import '_macros.html.twig' as colheader %}
 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
@@ -54,7 +18,7 @@
                     sort: 'title',
                     sortDirection: sort == 'title' and sortDirection == 'asc' ? 'desc' : 'asc',
                 }) }}">
-                    Title {{ _self.sortArrow('title', sort, sortDirection) }}
+                    Title {{ colheader.sortArrow('title', sort, sortDirection) }}
                 </a>
             </div>
         </th>
@@ -75,7 +39,7 @@
                     sort: 'createAt',
                     sortDirection: sort == 'createAt' and sortDirection == 'asc' ? 'desc' : 'asc',
                 }) }}">
-                    CreateAt {{ _self.sortArrow('createAt', sort, sortDirection) }}
+                    CreateAt {{ colheader.sortArrow('createAt', sort, sortDirection) }}
                 </a>
             </div>
         </th>

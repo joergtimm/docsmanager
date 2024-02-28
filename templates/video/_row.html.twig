@@ -15,7 +15,7 @@
         <p class="mb-0 font-semibold leading-tight text-xs">{{ item.owner.Name }}</p>
         <p class="mb-0 leading-tight text-xs text-slate-400">{{ item.owner.company }}</p>
     </td>
-    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         <div class=" min-h-[50px] w-full overflow-x-scroll rounded-lg  lg:overflow-visible">
             <div class="flex items-center -space-x-4">
                 {% for videoActor in item.videoActors %}
@@ -26,7 +26,7 @@
                     >
                         <img
                         alt="{{ videoActor.actor.id }}-{{ videoActor.actor.name }}"
-                        src="{{ asset('img/'~videoActor.actor.profilepic) }}"
+                        src="{{ vich_uploader_asset(videoActor.actor) }}"
                         class="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
                         />
                         <template data-popover-target="content">
@@ -55,7 +55,7 @@
                 {% endfor %}
             </div>
         </div>
-    </th>
+    </td>
     <td class="px-6 py-4">
         <p class="mb-0 font-semibold leading-tight text-xs">{{ item.createAt|ago }}</p>
         <p class="mb-0 leading-tight text-xs text-slate-400">{{ item.updateAt|ago }}</p>
@@ -64,16 +64,18 @@
         {{ include('video/_online-badge.html.twig') }}
     </td>
     <td class="px-6 py-4 whitespace-nowrap flex">
-        <a
+        <twig:Button
+                tag="a"
+                variant="link"
                 href="{{ path('app_video_edit', {'id': item.id}) }}"
-                class="ml-4 text-yellow-400 hover:text-yellow-600"
                 data-turbo-frame="modal"
+                class="flex items-center font-bold"
         >
             <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                  fill="currentColor" viewBox="0 0 20 20">
                 <path d="m13.835 7.578-.005.007-7.137 7.137 2.139 2.138 7.143-7.142-2.14-2.14Zm-10.696 3.59 2.139 2.14 7.138-7.137.007-.005-2.141-2.141-7.143 7.143Zm1.433 4.261L2 12.852.051 18.684a1 1 0 0 0 1.265 1.264L7.147 18l-2.575-2.571Zm14.249-14.25a4.03 4.03 0 0 0-5.693 0L11.7 2.611 17.389 8.3l1.432-1.432a4.029 4.029 0 0 0 0-5.689Z"></path>
             </svg>
-        </a>
+        </twig:Button>
         <twig:Modal :allowSmallWidth="true">
             <twig:block name="trigger">
                 <button

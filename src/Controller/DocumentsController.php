@@ -9,6 +9,8 @@ use App\Form\DocumentsType;
 use App\Service\DocumentManager;
 use App\Service\PdfManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use League\Flysystem\FilesystemException;
 use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
 use setasign\Fpdi\PdfParser\Filter\FilterException;
@@ -141,6 +143,25 @@ class DocumentsController extends AbstractController
             'videoActor' => $document->getVideoActor(),
             'form' => $form,
         ]);
+    }
+
+    #[Route('/get/pdf/{id}', name: 'app_document_as_pdf', methods: ['GET', 'POST'])]
+    public function getPdf(Pdf $pdf, Documents $document): PdfResponse
+    {
+        $pdf->setOption('disable-javascript', false);
+        $pdf->generate('https://localhost:8000/actor', 'myVideo.pdf');
+        $html = $this->renderView('pdfBase.html.twig');
+
+        $pdf->setOption('lowquality', false);
+        $pdf->setOption('page-size', 'A4');
+        $pdf->setOption('encoding', 'UTF-8');
+        $pdf->setOption('disable-javascript', true);
+
+
+        return new PdfResponse(
+            $pdf->getOutputFromHtml($html),
+            $document->getMergeName() . '.pdf'
+        );
     }
 
     private function createDocumentForm(VideoActors $videoActors, ?Documents $document = null): FormInterface

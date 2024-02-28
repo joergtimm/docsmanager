@@ -2,6 +2,8 @@
 
 {% block title %}Actor index{% endblock %}
 
+{% import '_macros.html.twig' as colheader %}
+
 {% block main_content %}
     <!-- Start coding here -->
     <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
@@ -85,7 +87,10 @@
     <div class="border-2 border-solid rounded-lg border-gray-100 dark:border-gray-600 h-full mb-4 p-3">
         {% block actor_list_frame %}
             <turbo-frame id="actor-list" data-turbo-action="advance">
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div
+                class="relative overflow-x-auto shadow-md sm:rounded-lg"
+                data-controller="checkbox-select-all check"
+        >
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -102,7 +107,7 @@
                                 sort: 'name',
                                 sortDirection: sort == 'name' and sortDirection == 'asc' ? 'desc' : 'asc',
                             }) }}">
-                                Name {{ _self.sortArrow('name', sort, sortDirection) }}
+                                Name {{ colheader.sortArrow('name', sort, sortDirection) }}
                             </a>
                         </div>
                     </th>
@@ -113,7 +118,7 @@
                                 sort: 'orgin',
                                 sortDirection: sort == 'orgin' and sortDirection == 'asc' ? 'desc' : 'asc',
                             }) }}">
-                                Orgin {{ _self.sortArrow('orgin', sort, sortDirection) }}
+                                Orgin {{ colheader.sortArrow('orgin', sort, sortDirection) }}
                             </a>
                         </div>
                     </th>
@@ -124,7 +129,7 @@
                                 sort: 'bornAt',
                                 sortDirection: sort == 'bornAt' and sortDirection == 'asc' ? 'desc' : 'asc',
                             }) }}">
-                                bornAt {{ _self.sortArrow('bornAt', sort, sortDirection) }}
+                                bornAt {{ colheader.sortArrow('bornAt', sort, sortDirection) }}
                             </a>
                         </div>
                     </th>

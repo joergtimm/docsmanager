@@ -10,7 +10,7 @@
     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         <div class="flex px-2 py-1">
             <div>
-                <img src="{{ asset('img/'~item.profilepic) }}"
+                <img src="{{ vich_uploader_asset(item)|imagine_filter('squared_thumbnail_small') }}"
                      class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                      alt="actor-{{ item.id }}"/>
             </div>
@@ -40,26 +40,28 @@
         <span class="bg-gradient-to-tl from-green-600 to-lime-400 px-1 text-xs rounded-1.8 py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Online</span>
     </td>
     <td class="px-6 py-4 whitespace-nowrap flex">
-        <a
+        <twig:Button
+                tag="a"
+                variant="link"
                 href="{{ path('app_actor_edit', {'id': item.id}) }}"
-                class="ml-4 text-yellow-400 hover:text-yellow-600"
                 data-turbo-frame="modal"
+                class="flex items-center font-bold"
         >
-            <svg class="w-6 h-6 text-gray-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                  fill="currentColor" viewBox="0 0 20 20">
-                <path d="m13.835 7.578-.005.007-7.137 7.137 2.139 2.138 7.143-7.142-2.14-2.14Zm-10.696 3.59 2.139 2.14 7.138-7.137.007-.005-2.141-2.141-7.143 7.143Zm1.433 4.261L2 12.852.051 18.684a1 1 0 0 0 1.265 1.264L7.147 18l-2.575-2.571Zm14.249-14.25a4.03 4.03 0 0 0-5.693 0L11.7 2.611 17.389 8.3l1.432-1.432a4.029 4.029 0 0 0 0-5.689Z"/>
+                <path d="m13.835 7.578-.005.007-7.137 7.137 2.139 2.138 7.143-7.142-2.14-2.14Zm-10.696 3.59 2.139 2.14 7.138-7.137.007-.005-2.141-2.141-7.143 7.143Zm1.433 4.261L2 12.852.051 18.684a1 1 0 0 0 1.265 1.264L7.147 18l-2.575-2.571Zm14.249-14.25a4.03 4.03 0 0 0-5.693 0L11.7 2.611 17.389 8.3l1.432-1.432a4.029 4.029 0 0 0 0-5.689Z"></path>
             </svg>
-        </a>
+        </twig:Button>
         <twig:Modal :allowSmallWidth="true">
             <twig:block name="trigger">
                 <button
                         class="ml-4 text-red-400 hover:text-red-600"
                         data-action="modal#open"
                 >
-                    <svg class="w-6 h-6 text-gray-600 hover:text-gray-800 dark:text-white" aria-hidden="true"
+                    <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true"
                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                              d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"></path>
                     </svg>
                 </button>
             </twig:block>
@@ -67,14 +69,14 @@
             <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                  stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
-                <path d="M12 9v4"/>
-                <path d="M12 16v.01"/>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                <path d="M12 9v4"></path>
+                <path d="M12 16v.01"></path>
             </svg>
 
             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Delete this Actor???
+                Delete this Client???
             </h3>
 
             <div class="flex justify-between">

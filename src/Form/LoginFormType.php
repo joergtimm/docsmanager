@@ -17,15 +17,9 @@ class LoginFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'mapped' => false,
-                'attr' => [
-                    'data-login-target' => 'emailin'
-                ]
             ])
             ->add('password', PasswordType::class, [
                 'toggle' => true,
-                'attr' => [
-                    'data-login-target' => 'passwordin'
-                ]
             ])
             ->add('_remember_me', CheckboxType::class, [
                 'required' => false,

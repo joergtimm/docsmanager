@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\UX\Dropzone\Form\DropzoneType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ActorType extends AbstractType
 {
@@ -37,8 +38,15 @@ class ActorType extends AbstractType
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('profilepic', FileType::class, [
-                'mapped' => false,
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'löschen',
+                'download_label' => 'download',
+                'download_uri' => true,
+                'image_uri' => true,
+                'imagine_pattern' => 'video_card_thumbnail',
+                'asset_helper' => true,
             ])
         ;
     }
