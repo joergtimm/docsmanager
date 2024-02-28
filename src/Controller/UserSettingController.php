@@ -38,7 +38,7 @@ class UserSettingController extends AbstractController
         UserRepository $userRepository
     ): Response {
         $user = $userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
-        $userSetting = $userSettingRepository->findOneBy(['user' => $this->getUser()]);
+        $userSetting = $userSettingRepository->findOneBy(['user' => $user]);
         if (!$userSetting) {
             $userSetting = new UserSetting();
             $userSetting->setUser($user);
