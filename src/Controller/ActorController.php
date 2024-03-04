@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Actor;
+use App\Entity\User;
 use App\Form\ActorType;
 use App\Repository\ActorRepository;
+use App\Service\DataViewManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
@@ -21,6 +23,7 @@ class ActorController extends AbstractController
     #[Route('/', name: 'app_actor_index', methods: ['GET'])]
     public function index(
         ActorRepository $actorRepository,
+        DataViewManager $dataViewManager,
         #[MapQueryParameter] int $page = 1,
         #[MapQueryParameter] string $query = null,
         #[MapQueryParameter] string $sort = 'name',
@@ -29,8 +32,15 @@ class ActorController extends AbstractController
         #[MapQueryParameter] int $listItems = 10,
         #[MapQueryParameter] int $gridItems = 12,
     ): Response {
-        $validSorts = ['name', 'bornAt', 'orgin'];
-        $sort = in_array($sort, $validSorts) ? $sort : 'name';
+        /** @var User $me */
+        $me = $this->getUser();
+        $dataView = $dataViewManager->setDataView($me, DataViewManager::ACTOR);
+
+        $validSorts = $dataView->getSearchProbs();
+        $firstSort = reset($validSorts);
+        $firstSort = (string) $firstSort;
+
+        $sort = in_array($sort, $validSorts) ? $sort : $firstSort;
 
         $validViewModes = ['list', 'grid'];
         $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
@@ -60,8 +70,7 @@ class ActorController extends AbstractController
             'sortDirection' => $sortDirection,
             'sort' => $sort,
             'viewMode' => $viewMode,
-            'listItems' => $listItems,
-            'gridItems' => $gridItems
+            'dataView' => $dataView
         ]);
     }
 
@@ -162,4 +171,5 @@ class ActorController extends AbstractController
             ) : $this->generateUrl('app_actor_new'),
         ]);
     }
+
 }

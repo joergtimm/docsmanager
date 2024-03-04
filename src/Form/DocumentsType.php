@@ -23,13 +23,13 @@ class DocumentsType extends AbstractType
         $builder
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
-                'allow_delete' => true,
+                'allow_delete' => false,
                 'delete_label' => 'löschen',
                 'download_label' => 'download',
-                'download_uri' => true,
-                'image_uri' => true,
+                'download_uri' => false,
+                'image_uri' => false,
                 'imagine_pattern' => 'video_card_thumbnail',
-                'asset_helper' => true,
+                'asset_helper' => false,
             ])
             ->add('isValid', SwitchType::class, [
                 'label' => 'valid',

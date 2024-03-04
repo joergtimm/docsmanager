@@ -14,6 +14,7 @@ export default class extends Controller {
     connect()
     {
 
+
         this.player = videojs(this.myplayerTarget, {
             control: true,
             autoplay: true,
@@ -66,6 +67,20 @@ export default class extends Controller {
 
         this.player.ready(() => {
             this.player.play();
+        });
+        this.player.on('error', () => {
+            this.player.error(null);
+            this.player.src(sources);
+            this.player.play();
+        });
+        this.player.on('ended', () => {
+            this.player.currentTime(0);
+            this.player.play();
+        });
+        this.player.on('timeupdate', () => {
+            if (this.player.currentTime() > 10) {
+                this.player.pause();
+            }
         });
     }
 

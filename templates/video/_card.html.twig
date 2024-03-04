@@ -1,38 +1,69 @@
 <div id="video-list-item-{{ item.id }}"
-     class="relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
-    <a href="" class="hover:text-orange-600 absolute z-30 top-2 right-0 mt-2 mr-3">
-        <svg class="w-6 h-6 text-yellow-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-             fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"></path>
-        </svg>
-    </a>
-    <a href="" class="z-20 absolute h-full w-full top-0 left-0 ">&nbsp;</a>
-    <div class="h-auto overflow-hidden">
-        <div class="h-auto overflow-hidden relative">
-            <img src="{{ asset('img/'~item.thumb) }}" alt="">
-        </div>
+     class="p-3 relative flex flex-col shadow-md rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
+    <a href="{{ path('app_video_show', { id: item.id }) }}" target="_top" class="mb-0 font-semibold leading-tight">{{ item.title }}</a>
+
+    <div class="h-auto overflow-hidden mt-3 p-2 border">
+        <h4>Owner</h4>
+        <p class="mb-0 font-semibold leading-tight text-xs">{{ item.owner.Name }}</p>
+        <p class="mb-0 leading-tight text-xs text-slate-400">{{ item.owner.company }}</p>
     </div>
     <div class="bg-white py-4 px-3">
-        <h3 class="text-xs mb-2 font-medium">{{ item.title }}</h3>
-        <div class="flex justify-between items-center">
-            <p class="text-xs text-gray-400">
+        <div class=" min-h-[50px] w-full overflow-x-scroll rounded-lg  lg:overflow-visible">
+            <div class="flex items-center -space-x-4">
+                {% for videoActor in item.videoActors %}
+                    <div
+                            data-controller="popover"
+                            data-action="mouseenter->popover#show mouseleave->popover#hide"
+                            class="relative"
+                    >
+                        <img
+                                alt="{{ videoActor.actor.id }}-{{ videoActor.actor.name }}"
+                                src="{{ vich_uploader_asset(videoActor.actor) }}"
+                                class="relative inline-block h-12 w-12 rounded-full border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+                        />
+                        <template data-popover-target="content">
+                            <div
+                                    data-popover-target="card"
+                                    class="max-w-sm rounded shadow-lg bg-white absolute left-0 z-50"
+                                    style="bottom: 2rem; width: max-content;"
+                            >
+                                <turbo-frame loading="lazy" id="actor-pop-card-{{ videoActor.actor.id }}" target="_top"
+                                             src="{{ path('app_actor_show_popcard', {
+                                                 'id': videoActor.actor.id,
+                                             }) }}">
+                                    <div class="p-10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="animate-spin" width="24"
+                                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M12 3a9 9 0 1 0 9 9"></path>
+                                        </svg>
+                                    </div>
+                                </turbo-frame>
+                            </div>
+                        </template>
+                    </div>
 
-            </p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="bg-gradient-to-tl {{ item.isverrifyted ? 'from-emerald-500 to-teal-400' : 'from-red-600 to-orange-600' }} px-1 text-xs rounded-1.8 py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
+    {{ item.isverrifyted ? 'online' : 'offline' }}
+</span>
             <div class="relative z-40 flex items-center gap-2">
-                <a class="text-orange-600 hover:text-blue-500" href="">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                <twig:Button
+                        tag="a"
+                        variant="link"
+                        href="{{ path('app_video_edit', {'id': item.id}) }}"
+                        data-turbo-frame="modal"
+                        class="flex items-center font-bold"
+                >
+                    <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                         fill="currentColor" viewBox="0 0 20 20">
+                        <path d="m13.835 7.578-.005.007-7.137 7.137 2.139 2.138 7.143-7.142-2.14-2.14Zm-10.696 3.59 2.139 2.14 7.138-7.137.007-.005-2.141-2.141-7.143 7.143Zm1.433 4.261L2 12.852.051 18.684a1 1 0 0 0 1.265 1.264L7.147 18l-2.575-2.571Zm14.249-14.25a4.03 4.03 0 0 0-5.693 0L11.7 2.611 17.389 8.3l1.432-1.432a4.029 4.029 0 0 0 0-5.689Z"></path>
                     </svg>
-                </a>
-                <a class="text-orange-600 hover:text-blue-500" href="">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
-                    </svg>
-                </a>
+                </twig:Button>
             </div>
         </div>
     </div>

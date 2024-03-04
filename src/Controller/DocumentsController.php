@@ -132,9 +132,8 @@ class DocumentsController extends AbstractController
             }
 
             return $this->redirectToRoute(
-                'admin_document_show',
-                ['id' => $document->getId()],
-                Response::HTTP_SEE_OTHER
+                'app_video_show',
+                ['id' => $document->getVideoActor()->getVideo()->getId()]
             );
         }
 
@@ -160,7 +159,7 @@ class DocumentsController extends AbstractController
 
         return new PdfResponse(
             $pdf->getOutputFromHtml($html),
-            $document->getMergeName() . '.pdf'
+            $document->getDocumentKey() . '.pdf'
         );
     }
 

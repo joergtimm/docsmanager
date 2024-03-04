@@ -33,7 +33,7 @@ class VideoController extends AbstractController
         #[MapQueryParameter] string $query = null,
         #[MapQueryParameter] string $sort = 'title',
         #[MapQueryParameter] string $sortDirection = 'ASC',
-        #[MapQueryParameter] string $viewMode = 'list',
+        #[MapQueryParameter] string $viewMode = '',
         #[MapQueryParameter] int $listItems = 10,
         #[MapQueryParameter] int $gridItems = 12,
     ): Response {
@@ -49,7 +49,7 @@ class VideoController extends AbstractController
         $sort = in_array($sort, $validSorts) ? $sort : $firstSort;
 
         $validViewModes = ['list', 'grid'];
-        $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'list';
+        $viewMode = in_array($viewMode, $validViewModes) ? $viewMode : 'grid';
         $validSortDirections = ['asc', 'desc'];
         $sortDirection = in_array($sortDirection, $validSortDirections) ? $sortDirection : 'asc';
 

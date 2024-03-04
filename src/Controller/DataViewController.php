@@ -17,19 +17,21 @@ class DataViewController extends AbstractController
 {
     #[Route('/_get', name: 'app_data_view_show', methods: ['GET', 'POST'])]
     public function getViewParams(
+        EntityManagerInterface $em,
         DataViewRepository $dataViewRepository,
         #[MapQueryParameter] string $type = 'home',
-    ): Response {
+    ): DataView {
         $dataView = $dataViewRepository->findOneBy(['user' => $this->getUser(), 'type' => $type]);
         if (!$dataView) {
-            $dataView = $this->new();
+            $dataView = $this->new(
+                $em,
+            );
         }
         return $dataView;
     }
 
     #[Route('/new', name: 'app_data_view_new', methods: ['GET', 'POST'])]
     public function new(
-        Request $request,
         EntityManagerInterface $em,
         #[MapQueryParameter] string $type = 'home',
         #[MapQueryParameter] string $title = 'Home',

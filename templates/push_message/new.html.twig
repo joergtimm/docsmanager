@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PushMessage{% endblock %}
+
+{% block body %}
+    <h1>Create new PushMessage</h1>
+
+    {{ include('push_message/_form.html.twig') }}
+
+    <a href="{{ path('app_push_message_index') }}">back to list</a>
+{% endblock %}

@@ -59,6 +59,13 @@ final class ClientFactory extends ModelFactory
         return [
             'Name' => self::faker()->name('male'),
             'company' => self::faker()->company(),
+            'country' => self::faker()->country(),
+            'locality' => self::faker()->city(),
+            'region' => self::faker()->citySuffix(),
+            'postalCode' => self::faker()->postcode(),
+            'streetAddress' => self::faker()->streetAddress(),
+            'email' => self::faker()->companyEmail(),
+            'telephone' => self::faker()->phoneNumber()
         ];
     }
 

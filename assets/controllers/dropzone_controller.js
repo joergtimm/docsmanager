@@ -20,6 +20,10 @@ export default class extends Controller {
 
         });
 
+        myDropzone.on("error", function (file, errorMessage) {
+            console.log(errorMessage);
+        });
+
         Dropzone.options.myDropzone = {
             acceptedFiles: "image/*,application/pdf",
             dictDefaultMessage: 'ziehen sie hier die Dateien hinein zum uploaden'
@@ -33,19 +37,25 @@ export default class extends Controller {
                 formData.append("exifData", file.exifData); // EXIF-Daten den Formulardaten hinzufügen
             }
 
+
         });
 
         myDropzone.on('queuecomplete', () => {
             console.log('queuecomplete');
+            console.log('Upload complete');
+
 
         })
 
         myDropzone.on('success', (file, responseText) => {
+
             var mylist = this.galerieTarget;
             mylist.insertAdjacentHTML('beforebegin', responseText);
             setTimeout(() => {
                 myDropzone.removeFile(file);
             }, 3000);
+
+            console.log(responseText);
 
 
         })

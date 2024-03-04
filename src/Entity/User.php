@@ -25,7 +25,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-
     #[ORM\Column]
     private string $password;
 
@@ -42,9 +41,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?UserSetting $userSetting = null;
 
     private bool $isMe = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Client::class, cascade: ['persist'])]
+    private Collection $clients;
     public function __construct()
     {
         $this->dataViews = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -196,5 +199,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsMe(bool $isMe): void
     {
         $this->isMe = $isMe;
+    }
+
+    /**
+     * @return Collection<int, Client>
+     */
+    public function getClients(): Collection
+    {
+        return $this->clients;
+    }
+
+    public function addClient(Client $client): static
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients->add($client);
+            $client->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $client): static
+    {
+        if ($this->clients->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getUser() === $this) {
+                $client->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -256,4 +256,16 @@ return [
     'highlight.js/lib/languages/javascript' => [
         'version' => '11.9.0',
     ],
+    'jspdf' => [
+        'version' => '2.5.1',
+    ],
+    'html2canvas' => [
+        'version' => '1.4.1',
+    ],
+    '@babel/runtime/helpers/typeof' => [
+        'version' => '7.23.9',
+    ],
+    'fflate' => [
+        'version' => '0.4.8',
+    ],
 ];

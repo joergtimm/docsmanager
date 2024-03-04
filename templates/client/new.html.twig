@@ -1,11 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends 'modalBase.html.twig' %}
 
-{% block title %}New Client{% endblock %}
+{% block title %}Client new{% endblock %}
 
-{% block body %}
-    <h1>Create new Client</h1>
+{% block main_content %}
+    <div class="m-4 p-4 modal:m-0 modal:p-0 bg-gray-50 rounded-lg">
+        <div class="flex justify-between">
+            <h1 class="text-xl font-semibold text-gray-800 mb-4">New Client</h1>
 
-    {{ include('client/_form.html.twig') }}
+            <div class="mr-4">
+                <a href="{{ path('app_client_index') }}" class="text-sm font-medium text-gray-800">
+                    Back to list
+                </a>
+            </div>
+        </div>
+        {{ include('client/_form.html.twig') }}
+    </div>
+{% endblock %}
 
-    <a href="{{ path('app_client_index') }}">back to list</a>
+{% block stream_success %}
+    <turbo-stream action="update" target="modal">
+        <template></template>
+    </turbo-stream>
+    <turbo-stream action="prepend" targets="#clients-list tbody">
+        <template>
+            {{ include('client/_row.html.twig') }}
+        </template>
+    </turbo-stream>
 {% endblock %}

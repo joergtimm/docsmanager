@@ -7,14 +7,14 @@
             {{ form_row(form.name) }}
             {{ form_row(form.bornAt) }}
             {{ form_row(form.gender) }}
-            {{ form_row(form.imageFile) }}
+
 
         </div>
 
 
         <div
                 class="rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
-        ></div>
+        >{{ form_row(form.imageFile) }}</div>
     </div>
     <div>
         <twig:Button

@@ -15,4 +15,12 @@ class DashboardController extends AbstractController
             'controller_name' => 'DashboardController',
         ]);
     }
+
+    #[Route('/add/bild', name: 'app_add_bild', methods: ['GET', 'POST'])]
+    public function addBild(): Response
+    {
+        return $this->render('_gal-thumb.html.twig', [
+            'controller_name' => 'DashboardController',
+        ]);
+    }
 }

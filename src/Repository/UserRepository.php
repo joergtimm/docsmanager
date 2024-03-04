@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -40,6 +41,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function findBySearch(
+        ?string $query = null,
+        ?string $sort = null,
+        string $direction = 'desc'
+    ): QueryBuilder {
+        $qb = $this->createQueryBuilder('u');
+
+        if ($query) {
+            $qb->andWhere('u.username LIKE :query OR u.email LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+        if ($sort) {
+            $qb->orderBy('u.' . $sort, $direction);
+        }
+
+        return $qb;
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

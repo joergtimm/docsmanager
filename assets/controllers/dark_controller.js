@@ -36,6 +36,8 @@ export default class extends Controller {
                 localStorage.setItem('color-theme', 'dark')
             }
         }
+
+
     }
 
     toggle()

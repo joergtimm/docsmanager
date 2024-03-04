@@ -35,6 +35,14 @@
                                 <td class="py-2">{{ video.videoKey }}</td>
                             </tr>
                             <tr>
+                                <td class="py-2 pl-6 font-medium">API Test</td>
+                                <td class="py-2">
+                                    <a href="{{ path('app_api_video_show', {videoKey: video.videoKey}) }}" target="_blank">
+                                        json
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="py-2 pl-10">Status</td>
                                 <td class="py-2">{{ include('video/_online-badge.html.twig', {item: video}) }}</td>
                             </tr>

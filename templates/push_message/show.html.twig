@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PushMessage{% endblock %}
+
+{% block body %}
+    <h1>PushMessage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ push_message.id }}</td>
+            </tr>
+            <tr>
+                <th>CreateAt</th>
+                <td>{{ push_message.createAt ? push_message.createAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ push_message.state }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ push_message.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_push_message_index') }}">back to list</a>
+
+    <a href="{{ path('app_push_message_edit', {'id': push_message.id}) }}">edit</a>
+
+    {{ include('push_message/_delete_form.html.twig') }}
+{% endblock %}

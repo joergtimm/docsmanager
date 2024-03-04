@@ -13,6 +13,8 @@ class DataViewManager
 {
     public const VIDEO = 'video';
     public const CLIENT = 'client';
+    public const USER = 'user';
+    public const ACTOR = 'actor';
 
     public function __construct(private DataViewRepository $repository, private EntityManagerInterface $em)
     {
@@ -35,7 +37,23 @@ class DataViewManager
                     'title' => 'Clients',
                     'gridlist' => 'list',
                     'searchProbs' =>
-                        ['Name', 'company']
+                        ['Name', 'company', 'country']
+                ];
+                break;
+            case self::USER:
+                $defaults = [
+                    'title' => 'User',
+                    'gridlist' => 'list',
+                    'searchProbs' =>
+                        ['username', 'email']
+                ];
+                break;
+            case self::ACTOR:
+                $defaults = [
+                    'title' => 'Actor',
+                    'gridlist' => 'list',
+                    'searchProbs' =>
+                        ['name']
                 ];
                 break;
         }

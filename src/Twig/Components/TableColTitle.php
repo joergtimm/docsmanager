@@ -11,7 +11,7 @@ final class TableColTitle
 
     public string $fieldname;
 
-    public string $direction;
+    public ?string $direction = 'asc';
 
     public string $label;
 

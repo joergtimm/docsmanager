@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -25,7 +26,7 @@ class ClientController extends AbstractController
         DataViewManager $dataViewManager,
         #[MapQueryParameter] int $page = 1,
         #[MapQueryParameter] string $query = null,
-        #[MapQueryParameter] string $sort = 'title',
+        #[MapQueryParameter] string $sort = 'name',
         #[MapQueryParameter] string $sortDirection = 'ASC',
         #[MapQueryParameter] string $viewMode = 'list',
         #[MapQueryParameter] int $listItems = 10,
@@ -59,10 +60,9 @@ class ClientController extends AbstractController
         }
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($clientRepository->findBySearch(
-                null,
                 $query,
                 $sort,
-                $sortDirection
+                $sortDirection,
             )),
             $page,
             $items
@@ -88,6 +88,16 @@ class ClientController extends AbstractController
             $entityManager->persist($client);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Client wurde angelegt');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('client/new.html.twig', 'stream_success', [
+                    'item' => $client
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
+
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -108,11 +118,22 @@ class ClientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ClientType::class, $client);
+        $form = $this->createClientForm($client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $client = $form->getData();
+            $entityManager->persist($client);
             $entityManager->flush();
+            $this->addFlash('success', 'Client wurde geändert');
+
+            if ($request->headers->has('turbo-frame')) {
+                $stream = $this->renderBlockView('client/edit.html.twig', 'stream_success', [
+                    'item' => $client
+                ]);
+
+                $this->addFlash('stream', $stream);
+            }
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -132,5 +153,17 @@ class ClientController extends AbstractController
         }
 
         return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function createClientForm(Client $client = null): FormInterface
+    {
+        $client = $client ?? new client();
+
+        return $this->createForm(clientType::class, $client, [
+            'action' => $client->getId() ? $this->generateUrl(
+                'app_client_edit',
+                ['id' => $client->getId()]
+            ) : $this->generateUrl('app_client_new'),
+        ]);
     }
 }

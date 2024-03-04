@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\VideoRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,14 +16,32 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
+#[ApiResource(
+    shortName: 'video',
+    operations: [
+        new Get(uriTemplate: '/video/{videoKey}'),
+    ],
+    formats: [
+       'jsonld',
+        'json',
+        'html',
+        'jsonhal',
+        'csv' => 'text/csv'
+        ],
+    normalizationContext: [
+        'groups' => ['video:read']
+    ]
+)]
 class Video
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ApiProperty(identifier: false)]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['video:read'])]
     private ?string $title = null;
 
     /**
@@ -32,6 +53,7 @@ class Video
     private ?DateTimeImmutable $createAt;
 
     #[ORM\Column]
+    #[Groups(['video:read'])]
     private ?bool $isverrifyted = null;
 
     #[ORM\ManyToOne(inversedBy: 'videos')]
@@ -46,6 +68,7 @@ class Video
     private ?DateTimeImmutable $updateAt;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['video:read'])]
     private ?array $metadata = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -58,6 +81,8 @@ class Video
     private ?bool $is_h265 = null;
 
     #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[Groups(['video:read'])]
+    #[ApiProperty(identifier: true)]
     private Uuid $videoKey;
 
     #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoActors::class)]
@@ -76,6 +101,9 @@ class Video
     #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoParticipiant::class)]
     private Collection $videoParticipiants;
 
+    #[ORM\OneToMany(mappedBy: 'video', targetEntity: PushMessage::class)]
+    private Collection $pushMessages;
+
     public function __construct()
     {
         $this->videoActors = new ArrayCollection();
@@ -83,6 +111,7 @@ class Video
         $this->isverrifyted = false;
         $this->videoParticipiants = new ArrayCollection();
         $this->createAt = new \DateTimeImmutable();
+        $this->pushMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -316,6 +345,36 @@ class Video
             // set the owning side to null (unless already changed)
             if ($videoParticipiant->getVideo() === $this) {
                 $videoParticipiant->setVideo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PushMessage>
+     */
+    public function getPushMessages(): Collection
+    {
+        return $this->pushMessages;
+    }
+
+    public function addPushMessage(PushMessage $pushMessage): static
+    {
+        if (!$this->pushMessages->contains($pushMessage)) {
+            $this->pushMessages->add($pushMessage);
+            $pushMessage->setVideo($this);
+        }
+
+        return $this;
+    }
+
+    public function removePushMessage(PushMessage $pushMessage): static
+    {
+        if ($this->pushMessages->removeElement($pushMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($pushMessage->getVideo() === $this) {
+                $pushMessage->setVideo(null);
             }
         }
 

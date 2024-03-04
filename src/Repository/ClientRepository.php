@@ -23,7 +23,6 @@ class ClientRepository extends ServiceEntityRepository
     }
 
     public function findBySearch(
-        ?Client $client = null,
         ?string $query = null,
         ?string $sort = null,
         string $direction = 'desc'

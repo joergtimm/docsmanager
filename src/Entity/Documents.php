@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DocumentsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -81,10 +83,14 @@ class Documents
     #[ORM\Column(length: 255, nullable: true)]
     private ?array $imageDimensions = null;
 
+    #[ORM\OneToMany(mappedBy: 'document', targetEntity: PushMessage::class)]
+    private Collection $pushMessages;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable();
         $this->documentKey = Uuid::v1();
+        $this->pushMessages = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -326,5 +332,35 @@ class Documents
     public function setDocumentKey(Uuid $documentKey): void
     {
         $this->documentKey = $documentKey;
+    }
+
+    /**
+     * @return Collection<int, PushMessage>
+     */
+    public function getPushMessages(): Collection
+    {
+        return $this->pushMessages;
+    }
+
+    public function addPushMessage(PushMessage $pushMessage): static
+    {
+        if (!$this->pushMessages->contains($pushMessage)) {
+            $this->pushMessages->add($pushMessage);
+            $pushMessage->setDocument($this);
+        }
+
+        return $this;
+    }
+
+    public function removePushMessage(PushMessage $pushMessage): static
+    {
+        if ($this->pushMessages->removeElement($pushMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($pushMessage->getDocument() === $this) {
+                $pushMessage->setDocument(null);
+            }
+        }
+
+        return $this;
     }
 }

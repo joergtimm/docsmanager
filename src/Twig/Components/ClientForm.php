@@ -2,7 +2,9 @@
 
 namespace App\Twig\Components;
 
+use App\Entity\Client;
 use App\Entity\Mandnat;
+use App\Form\ClientType;
 use App\Form\MandnatType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -18,15 +20,15 @@ final class ClientForm extends AbstractController
     use ComponentWithFormTrait;
 
     #[LiveProp]
-    public ?Mandnat $initialFormData = null;
+    public ?Client $initialFormData = null;
 
     protected function instantiateForm(): FormInterface
     {
-        $client = $this->initialFormData ?? new Mandnat();
-        return $this->createForm(MandnatType::class, $client, [
+        $client = $this->initialFormData ?? new Client();
+        return $this->createForm(ClientType::class, $client, [
             'action' => $client->getId()
-                ? $this->generateUrl('app_mandnat_edit', ['id' => $client->getId()])
-                : $this->generateUrl('app_mandnat_new'),
+                ? $this->generateUrl('app_client_edit', ['id' => $client->getId()])
+                : $this->generateUrl('app_client_new'),
         ]);
     }
 }

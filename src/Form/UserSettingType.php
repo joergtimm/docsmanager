@@ -22,9 +22,13 @@ class UserSettingType extends AbstractType
                 'class' => Client::class,
                 'placeholder' => 'Client...',
                 'autocomplete' => true,
+                'tom_select_options' => [
+                    'allowEmptyOption' => true
+                ],
                 'by_reference' => false,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'empty_data' => '',
                 'attr' => [
                     'data-action' => 'autosubmit#debouncedSubmit',
                     'data-turbo-frames' => "videos"
@@ -37,6 +41,7 @@ class UserSettingType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => UserSetting::class,
+            'validation_groups' => false,
         ]);
     }
 }

@@ -4,14 +4,21 @@
         <div
                 class="rounded-lg border-gray-300 dark:border-gray-600"
         >
-            {{ form_row(form.name) }}
-            {{ form_row(form.conId) }}
-            {{ form_row(form.customNr) }}
+            {{ form_row(form.Name) }}
+            {{ form_row(form.company) }}
+            {{ form_row(form.country) }}
+            {{ form_row(form.locality) }}
+            {{ form_row(form.region) }}
+            {{ form_row(form.postalCode) }}
+            {{ form_row(form.streetAddress) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.telephone) }}
             {{ form_row(form.status) }}
         </div>
         <div
                 class="rounded-lg border-gray-300 dark:border-gray-600"
         >
+            {{ form_row(form.imageFile) }}
         </div>
     </div>
 
