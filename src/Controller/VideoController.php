@@ -22,6 +22,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/admin/video')]
 class VideoController extends AbstractController
 {
@@ -67,7 +68,6 @@ class VideoController extends AbstractController
 
         $pager = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($videoRepository->findBySearch(
-                $me->getUserSetting()->getClientInUse(),
                 $query,
                 $sort,
                 $sortDirection
@@ -103,9 +103,6 @@ class VideoController extends AbstractController
             $video->setCreateAt(new DateTimeImmutable());
             $video->setUpdateAt(new DateTimeImmutable());
             $video->setVideoKey(Uuid::v1());
-            $client = $dataViewManager->getClient($this->getUser());
-            $video->setOwner($client);
-
             $entityManager->persist($video);
             $entityManager->flush();
             $this->addFlash('success', 'Video wurde angelegt');

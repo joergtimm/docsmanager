@@ -26,12 +26,12 @@ class UserSettingType extends AbstractType
                     'allowEmptyOption' => true
                 ],
                 'by_reference' => false,
-                'choice_label' => 'name',
+                'choice_label' => 'company',
                 'choice_value' => 'id',
                 'empty_data' => '',
                 'attr' => [
                     'data-action' => 'autosubmit#debouncedSubmit',
-                    'data-turbo-frames' => "videos"
+                    'data-turbo-frames' => "clientfilter"
                 ]
             ])
         ;

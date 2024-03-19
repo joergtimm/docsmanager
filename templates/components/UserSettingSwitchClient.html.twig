@@ -1,4 +1,4 @@
-<div{{ attributes }}>
+<div{{ attributes }} class="dark:bg-gradient-to-b dark:from-gray-700 dark:to-gray-800 p-2">
     {{ form_start(form, {
         attr: {
             'data-action': 'live#action',
@@ -6,6 +6,6 @@
             'data-controller': 'autosubmit',
         }
     }) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.clientInUse) }}
     {{ form_end(form) }}
 </div>

@@ -23,7 +23,7 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $company = null;
@@ -84,7 +84,7 @@ class Client
     private ?string $imageOriginalName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?array $imageDimensions = null;
+    private ?array $imageDimensions = [];
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
@@ -110,6 +110,7 @@ class Client
         $this->status = 'active';
         $this->updateAt = new \DateTimeImmutable();
         $this->pushMessages = new ArrayCollection();
+        $this->user = null;
     }
 
     public function getId(): ?int
@@ -119,12 +120,12 @@ class Client
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): static
+    public function setName(string $name): static
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
@@ -405,9 +406,14 @@ class Client
         return $this->imageDimensions;
     }
 
-    public function setImageDimensions(?array $imageDimensions): void
+    /**
+     * @param array<string> $imageDimensions
+     * @return $this
+     */
+    public function setImageDimensions(?array $imageDimensions): self
     {
         $this->imageDimensions = $imageDimensions;
+        return $this;
     }
 
     public function getUpdateAt(): ?\DateTimeImmutable

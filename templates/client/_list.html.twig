@@ -15,10 +15,10 @@
             <div class="flex items-center">
                 <a href="{{ path('app_client_index', {
                     ...app.request.query.all(),
-                    sort: 'Name',
-                    sortDirection: sort == 'Name' and sortDirection == 'asc' ? 'desc' : 'asc',
+                    sort: 'name',
+                    sortDirection: sort == 'name' and sortDirection == 'asc' ? 'desc' : 'asc',
                 }) }}">
-                    Name {{ colheader.sortArrow('Name', sort, sortDirection) }}
+                    Name {{ colheader.sortArrow('name', sort, sortDirection) }}
                 </a>
             </div>
         </th>

@@ -65,6 +65,7 @@
         "symfony/uid": "7.0.*",
         "symfony/ux-autocomplete": "^2.13",
         "symfony/ux-chartjs": "^2.13",
+        "symfony/ux-cropperjs": "^2.16",
         "symfony/ux-dropzone": "^2.13",
         "symfony/ux-live-component": "^2.13",
         "symfony/ux-toggle-password": "^2.13",

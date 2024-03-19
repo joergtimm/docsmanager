@@ -7,6 +7,15 @@ oneup_flysystem:
         documents_adapter:
             local:
                 location: '%kernel.project_dir%/public/storage/documents'
+        video_adapter:
+            local:
+                location: '%kernel.project_dir%/public/storage/video'
+        client_adapter:
+            local:
+                location: '%kernel.project_dir%/public/storage/client'
+        actor_adapter:
+            local:
+                location: '%kernel.project_dir%/public/storage/actor'
 
     filesystems:
         default_filesystem:
@@ -15,4 +24,13 @@ oneup_flysystem:
         documents:
             adapter: documents_adapter
             mount: documents
+        video:
+            adapter: video_adapter
+            mount: video
+        client:
+            adapter: client_adapter
+            mount: client
+        actor:
+            adapter: actor_adapter
+            mount: actor
 

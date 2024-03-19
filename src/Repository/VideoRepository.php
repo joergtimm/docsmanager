@@ -25,7 +25,6 @@ class VideoRepository extends ServiceEntityRepository
     }
 
     public function findBySearch(
-        ?Client $client = null,
         ?string $query = null,
         ?string $sort = null,
         string $direction = 'desc'
@@ -36,10 +35,12 @@ class VideoRepository extends ServiceEntityRepository
                 ->leftJoin('va.actor', 'a')
                 ->addSelect('va', 'a');
 
+        /*
         if ($client) {
             $qb->andWhere('v.owner = :client')
                 ->setParameter('client', $client);
         }
+        */
 
         if ($query) {
             $qb->andWhere('v.title LIKE :query')
@@ -53,21 +54,7 @@ class VideoRepository extends ServiceEntityRepository
     }
 
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function findByVideoKey(?string $value = null)
-    {
-        return $this->createQueryBuilder('v')
-           ->andWhere('v.v.videoKey = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
-//    public function findOneBySomeField($value): ?Video
+    //    public function findOneBySomeField($value): ?Video
 //    {
 //        return $this->createQueryBuilder('v')
 //            ->andWhere('v.exampleField = :val')

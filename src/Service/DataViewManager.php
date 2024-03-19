@@ -37,7 +37,7 @@ class DataViewManager
                     'title' => 'Clients',
                     'gridlist' => 'list',
                     'searchProbs' =>
-                        ['Name', 'company', 'country']
+                        ['name', 'company', 'country']
                 ];
                 break;
             case self::USER:

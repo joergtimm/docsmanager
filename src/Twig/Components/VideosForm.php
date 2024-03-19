@@ -3,6 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Entity\Video;
+use App\Form\VideoPartipiantType;
 use App\Form\VideoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -10,23 +11,22 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\LiveComponent\LiveCollectionTrait;
 
-#[AsLiveComponent(method: 'get')]
+#[AsLiveComponent]
 class VideosForm extends AbstractController
 {
     use DefaultActionTrait;
-    use ComponentWithFormTrait;
+    use LiveCollectionTrait;
 
-    #[LiveProp]
-    public ?Video $initialFormData = null;
+    #[LiveProp(fieldName: 'formData')]
+    public ?Video $video;
 
     protected function instantiateForm(): FormInterface
     {
-        $video = $this->initialFormData ?? new Video();
-        return $this->createForm(VideoType::class, $video, [
-            'action' => $video->getId()
-                ? $this->generateUrl('app_video_edit', ['id' => $video->getId()])
-                : $this->generateUrl('app_video_new'),
-        ]);
+        return $this->createForm(
+            VideoType::class,
+            $this->video
+        );
     }
 }

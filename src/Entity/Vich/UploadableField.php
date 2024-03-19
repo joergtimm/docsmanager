@@ -2,7 +2,7 @@
 
 namespace App\Entity\Vich;
 
-class UploadableField
+#[\Attribute] class UploadableField
 {
 
 }

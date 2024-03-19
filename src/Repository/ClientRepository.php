@@ -30,7 +30,7 @@ class ClientRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('c');
 
         if ($query) {
-            $qb->andWhere('c.Name LIKE :query OR c.company LIKE :query')
+            $qb->andWhere('c.name LIKE :query OR c.company LIKE :query')
                 ->setParameter('query', '%' . $query . '%');
         }
         if ($sort) {

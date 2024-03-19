@@ -33,9 +33,11 @@ document.addEventListener('turbo:load', () => {
     // if (shouldPerformTransition()) Turbo.cache.exemptPageFromCache();
 });
 
+/*
 document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById('updateProductButton').click();
 });
+ */
 
 document.addEventListener('turbo:before-frame-render', (event) => {
     if (shouldPerformTransition() && !event.target.hasAttribute('data-skip-transition')) {
@@ -50,8 +52,10 @@ document.addEventListener('turbo:before-frame-render', (event) => {
 
         performTransition(event.target, event.detail.newFrame, async() => {
             await event.detail.resume();
-        }).then(() => {
-            e(event.target, { activeAttr: 'data-active' });
+        }).then(( ) => {
+
+            console.log('performFrameTransition');
+
           });
     }
 });

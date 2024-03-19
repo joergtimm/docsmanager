@@ -20,16 +20,16 @@ vich_uploader:
                 service: Vich\UploaderBundle\Naming\SubdirDirectoryNamer
                 options: { chars_per_dir: 36, dirs: 3 }
         actor:
-            uri_prefix: /storage/documents
-            upload_destination: oneup_flysystem.documents_filesystem
+            uri_prefix: /storage/actor
+            upload_destination: oneup_flysystem.actor_filesystem
             inject_on_load: true
             delete_on_update: true
             delete_on_remove: true
             namer:
                 service: Vich\UploaderBundle\Naming\SmartUniqueNamer
         client:
-            uri_prefix: /storage/documents
-            upload_destination: oneup_flysystem.documents_filesystem
+            uri_prefix: /storage/client
+            upload_destination: oneup_flysystem.client_filesystem
             inject_on_load: true
             delete_on_update: true
             delete_on_remove: true

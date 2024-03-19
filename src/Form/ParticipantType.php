@@ -15,13 +15,6 @@ class ParticipantType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('firstName')
-            ->add('bornAt')
-            ->add('birthName')
-            ->add('idType')
-            ->add('idNumber')
-            ->add('createAt')
-            ->add('updateAt')
             ->add('video', EntityType::class, [
                 'class' => Video::class,
                 'choice_label' => 'id',

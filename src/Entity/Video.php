@@ -12,10 +12,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints\Valid;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
+#[Vich\Uploadable]
 #[ApiResource(
     shortName: 'video',
     operations: [
@@ -91,23 +95,45 @@ class Video
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumb = null;
 
-    #[ORM\OneToMany(mappedBy: 'video', targetEntity: Participant::class)]
-    private Collection $participants;
-
     #[ORM\ManyToOne(inversedBy: 'videos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $owner = null;
 
-    #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoParticipiant::class)]
+    #[ORM\OneToMany(mappedBy: 'video', targetEntity: VideoParticipiant::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Valid]
     private Collection $videoParticipiants;
 
     #[ORM\OneToMany(mappedBy: 'video', targetEntity: PushMessage::class)]
     private Collection $pushMessages;
 
+    #[Vich\UploadableField(
+        mapping: 'video',
+        fileNameProperty: 'imageName',
+        size: 'imageSize',
+        mimeType: 'imageMimeType',
+        originalName: 'imageOriginalName',
+        dimensions: 'imageDimensions'
+    )]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $imageSize = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageMimeType = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageOriginalName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?array $imageDimensions = [];
+
     public function __construct()
     {
         $this->videoActors = new ArrayCollection();
-        $this->participants = new ArrayCollection();
         $this->isverrifyted = false;
         $this->videoParticipiants = new ArrayCollection();
         $this->createAt = new \DateTimeImmutable();
@@ -279,36 +305,6 @@ class Video
         return $this;
     }
 
-    /**
-     * @return Collection<int, Participant>
-     */
-    public function getParticipants(): Collection
-    {
-        return $this->participants;
-    }
-
-    public function addParticipant(Participant $participant): static
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants->add($participant);
-            $participant->setVideo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(Participant $participant): static
-    {
-        if ($this->participants->removeElement($participant)) {
-            // set the owning side to null (unless already changed)
-            if ($participant->getVideo() === $this) {
-                $participant->setVideo(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getOwner(): ?Client
     {
         return $this->owner;
@@ -329,17 +325,17 @@ class Video
         return $this->videoParticipiants;
     }
 
-    public function addVideoParticipiant(VideoParticipiant $videoParticipiant): static
+    public function addVideoParticipiant(VideoParticipiant $videoParticipiant): self
     {
         if (!$this->videoParticipiants->contains($videoParticipiant)) {
-            $this->videoParticipiants->add($videoParticipiant);
+            $this->videoParticipiants[] = $videoParticipiant;
             $videoParticipiant->setVideo($this);
         }
 
         return $this;
     }
 
-    public function removeVideoParticipiant(VideoParticipiant $videoParticipiant): static
+    public function removeVideoParticipiant(VideoParticipiant $videoParticipiant): self
     {
         if ($this->videoParticipiants->removeElement($videoParticipiant)) {
             // set the owning side to null (unless already changed)
@@ -377,6 +373,75 @@ class Video
                 $pushMessage->setVideo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(?string $imageMimeType): void
+    {
+        $this->imageMimeType = $imageMimeType;
+    }
+
+    public function getImageOriginalName(): ?string
+    {
+        return $this->imageOriginalName;
+    }
+
+    public function setImageOriginalName(?string $imageOriginalName): void
+    {
+        $this->imageOriginalName = $imageOriginalName;
+    }
+
+    public function getImageDimensions(): array|null
+    {
+        $imageDimensions = $this->imageDimensions;
+        $imageDimensions[] = '1';
+
+        return array_unique($imageDimensions);
+    }
+
+    /**
+     * @param array<string> $imageDimensions
+     * @return $this
+     */
+    public function setImageDimensions(?array $imageDimensions): self
+    {
+        $this->imageDimensions = $imageDimensions;
 
         return $this;
     }

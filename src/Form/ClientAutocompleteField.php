@@ -20,7 +20,7 @@ class ClientAutocompleteField extends AbstractType
             'placeholder' => 'Choose a Client',
             'autocomplete' => true,
             'by_reference' => false,
-            'searchable_fields' => ['name'],
+            'searchable_fields' => ['company'],
 
             'query_builder' => function (ClientRepository $clientRepository) {
                 return $clientRepository->createQueryBuilder('client', 'client.id');

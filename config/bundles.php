@@ -37,4 +37,5 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     Trsteel\CkeditorBundle\TrsteelCkeditorBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    Symfony\UX\Cropperjs\CropperjsBundle::class => ['all' => true],
 ];

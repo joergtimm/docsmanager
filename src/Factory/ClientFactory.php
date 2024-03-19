@@ -57,7 +57,7 @@ final class ClientFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'Name' => self::faker()->name('male'),
+            'name' => self::faker()->name('male'),
             'company' => self::faker()->company(),
             'country' => self::faker()->country(),
             'locality' => self::faker()->city(),

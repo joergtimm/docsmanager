@@ -59,7 +59,6 @@ class UserSettingController extends AbstractController
 
             if ($request->headers->has('turbo-frame')) {
                 $stream = $this->renderBlockView('user_setting/_stream.html.twig', 'stream_success', [
-                    'userSettings' => $userSetting,
                     'form' => $form,
                 ]);
 
@@ -82,7 +81,7 @@ class UserSettingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_setting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dashboard', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user_setting/edit.html.twig', [

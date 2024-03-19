@@ -42,7 +42,8 @@ class VideoActrorsInfo
         $this->hasIdCardFront = $hasIdCardFront;
         $this->hasIdCardBack = $hasIdCardBack;
         $this->hasContract = $hasContract;
-        $this->hasAllRequiredDocuments = $this->hasIdShot && $this->hasIdCardFront && $this->hasIdCardBack && $this->hasContract;
+        $this->hasAllRequiredDocuments =
+            $this->hasIdShot && $this->hasIdCardFront && $this->hasIdCardBack && $this->hasContract;
     }
 
     public function setHasIdShot(bool $hasIdShot): void

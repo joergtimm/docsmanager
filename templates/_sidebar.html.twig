@@ -6,7 +6,7 @@
 >
     <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
         {% block client_form %}
-                <turbo-frame id="clientfilter" src="{{ path('app_user_setting_get') }}" loading="lazy">
+                <turbo-frame id="clientfilter" src="{{ path('app_user_setting_get') }}" class="shadow-red-500/50" loading="lazy">
                     {{ include('_spinner.html.twig') }}
                 </turbo-frame>
         {% endblock %}

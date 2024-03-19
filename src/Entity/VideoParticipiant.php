@@ -24,9 +24,13 @@ class VideoParticipiant
     #[ORM\Column]
     private ?\DateTimeImmutable $createAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updateAt = null;
+
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable();
+        $this->updateAt = new \DateTimeImmutable();
     }
     public function getId(): ?int
     {
@@ -65,6 +69,18 @@ class VideoParticipiant
     public function setCreateAt(\DateTimeImmutable $createAt): static
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeImmutable $updateAt): static
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }

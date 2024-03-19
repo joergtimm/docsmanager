@@ -268,4 +268,11 @@ return [
     'fflate' => [
         'version' => '0.4.8',
     ],
+    'cropperjs' => [
+        'version' => '1.6.1',
+    ],
+    'cropperjs/dist/cropper.min.css' => [
+        'version' => '1.6.1',
+        'type' => 'css',
+    ],
 ];
